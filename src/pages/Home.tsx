@@ -37,7 +37,6 @@ import {
 import type { PersonSummary } from '../types/person'
 import { formatCount } from '../utils/format'
 
-// Optional hero video: put a short muted loop at public/videos/hero.mp4.
 const HERO_VIDEO = '/videos/hero.mp4'
 const HERO_IMAGE =
   'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=75'
@@ -73,8 +72,6 @@ const ROLE_IMAGES = {
 const CTA_BACKGROUND =
   'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=75'
 
-// Hero slides — all images are normalized to the same square canvas (1200x1200)
-// Save in public/images/ as hero-1.png ... hero-5.png
 const HERO_SLIDES = [
   { src: '/images/hero-3.png', alt: 'Creators on the platform' },
   { src: '/images/hero-4.png', alt: 'Brand tracking campaign reach' },
@@ -82,11 +79,6 @@ const HERO_SLIDES = [
   { src: '/images/hero-5.png', alt: 'Content creator with laptop' },
   { src: '/images/hero-2.png', alt: 'Creator working on laptop' },
 ]
-
-// Hero bottom is cut with a wavy mask, so the real page background (light or dark) shows through
-const CURVE_MASK =
-  'linear-gradient(#000 0 0) top / 100% calc(100% - var(--curve-h)) no-repeat, ' +
-  'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 1440 200\' preserveAspectRatio=\'none\'%3E%3Cpath d=\'M0,0 L1440,0 L1440,100 C1200,40 960,180 720,100 C480,20 240,180 0,100 Z\'/%3E%3C/svg%3E") bottom / 100% var(--curve-h) no-repeat'
 
 function RotatingWord({ words }: { words: string[] }) {
   const [i, setI] = useState(0)
@@ -105,7 +97,6 @@ function RotatingWord({ words }: { words: string[] }) {
   )
 }
 
-// Hero image slider: fixed square box so every picture has the same size, responsive on all screens
 function HeroShowcase({ topLabel }: { topLabel: string }) {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
@@ -135,7 +126,6 @@ function HeroShowcase({ topLabel }: { topLabel: string }) {
         />
       ))}
 
-      {/* Floating chips */}
       <div
         className="absolute bottom-[14%] end-0 z-20 flex animate-float-slow items-center gap-1.5 rounded-xl bg-white px-2.5 py-1.5 text-[10px] font-semibold text-gray-900 shadow-xl ring-1 ring-gray-200 sm:gap-2 sm:rounded-2xl sm:px-3.5 sm:py-2 sm:text-xs"
         style={{ animationDelay: '-2s' }}
@@ -144,7 +134,6 @@ function HeroShowcase({ topLabel }: { topLabel: string }) {
         {topLabel}
       </div>
 
-      {/* Dots */}
       <div className="absolute inset-x-0 -bottom-5 z-20 flex justify-center gap-2">
         {HERO_SLIDES.map((s, i) => (
           <button
@@ -162,11 +151,9 @@ function HeroShowcase({ topLabel }: { topLabel: string }) {
   )
 }
 
-// Decorative vector shapes for the roles section background
 function RoleShapes() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-      {/* Concentric rings, top-left */}
       <svg
         viewBox="0 0 200 200"
         fill="none"
@@ -177,7 +164,6 @@ function RoleShapes() {
         <circle cx="100" cy="100" r="34" fill="currentColor" />
       </svg>
 
-      {/* Dotted grid, top-right */}
       <svg
         viewBox="0 0 120 120"
         className="absolute end-4 top-6 hidden h-24 w-24 text-white/25 sm:block md:h-32 md:w-32"
@@ -190,7 +176,6 @@ function RoleShapes() {
         <rect width="120" height="120" fill="url(#role-dots)" />
       </svg>
 
-      {/* Triangle outline */}
       <svg
         viewBox="0 0 100 100"
         fill="none"
@@ -199,7 +184,6 @@ function RoleShapes() {
         <path d="M50 8 L94 88 L6 88 Z" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
       </svg>
 
-      {/* Plus signs */}
       <svg
         viewBox="0 0 40 40"
         fill="none"
@@ -215,7 +199,6 @@ function RoleShapes() {
         <path d="M20 4 V36 M4 20 H36" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
       </svg>
 
-      {/* Soft blob, bottom-right */}
       <svg
         viewBox="0 0 200 200"
         className="absolute -bottom-16 -end-16 h-56 w-56 text-brand-violet/25 sm:-bottom-24 sm:-end-24 sm:h-80 sm:w-80"
@@ -227,7 +210,6 @@ function RoleShapes() {
         />
       </svg>
 
-      {/* Wave line */}
       <svg
         viewBox="0 0 1200 80"
         preserveAspectRatio="none"
@@ -282,7 +264,6 @@ function IndustryTile({
   )
 }
 
-// Reusable CTA card
 function CtaCard({
   title,
   body,
@@ -418,14 +399,13 @@ function Home() {
   return (
     <div className="home-page overflow-x-hidden pb-16">
       <ScrollProgressButton />
+      
       {/* Hero */}
-      <div className="relative [--curve-h:6rem] sm:[--curve-h:9rem] md:[--curve-h:12rem] lg:[--curve-h:14rem]">
       <section
         aria-label={t('home.heroLabel')}
-        className="keep-dark relative isolate overflow-hidden bg-brand-plum"
-        style={{ mask: CURVE_MASK, WebkitMask: CURVE_MASK }}
+        className="keep-dark relative isolate bg-brand-plum"
       >
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 -z-10 overflow-hidden">
           <img
             src={HERO_IMAGE}
             alt=""
@@ -520,34 +500,38 @@ function Home() {
             </div>
           </div>
 
-          {/* Image showcase: below text on mobile/tablet, right side on desktop */}
           <HeroShowcase
             topLabel={d('home.heroTop', 'Top rated talent')}
           />
         </div>
 
+        {/* ✅ Fix: Removed mask, added SVG curve with purple top border and no gap */}
+               {/* ✅ Wavy Curve — Light mode white, Dark mode dark */}
+        <div className="pointer-events-none absolute inset-x-0 -bottom-1 z-10 w-full translate-y-[1px]">
+          <svg
+            viewBox="0 0 1440 200"
+            preserveAspectRatio="none"
+            className="h-24 w-full sm:h-36 md:h-48 lg:h-56"
+            aria-hidden="true"
+          >
+            {/* Purple top border */}
+            <path
+              d="M0,100 C240,180 480,20 720,100 C960,180 1200,40 1440,100"
+              fill="none"
+              stroke="#8b3df5"
+              strokeWidth="6"
+              strokeLinecap="round"
+            />
+            
+            {/* ✅ Light mode: White curve */}
+            <path
+              d="M0,100 C240,180 480,20 720,100 C960,180 1200,40 1440,100 L1440,200 L0,200 Z"
+              className="fill-[#ffffff] dark:fill-[#121212]"
+            />
+          </svg>
+        </div>
       </section>
 
-      {/* Purple curve line (drawn outside the masked hero so it is not clipped) */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
-        <svg
-          viewBox="0 0 1440 200"
-          preserveAspectRatio="none"
-          className="h-[var(--curve-h)] w-full"
-          aria-hidden="true"
-        >
-          <path
-            d="M0,100 C240,180 480,20 720,100 C960,180 1200,40 1440,100"
-            fill="none"
-            stroke="#8b3df5"
-            strokeWidth="6"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
-      </div>
-
-      {/* Stats card overlapping the hero */}
       <div className="relative z-20 mx-auto -mt-10 max-w-6xl px-4 sm:-mt-14">
         <Reveal>
           <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-3xl bg-gray-200 shadow-xl ring-1 ring-gray-200 md:grid-cols-4">
@@ -563,7 +547,6 @@ function Home() {
         </Reveal>
       </div>
 
-      {/* Scrolling strip of top creators */}
       {people.length > 0 && (
         <section className="group mt-10 overflow-hidden sm:mt-14" aria-label={t('home.mostFollowed')}>
           <div className="flex w-max animate-marquee gap-3 sm:gap-4">
@@ -669,7 +652,6 @@ function Home() {
         <HowItWorks />
       </div>
 
-      {/* Tabs per role — FULL WIDTH background with vector shapes, centered content */}
       <section className="relative isolate mt-16 w-full overflow-hidden bg-gray-800 py-8 shadow-sm ring-1 ring-gray-100 sm:mt-24 sm:py-10 md:py-16">
         <RoleShapes />
         <div className="relative z-10 mx-auto max-w-6xl px-4">
@@ -742,7 +724,6 @@ function Home() {
         </div>
       </section>
 
-      {/* OpenCampaigns — full width */}
       <div className="mt-16 sm:mt-24">
         <OpenCampaigns />
       </div>
@@ -752,7 +733,6 @@ function Home() {
 
         <Faq />
 
-        {/* Final CTA */}
         <Reveal>
           <section className="keep-dark relative isolate overflow-hidden rounded-2xl p-4 text-white sm:rounded-[2rem] sm:p-6 md:p-12">
             <img
@@ -776,7 +756,6 @@ function Home() {
         </Reveal>
       </div>
 
-      {/* Video popup */}
       {playing && (
         <div
           role="dialog"
@@ -806,7 +785,6 @@ function Home() {
   )
 }
 
-// "See all" only when there is a page to go to
 function SectionHeader({ title, to }: { title: string; to?: string }) {
   const { t } = useTranslation()
   return (
