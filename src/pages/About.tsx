@@ -39,12 +39,10 @@ import {
 import ScrollProgressButton from "../components/home/ScrollProgressButton";
 import { useAuth } from "../hooks/useAuth";
 import { useTaxonomy } from "../hooks/useTaxonomy";
-// import type { PersonSummary } from "../types/person";
 
-// Upar wale card ki tasveer (Unsplash, Home hero wali mein se ek)
 const ABOUT_IMAGE =
   "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=80";
-// Statement band picture (tried in order; if none loads the dark band stays)
+
 const BAND_IMAGES = [
   "photo-1470229722913-7c0e2dbbafd3",
   "photo-1429962714451-bb934ecdc4ec",
@@ -54,7 +52,6 @@ const BAND_IMAGES = [
 
 const FAQ_COUNT = 7;
 
-// Mission ki tasveerein (Home hero jaisi: 1200x1200, transparent), khud badalti rehti hain
 const MISSION_SLIDES = [1, 2, 3, 4].map((n) => ({
   src: `/images/about-${n}.png`,
   alt: `about.missionImg${n}`,
@@ -119,7 +116,6 @@ function Heading({ title, sub }: { title: string; sub?: string }) {
   );
 }
 
-// About: platform kya hai, kaise chalta hai, kis ke liye hai aur is mein kya kya hai
 function About() {
   const { t } = useTranslation();
   const d = (key: string, defaultValue: string) => t(key, { defaultValue });
@@ -196,7 +192,6 @@ function About() {
     },
   ];
 
-  // Teen qism ke account: har ek ke apne fayde aur signup ka seedha raasta
   const audiences: { key: string; icon: IconDefinition; type: string }[] = [
     { key: "talent", icon: faStar, type: "talent" },
     { key: "manager", icon: faUserTie, type: "representative" },
@@ -209,14 +204,8 @@ function About() {
   }));
 
   return (
-    // ✅ Root — w-screen + calc trick: Layout ke max-w-6xl aur px-4 se bahar
-    <div
-      className="w-screen space-y-20 overflow-x-clip md:space-y-28"
-      style={{
-        marginLeft: "calc(50% - 50vw)",
-        marginRight: "calc(50% - 50vw)",
-      }}
-    >
+    // ✅ Simple Responsive Root Div (no horizontal scroll)
+    <div className="w-full space-y-20 overflow-x-hidden md:space-y-28">
       <ScrollProgressButton />
 
       {/* Hero — max-w-6xl */}
@@ -294,10 +283,9 @@ function About() {
         </Reveal>
       </div>
 
-      {/* Mission + How it works: ek hi set of background vectors (Home jaisa) */}
+      {/* Mission + How it works */}
       <div className="relative isolate space-y-20 md:space-y-28">
         <FeatureShapes id="about-a" />
-      {/* Mission + faces — max-w-6xl */}
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2">
         <Reveal>
           <h2 className="font-display text-2xl font-bold md:text-4xl">
@@ -383,10 +371,9 @@ function About() {
         </section>
       </Reveal>
 
-      {/* Everything + Kis ke liye + Usool: ek set of background vectors */}
+      {/* Everything + Kis ke liye + Usool */}
       <div className="relative isolate space-y-20 md:space-y-28">
         <FeatureShapes id="about-b" />
-      {/* Everything on the platform — max-w-6xl */}
       <section className="mx-auto max-w-6xl px-4">
         <Heading
           title={t("about.featuresTitle")}
@@ -411,7 +398,7 @@ function About() {
         </div>
       </section>
 
-      {/* Kis ke liye: teen account types — max-w-6xl */}
+      {/* Kis ke liye: teen account types */}
       <section className="mx-auto max-w-6xl px-4">
         <Heading title={t("about.forTitle")} />
         <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -474,7 +461,7 @@ function About() {
         </div>
       </section>
 
-      {/* Usool — max-w-6xl */}
+      {/* Usool */}
       <section className="mx-auto max-w-6xl px-4">
         <Heading
           title={t("about.valuesTitle")}
@@ -541,7 +528,7 @@ function About() {
         </div>
       </section>
 
-      {/* Aakhri dawat — max-w-6xl */}
+      {/* Aakhri dawat */}
       <Reveal>
         <section className="keep-dark relative isolate mx-auto flex max-w-6xl flex-col items-center gap-7 overflow-hidden rounded-3xl bg-brand-plum p-6 text-center text-white md:p-12">
           <div className={`${glow} -start-16 -top-20 h-72 w-72 bg-brand-violet/35`} />
