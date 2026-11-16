@@ -432,11 +432,7 @@ function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-brand-plum/95 via-brand-plum/50 to-transparent" />
         </div>
 
-        {/* 2 tilted vertical lines (decorative) */}
-        <div className="pointer-events-none absolute inset-0 z-0 hidden overflow-hidden lg:block">
-          <div className="absolute right-[32%] top-0 h-full w-px bg-brand-violet/60 rotate-12 transform origin-top"></div>
-          <div className="absolute right-[28%] top-0 h-full w-px bg-white/40 rotate-12 transform origin-top"></div>
-        </div>
+       
 
         <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-8 px-4 pb-28 pt-20 sm:gap-10 sm:pb-40 sm:pt-24 md:pt-28 lg:grid-cols-2">
           <div className="text-center lg:text-start">
