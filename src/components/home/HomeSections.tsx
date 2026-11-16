@@ -301,8 +301,9 @@ export function HighlightedText1({ i18nKey }: { i18nKey: string }) {
   return <Trans i18nKey={i18nKey} components={{ hl: <span className={HIGHLIGHT1} /> }} />
 }
 
-// Decorative vector shapes behind the "Everything you need to work with creators" section
-function FeatureShapes() {
+// Decorative vector shapes behind a light page section (Home features, About page).
+// id: har jagah alag, taake dots ke <pattern> ki ID ek page pe takraye nahi
+export function FeatureShapes({ id = 'feat' }: { id?: string }) {
   return (
     <div
       aria-hidden="true"
@@ -325,11 +326,11 @@ function FeatureShapes() {
         className="absolute end-2 top-24 hidden h-24 w-24 text-brand-violet/30 sm:block md:h-32 md:w-32"
       >
         <defs>
-          <pattern id="feat-dots-a" width="15" height="15" patternUnits="userSpaceOnUse">
+          <pattern id={`${id}-dots-a`} width="15" height="15" patternUnits="userSpaceOnUse">
             <circle cx="3" cy="3" r="2" fill="currentColor" />
           </pattern>
         </defs>
-        <rect width="120" height="120" fill="url(#feat-dots-a)" />
+        <rect width="120" height="120" fill={`url(#${id}-dots-a)`} />
       </svg>
 
       {/* Soft blob, left middle */}
@@ -389,11 +390,11 @@ function FeatureShapes() {
         className="absolute bottom-24 start-2 hidden h-24 w-24 text-[#FF7A00]/30 sm:block md:h-32 md:w-32"
       >
         <defs>
-          <pattern id="feat-dots-b" width="15" height="15" patternUnits="userSpaceOnUse">
+          <pattern id={`${id}-dots-b`} width="15" height="15" patternUnits="userSpaceOnUse">
             <circle cx="3" cy="3" r="2" fill="currentColor" />
           </pattern>
         </defs>
-        <rect width="120" height="120" fill="url(#feat-dots-b)" />
+        <rect width="120" height="120" fill={`url(#${id}-dots-b)`} />
       </svg>
 
       {/* Rings, bottom-right */}

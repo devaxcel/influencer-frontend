@@ -66,23 +66,15 @@ function SearchBar({
     <form
       onSubmit={handleSubmit}
       role="search"
-      className={`flex w-full gap-2 rounded-2xl transition duration-300 ${
-        focused
-          ? onDark
-            ? "ring-2 ring-white/60"
-            : "ring-2 ring-gray-900/20"
-          : onDark
-            ? "ring-1 ring-white/20"
-            : "ring-1 ring-transparent"
-      }`}
+      className="flex w-full gap-2 rounded-2xl transition duration-300"
       style={{ padding: 0 }}
     >
       <div className="relative min-w-0 flex-1">
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
-          className={`pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-sm transition ${
-            onDark ? "text-white/60" : "text-gray-400"
-          } ${focused ? "scale-110" : ""}`}
+          className={`pointer-events-none absolute start-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 transition ${
+            focused ? "scale-110" : ""
+          }`}
         />
         <input
           type="search"
@@ -92,7 +84,9 @@ function SearchBar({
           onBlur={() => setFocused(false)}
           placeholder={t("site.search.placeholder")}
           aria-label={t("site.search.label")}
-          className={`w-full rounded-2xl border-0 bg-white ps-11 pe-4 text-gray-900 outline-none placeholder:text-gray-400 shadow-sm ${padding}`}
+          className={`w-full rounded-2xl border-0 bg-white ps-11 pe-4 text-gray-900 outline-none placeholder:text-gray-400 shadow-sm transition focus:ring-2 ${
+            onDark ? "focus:ring-white/60" : "focus:ring-brand/30"
+          } ${padding}`}
         />
       </div>
       <button

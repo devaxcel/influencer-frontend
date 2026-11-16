@@ -686,7 +686,6 @@
     "statReach": "Combined reach of top creators",
     "platformsTitle": "See reach across every platform they use",
     "toolkitTitle": "Everything you need to work with creators",
-    
     "toolkitSub": "Search, shortlist, hire and get it in writing, all in one place.",
     "fDiscoverTitle": "Discover the right people in seconds",
     "fDiscoverBody": "Filter by profession, industry, country, language and reach. Every verified profile shows its sources openly.",
@@ -2651,7 +2650,12 @@
     "ctaJoin": "Create a free account",
     "band": "Real reach. Real people. Real agreements.",
     "bandBody": "No guesswork and no screenshots of chats. Everything is checked, written down and signed.",
-    "peopleTitle": "Already on the platform"
+    "peopleTitle": "Already on the platform",
+    "missionImg1": "A verified talent profile with real numbers",
+    "missionImg2": "Reach across Instagram, YouTube and TikTok",
+    "missionImg3": "A signed agreement paid by milestone",
+    "missionImg4": "A campaign with talent applying",
+    "missionSlide": "Show picture {{n}}"
   },
   "photo": {
     "uploaded": "Photo saved",

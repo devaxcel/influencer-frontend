@@ -106,7 +106,7 @@ function RotatingWord({ words }: { words: string[] }) {
 }
 
 // Hero image slider: fixed square box so every picture has the same size, responsive on all screens
-function HeroShowcase({ verifiedLabel, topLabel }: { verifiedLabel: string; topLabel: string }) {
+function HeroShowcase({ topLabel }: { topLabel: string }) {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
 
@@ -136,10 +136,6 @@ function HeroShowcase({ verifiedLabel, topLabel }: { verifiedLabel: string; topL
       ))}
 
       {/* Floating chips */}
-      <div className="absolute start-0 top-[12%] z-20 flex animate-float items-center gap-1.5 rounded-xl bg-white px-2.5 py-1.5 text-[10px] font-semibold text-gray-900 shadow-xl ring-1 ring-gray-200 sm:gap-2 sm:rounded-2xl sm:px-3.5 sm:py-2 sm:text-xs">
-        <FontAwesomeIcon icon={faCircleCheck} className="text-brand-violet" />
-        {verifiedLabel}
-      </div>
       <div
         className="absolute bottom-[14%] end-0 z-20 flex animate-float-slow items-center gap-1.5 rounded-xl bg-white px-2.5 py-1.5 text-[10px] font-semibold text-gray-900 shadow-xl ring-1 ring-gray-200 sm:gap-2 sm:rounded-2xl sm:px-3.5 sm:py-2 sm:text-xs"
         style={{ animationDelay: '-2s' }}
@@ -526,7 +522,6 @@ function Home() {
 
           {/* Image showcase: below text on mobile/tablet, right side on desktop */}
           <HeroShowcase
-            verifiedLabel={d('home.heroVerified', 'Verified creators')}
             topLabel={d('home.heroTop', 'Top rated talent')}
           />
         </div>

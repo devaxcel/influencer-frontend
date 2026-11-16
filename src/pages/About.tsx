@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -31,9 +31,10 @@ import {
 import { peopleQuery } from "../api/queries";
 import {
   CountUp,
-  Photo,
+  FeatureShapes,
   PlatformStrip,
   Reveal,
+  prefersReducedMotion,
 } from "../components/home/HomeSections";
 import ScrollProgressButton from "../components/home/ScrollProgressButton";
 import { useAuth } from "../hooks/useAuth";
@@ -52,6 +53,61 @@ const BAND_IMAGES = [
 );
 
 const FAQ_COUNT = 7;
+
+// Mission ki tasveerein (Home hero jaisi: 1200x1200, transparent), khud badalti rehti hain
+const MISSION_SLIDES = [1, 2, 3, 4].map((n) => ({
+  src: `/images/about-${n}.png`,
+  alt: `about.missionImg${n}`,
+}));
+
+function MissionShowcase() {
+  const { t } = useTranslation();
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused || prefersReducedMotion()) return;
+    const id = window.setInterval(
+      () => setActive((p) => (p + 1) % MISSION_SLIDES.length),
+      3500,
+    );
+    return () => window.clearInterval(id);
+  }, [paused]);
+
+  return (
+    <div
+      className="relative mx-auto aspect-square w-full max-w-[18rem] sm:max-w-sm md:max-w-md"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {MISSION_SLIDES.map((s, i) => (
+        <img
+          key={s.src}
+          src={s.src}
+          alt={t(s.alt)}
+          loading="lazy"
+          onError={(e) => (e.currentTarget.style.display = "none")}
+          className={`absolute inset-0 h-full w-full object-contain transition-all duration-1000 ease-out ${
+            i === active ? "scale-100 opacity-100" : "scale-95 opacity-0"
+          }`}
+        />
+      ))}
+      <div className="absolute inset-x-0 -bottom-5 z-20 flex justify-center gap-2">
+        {MISSION_SLIDES.map((s, i) => (
+          <button
+            key={s.src}
+            type="button"
+            aria-label={t("about.missionSlide", { n: i + 1 })}
+            onClick={() => setActive(i)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              i === active ? "w-7 bg-brand-violet" : "w-2 bg-gray-300 hover:bg-gray-400"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 const glow = "absolute -z-10 animate-drift rounded-full blur-3xl";
 
 function Heading({ title, sub }: { title: string; sub?: string }) {
@@ -75,7 +131,6 @@ function About() {
   const { data: peopleData } = useQuery(
     peopleQuery(new URLSearchParams({ limit: "12", sort: "followers" })),
   );
-  const faces = peopleData?.people ?? [];
 
   const stats: { icon: IconDefinition; value: number; label: string }[] = [
     {
@@ -173,8 +228,7 @@ function About() {
           onError={(e) => (e.currentTarget.style.display = "none")}
           className="absolute inset-0 -z-10 h-full w-full animate-[fade_1.2s_ease-out_both] object-cover"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-gray-950/95 via-gray-950/75 to-gray-950/25 rtl:bg-gradient-to-l" />
-        <div className={`${glow} -start-16 -top-20 h-72 w-72 bg-brand-violet/35`} />
+        <div className="absolute inset-0 -z-10 bg-gray-950/75" />
         <div className="max-w-2xl">
           <p className="animate-word text-xs font-medium tracking-wider text-white/60 uppercase">
             {t("about.eyebrow")}
@@ -240,6 +294,9 @@ function About() {
         </Reveal>
       </div>
 
+      {/* Mission + How it works: ek hi set of background vectors (Home jaisa) */}
+      <div className="relative isolate space-y-20 md:space-y-28">
+        <FeatureShapes id="about-a" />
       {/* Mission + faces — max-w-6xl */}
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2">
         <Reveal>
@@ -253,31 +310,17 @@ function About() {
             {t("about.mission2")}
           </p>
         </Reveal>
-        {faces.length >= 3 && (
-          <Reveal delay={150} className="mx-auto w-full max-w-md">
-            <div className="grid grid-cols-3 gap-3 sm:gap-4">
-              {faces.slice(0, 3).map((p, i) => (
-                <Link
-                  key={p._id}
-                  to={`/people/${p.slug}`}
-                  style={{ animationDelay: `${i * -2.2}s` }}
-                  className={`relative block animate-float overflow-hidden rounded-3xl shadow-2xl ring-4 ring-white ${["mt-8 aspect-[3/4]", "", "mt-12 aspect-[3/4]"][i]
-                    }`}
-                >
-                  <Photo person={p} className="absolute inset-0 h-full w-full" />
-                </Link>
-              ))}
-            </div>
-            <div className="mx-auto mt-8 w-fit rounded-2xl bg-brand px-6 py-3 text-center text-on-brand shadow-xl">
-              <p className="font-display text-2xl leading-none font-extrabold">
-                <CountUp value={peopleData?.meta.total ?? 0} />
-              </p>
-              <p className="mt-1 text-xs text-white/70">
-                {t("home.statProfiles")}
-              </p>
-            </div>
-          </Reveal>
-        )}
+        <Reveal delay={150} className="mx-auto w-full max-w-md">
+          <MissionShowcase />
+          <div className="mx-auto mt-10 w-fit rounded-2xl bg-brand px-6 py-3 text-center text-on-brand shadow-xl">
+            <p className="font-display text-2xl leading-none font-extrabold">
+              <CountUp value={peopleData?.meta.total ?? 0} />
+            </p>
+            <p className="mt-1 text-xs text-white/70">
+              {t("home.statProfiles")}
+            </p>
+          </div>
+        </Reveal>
       </section>
 
       {/* How it works — max-w-6xl */}
@@ -306,6 +349,8 @@ function About() {
           ))}
         </ol>
       </section>
+
+      </div>
 
       {/* ✅ Statement band — FULL WIDTH (no max-w, no px-4) */}
       <Reveal>
@@ -338,6 +383,9 @@ function About() {
         </section>
       </Reveal>
 
+      {/* Everything + Kis ke liye + Usool: ek set of background vectors */}
+      <div className="relative isolate space-y-20 md:space-y-28">
+        <FeatureShapes id="about-b" />
       {/* Everything on the platform — max-w-6xl */}
       <section className="mx-auto max-w-6xl px-4">
         <Heading
@@ -452,6 +500,8 @@ function About() {
           ))}
         </ul>
       </section>
+
+      </div>
 
       {/* PlatformStrip — max-w-6xl */}
       <div className="mx-auto max-w-6xl px-4">
