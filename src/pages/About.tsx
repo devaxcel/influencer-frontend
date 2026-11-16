@@ -209,14 +209,10 @@ function About() {
   }));
 
   return (
-    // ✅ Root — w-screen + calc trick: Layout ke max-w-6xl aur px-4 se bahar
-    <div
-      className="w-screen space-y-20 overflow-x-clip md:space-y-28"
-      style={{
-        marginLeft: "calc(50% - 50vw)",
-        marginRight: "calc(50% - 50vw)",
-      }}
-    >
+    // Root: Layout About ko pehle se poori chaurai deta hai, is liye w-full (w-screen / 100vw
+    // mein scrollbar bhi gina jata hai aur page side pe scroll hone lagta tha).
+    // overflow-x-clip: background vectors aur glow page se bahar na niklen
+    <div className="w-full space-y-20 overflow-x-clip md:space-y-28">
       <ScrollProgressButton />
 
       {/* Hero — max-w-6xl */}
