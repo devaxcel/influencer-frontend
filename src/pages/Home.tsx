@@ -522,7 +522,7 @@ function Home() {
             {/* ✅ Light mode: White curve */}
             <path
               d="M0,100 C240,180 480,20 720,100 C960,180 1200,40 1440,100 L1440,200 L0,200 Z"
-              className="fill-[#ffffff] dark:fill-[#121212]"
+              className="fill-[#ffffff] dark:fill-[#171513]"
             />
           </svg>
         </div>
