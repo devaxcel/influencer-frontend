@@ -1,8 +1,8 @@
-# Influence Platform
+# Influnexa
 
 **Live website:** https://influencer-frontend-kappa.vercel.app
 
-Influence Platform is a website where **businesses find, hire and work with talent**: creators, journalists, speakers, experts and public figures. It keeps everything in one place, from the first search to a signed agreement and a final review.
+Influnexa is a website where **businesses find, hire and work with talent**: creators, journalists, speakers, experts and public figures. It keeps everything in one place, from the first search to a signed agreement and a final review.
 
 This guide explains **every page, every tab and every button** in plain language. You do not need any technical knowledge to read it.
 
@@ -46,7 +46,7 @@ Log in at https://influencer-frontend-kappa.vercel.app/login with any of these t
 
 Finding the right person for a campaign, event or story is usually slow. Follower numbers are scattered across apps, you never know who is real, and deals happen over chats with nothing in writing.
 
-Influence Platform fixes this in four steps:
+Influnexa fixes this in four steps:
 
 | Step | What happens |
 |---|---|
@@ -78,7 +78,7 @@ When you sign up you choose one of three account types. The fourth (Admin) is fo
 
 The top bar is a floating, rounded bar that stays at the top of every page while you scroll.
 
-**On the left:** the name **Influence Platform**. Click it to go back to the home page.
+**On the left:** the name **Influnexa**. Click it to go back to the home page.
 
 **In the middle (on large screens):**
 
@@ -574,7 +574,7 @@ Open the profile and use **Report an error or request removal**.
 Create one from your talent dashboard. It goes live after your official account is verified.
 
 **How do I contact the team?**
-Email **hello@influenceplatform.com** or use **Contact us** in the footer. The team replies within 1–2 working days.
+Email **info@influnexa.com** or use **Contact us** in the footer. The team replies within 1–2 working days.
 
 ---
 

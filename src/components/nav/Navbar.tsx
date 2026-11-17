@@ -84,16 +84,9 @@ function Navbar() {
           aria-label={PLATFORM_NAME}
           className="flex shrink-0 items-center gap-2.5 xl:justify-self-start"
         >
-          {/* Favicon wala logo + do line mein naam */}
-          <img src="/logo-starlight.png?v=1" alt="" className="h-9 w-9 shrink-0 rounded-xl  sm:h-10 sm:w-10" />
-          <span className="flex flex-col" aria-hidden="true">
-            <span className="font-display text-[17px] font-bold leading-[1.05] tracking-tight text-gray-950 sm:text-xl">
-              {PLATFORM_NAME.split(' ')[0]}
-            </span>
-            <span className="text-[17px] font-normal leading-[1.05] tracking-tight text-gray-500 sm:text-xl">
-              {PLATFORM_NAME.split(' ').slice(1).join(' ')}
-            </span>
-          </span>
+          {/* Influnexa logo: light mode mein gehra naam, dark mode mein safed */}
+          <img src="/brand/influnexa-logo.png?v=1" alt="" className="h-8 w-auto shrink-0 sm:h-9 dark:hidden" />
+          <img src="/brand/influnexa-logo-light.png?v=1" alt="" className="hidden h-8 w-auto shrink-0 sm:h-9 dark:block" />
         </TopLink>
 
         {/* Desktop: beech wale links */}

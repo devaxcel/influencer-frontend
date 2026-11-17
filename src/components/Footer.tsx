@@ -188,8 +188,8 @@ function Footer() {
         <div className="grid gap-10 lg:grid-cols-12">
           {/* Brand + paigham + social + newsletter */}
           <div className="lg:col-span-4">
-            <TopLink to="/" className="text-2xl font-bold text-white">
-              {PLATFORM_NAME}
+            <TopLink to="/" className="inline-block">
+              <img src="/brand/influnexa-logo-light.png?v=1" alt={PLATFORM_NAME} className="h-9 w-auto" />
             </TopLink>
             <p className="mt-3 max-w-md text-sm leading-relaxed text-gray-400">
               {t('footer.tagline')}
