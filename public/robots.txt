@@ -1,0 +1,51 @@
+# Influnexa: https://influnexa.com
+# Public pages (talent, campaigns, businesses, managers, about, legal) are open to
+# search engines and AI agents. Account areas are private.
+# Agent-friendly versions: https://influnexa.com/llms.txt and any page + ".md"
+# (or send "Accept: text/markdown").
+
+User-agent: *
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /settings
+Disallow: /notifications
+Disallow: /inbox
+Disallow: /agreements
+Disallow: /shortlists
+Disallow: /talents
+Disallow: /my-profile
+Disallow: /api/
+
+# AI crawlers and AI assistants: allowed on the same public pages
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: anthropic-ai
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+User-agent: meta-externalagent
+User-agent: CCBot
+User-agent: cohere-ai
+User-agent: DuckAssistBot
+User-agent: MistralAI-User
+Allow: /
+Allow: /llms.txt
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /settings
+Disallow: /notifications
+Disallow: /inbox
+Disallow: /agreements
+Disallow: /shortlists
+Disallow: /talents
+Disallow: /my-profile
+Disallow: /api/
+
+Sitemap: https://influnexa.com/sitemap.xml

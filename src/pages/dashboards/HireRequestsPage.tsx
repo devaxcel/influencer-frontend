@@ -8,12 +8,12 @@ function HireRequestsPage() {
   return (
     <div className="mx-auto max-w-4xl">
       {user?.role === 'talent' ? (
-        <IncomingHireRequests />
+        <IncomingHireRequests asPage />
       ) : user?.role === 'representative' ? (
         // Manager: apne saare talents ki requests ek inbox mein
-        <IncomingHireRequests manager />
+        <IncomingHireRequests manager asPage />
       ) : (
-        <SentHireRequests />
+        <SentHireRequests asPage />
       )}
     </div>
   )

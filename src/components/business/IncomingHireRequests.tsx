@@ -16,7 +16,14 @@ type Answer = { hire: HireRequest; action: 'accept' | 'decline' }
 
 // Talent dashboard: verified businesses ki aayi hui hire requests. Accept ya decline.
 // Manager: apne saare talents ki (manager=true), ya ek talent ki (personId)
-function IncomingHireRequests({ personId, manager = false }: { personId?: string; manager?: boolean } = {}) {
+// asPage: apne page pe heading h1 (aur groups h2), dashboard ke andar h2 / h3
+function IncomingHireRequests({
+  personId,
+  manager = false,
+  asPage = false,
+}: { personId?: string; manager?: boolean; asPage?: boolean } = {}) {
+  const Title = asPage ? 'h1' : 'h2'
+  const GroupTitle = asPage ? 'h2' : 'h3'
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const { data: all, isLoading } = useQuery(incomingHiresQuery)
@@ -48,14 +55,14 @@ function IncomingHireRequests({ personId, manager = false }: { personId?: string
 
   return (
     <section id="hire-requests">
-      <h2 className="text-lg font-semibold">
+      <Title className="text-lg font-semibold">
         {t('hire.incomingTitle')}
         {pending > 0 && (
           <span className="ms-2 rounded-full bg-red-600 px-2 py-0.5 text-xs font-semibold text-white">
             {pending}
           </span>
         )}
-      </h2>
+      </Title>
       <p className="text-sm text-gray-500">
         {manager ? t('manager.hiresSubtitle') : t('hire.incomingSubtitle')}
       </p>
@@ -74,9 +81,9 @@ function IncomingHireRequests({ personId, manager = false }: { personId?: string
         (group) =>
           group.items.length > 0 && (
             <div key={group.key} className="mt-4">
-              <h3 className="text-sm font-medium text-gray-500">
+              <GroupTitle className="text-sm font-medium text-gray-500">
                 {group.key === 'waiting' ? t('hire.needsReply') : t('hire.earlier')}
-              </h3>
+              </GroupTitle>
               <ul className="mt-2 space-y-3">
                 {group.items.map((hire) => (
                   <HireRequestCard key={hire._id} hire={hire} who="business" showTalent={manager && !personId}>

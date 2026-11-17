@@ -29,6 +29,7 @@ import { campaignsQuery } from '../../api/queries'
 import type { PersonSummary } from '../../types/person'
 import { formatCount, initials } from '../../utils/format'
 import { money } from '../../utils/price'
+import { faqJsonLd, useJsonLd } from '../../utils/jsonLd'
 
 /* ---------- shared motion helpers ---------- */
 
@@ -728,6 +729,8 @@ export function Faq() {
     [d('home.q4', 'Can a manager work for a creator?'), d('home.a4', 'Yes. A verified manager can request to represent a creator, and the creator chooses what the manager may do.')],
     [d('home.q5', 'My profile is already listed. What now?'), d('home.a5', 'Find it, press Claim and follow the steps. Once approved it shows the verified badge and you control the details.')],
   ]
+  const { i18n } = useTranslation()
+  useJsonLd('ld-faq-home', faqJsonLd(rows.map(([q, a]) => ({ q, a })), i18n.language))
   return (
     <section className="mx-auto max-w-3xl">
       <Title>{d('home.faqTitle', 'Questions, answered')}</Title>

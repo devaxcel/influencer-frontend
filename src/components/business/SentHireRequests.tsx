@@ -13,7 +13,9 @@ import type { HireRequest } from '../../types/business'
 import { getApiError } from '../../utils/apiError'
 
 // Business dashboard: bheji hui hire requests aur un ki halat
-function SentHireRequests() {
+// asPage: apne page pe heading h1, dashboard ke andar h2
+function SentHireRequests({ asPage = false }: { asPage?: boolean } = {}) {
+  const Title = asPage ? 'h1' : 'h2'
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const { data: hires, isLoading } = useQuery(myHiresQuery)
@@ -34,7 +36,7 @@ function SentHireRequests() {
 
   return (
     <section>
-      <h2 className="text-lg font-semibold">{t('hire.sentTitle')}</h2>
+      <Title className="text-lg font-semibold">{t('hire.sentTitle')}</Title>
       <p className="text-sm text-gray-500">{t('hire.sentSubtitle')}</p>
 
       {isLoading && <div className="mt-4 h-24 animate-pulse rounded-2xl bg-white shadow-sm" />}
@@ -46,7 +48,7 @@ function SentHireRequests() {
       {!!hires?.length && (
         <ul className="mt-4 space-y-3">
           {hires.map((hire) => (
-            <HireRequestCard key={hire._id} hire={hire} who="talent">
+            <HireRequestCard key={hire._id} hire={hire} who="talent" titleAs={asPage ? 'h2' : 'h3'}>
               {hire.status === 'pending' && (
                 <button
                   type="button"

@@ -18,6 +18,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&display=swap" rel="stylesheet" />
     <title>Influnexa</title>
+    <link rel="alternate" type="text/markdown" href="/index.md" title="Influnexa (markdown)" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <!-- Search engines aur AI agents ke liye: kaun hain, kya dete hain, kaise book karein -->
+    <script type="application/ld+json" id="ld-site">{"@context":"https://schema.org","@graph":[{"@type":["Organization","OnlineBusiness"],"@id":"https://influnexa.com/#organization","name":"Influnexa","url":"https://influnexa.com/","logo":"https://influnexa.com/brand/influnexa-mark.png","image":"https://influnexa.com/brand/influnexa-logo.png","description":"Influnexa is a marketplace where businesses find, check and hire creators, journalists, speakers, experts and public figures, with verified profiles, real reach per platform, open campaigns and signed digital agreements.","email":"info@influnexa.com","knowsLanguage":["en","ur","ar"],"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"],"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"info@influnexa.com","availableLanguage":["English","Urdu","Arabic"],"hoursAvailable":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}},{"@type":"ContactPoint","contactType":"reservations","url":"https://influnexa.com/search","availableLanguage":["English","Urdu","Arabic"],"hoursAvailable":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Influnexa services (free)","itemListElement":[{"@type":"Offer","price":"0","priceCurrency":"PKR","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Talent discovery","description":"Search creators, journalists, speakers and experts by profession, industry, topic, country, city, language and followers.","provider":{"@id":"https://influnexa.com/#organization"},"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"]}},{"@type":"Offer","price":"0","priceCurrency":"PKR","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Verified profiles","description":"Talent claim their profile and prove it with a one-time code sent to an official account.","provider":{"@id":"https://influnexa.com/#organization"},"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"]}},{"@type":"Offer","price":"0","priceCurrency":"PKR","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Hire requests and digital agreements","description":"Verified businesses send hire requests; both sides sign an agreement with milestones.","provider":{"@id":"https://influnexa.com/#organization"},"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"]}},{"@type":"Offer","price":"0","priceCurrency":"PKR","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Open campaigns","description":"Verified businesses post a brief and budget; talent apply with a pitch.","provider":{"@id":"https://influnexa.com/#organization"},"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"]}}]},"potentialAction":[{"@type":"CommunicateAction","name":"Ask about a talent","target":{"@type":"EntryPoint","urlTemplate":"https://influnexa.com/api/inquiries","httpMethod":"POST","contentType":"application/json"}},{"@type":"ReserveAction","name":"Hire talent","target":{"@type":"EntryPoint","urlTemplate":"https://influnexa.com/search","actionPlatform":["https://schema.org/DesktopWebPlatform","https://schema.org/MobileWebPlatform"]}}]},{"@type":"WebSite","@id":"https://influnexa.com/#website","url":"https://influnexa.com/","name":"Influnexa","inLanguage":["en","ur","ar"],"publisher":{"@id":"https://influnexa.com/#organization"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://influnexa.com/search?q={search_term_string}"},"query-input":"required name=search_term_string"}}]}</script>
+    <script type="application/ld+json" id="ld-faq-home">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is a profile verified?","acceptedAnswer":{"@type":"Answer","text":"The person claims the profile, we send a 6-digit code to one of their official accounts, and an admin approves it once they enter the code."}},{"@type":"Question","name":"Is it free to join?","acceptedAnswer":{"@type":"Answer","text":"Creating an account and a profile is free."}},{"@type":"Question","name":"How does hiring work?","acceptedAnswer":{"@type":"Answer","text":"A verified business sends a hire request. When the talent accepts, both sides see each other's contact details and can draft an agreement."}},{"@type":"Question","name":"Can a manager work for a creator?","acceptedAnswer":{"@type":"Answer","text":"Yes. A verified manager can request to represent a creator, and the creator chooses what the manager may do."}},{"@type":"Question","name":"My profile is already listed. What now?","acceptedAnswer":{"@type":"Answer","text":"Find it, press Claim and follow the steps. Once approved it shows the verified badge and you control the details."}}]}</script>
     <script>
       // Page dikhne se pehle dark mode lagao, taake safed flash na aaye
       try {
@@ -28,7 +33,56 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Bina JavaScript wale agents ke liye page ka khaka. React load hote hi isay hata deta hai. -->
+      <div style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0">
+        <header>
+          <a href="/">Influnexa</a>
+          <nav aria-label="Main">
+            <a href="/search">Talent</a> <a href="/campaigns">Campaigns</a> <a href="/businesses">Businesses</a>
+            <a href="/managers">Managers</a> <a href="/about">About</a> <a href="/login">Log in</a> <a href="/register">Sign up</a>
+          </nav>
+        </header>
+        <main>
+          <h1>Influnexa: find, verify and hire creators, journalists and public figures</h1>
+          <p>Find journalists, creators, speakers, experts and public figures. See their real reach per platform, then connect or hire. Verified profiles, open campaigns and signed agreements in one place, in English, Urdu and Arabic.</p>
+          <section>
+            <h2>What you can do</h2>
+            <ul>
+              <li><a href="/search">Discover talent</a> by name, profession, industry, topic, country, city, language and followers.</li>
+              <li>Shortlist and compare up to four people side by side.</li>
+              <li><a href="/campaigns">Post a campaign</a> and let verified talent apply with a pitch.</li>
+              <li>Sign a digital agreement with milestones; deliveries and approvals are tracked.</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Pricing</h2>
+            <p>Influnexa is free right now: search, accounts, claiming a profile, shortlists, hire requests, campaigns and agreements. Talent set their own prices per service (fixed, a range, or price on request), shown on each profile.</p>
+          </section>
+          <section>
+            <h2>How to book</h2>
+            <p>Open a talent profile and press Contact / Hire, or send a question without an account. Inquiries are open 24/7 and the team replies by email within 1–2 working days.</p>
+          </section>
+          <section>
+            <h2>Questions, answered</h2>
+          <h3>How is a profile verified?</h3>
+          <p>The person claims the profile, we send a 6-digit code to one of their official accounts, and an admin approves it once they enter the code.</p>
+          <h3>Is it free to join?</h3>
+          <p>Creating an account and a profile is free.</p>
+          <h3>How does hiring work?</h3>
+          <p>A verified business sends a hire request. When the talent accepts, both sides see each other&#x27;s contact details and can draft an agreement.</p>
+          <h3>Can a manager work for a creator?</h3>
+          <p>Yes. A verified manager can request to represent a creator, and the creator chooses what the manager may do.</p>
+          <h3>My profile is already listed. What now?</h3>
+          <p>Find it, press Claim and follow the steps. Once approved it shows the verified badge and you control the details.</p>
+          </section>
+        </main>
+        <footer>
+          <p>Contact: <a href="mailto:info@influnexa.com">info@influnexa.com</a></p>
+          <p><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/llms.txt">llms.txt</a> · <a href="/index.md">Markdown</a> · <a href="/sitemap.xml">Sitemap</a></p>
+        </footer>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

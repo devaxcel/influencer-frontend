@@ -10,6 +10,10 @@ import './i18n'
 import App from './App.tsx'
 import LanguageRoot from './components/LanguageRoot'
 import AppToaster from './components/AppToaster'
+import { removeStaticPageJsonLd } from './utils/jsonLd'
+
+// index.html ka home FAQ sirf bina-JS agents ke liye hai; har page apna khud lagata hai
+removeStaticPageJsonLd()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

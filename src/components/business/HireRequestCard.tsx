@@ -142,12 +142,15 @@ function HireRequestCard({
   hire,
   who,
   showTalent = false,
+  titleAs: TitleTag = 'h3',
   children,
 }: {
   hire: HireRequest
   who: 'talent' | 'business'
   // Manager ke inbox mein: kis talent ke liye aayi
   showTalent?: boolean
+  // Heading ka level (page ki headings ke hisaab se, koi level skip na ho)
+  titleAs?: 'h2' | 'h3'
   children?: ReactNode
 }) {
   const { t, i18n } = useTranslation()
@@ -174,7 +177,7 @@ function HireRequestCard({
         <div className="min-w-0 w-full sm:flex-1">
           {/* Title + status pill: mobile pe center, sm+ left */}
           <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-            <h3 className="text-sm font-semibold sm:text-base">{hire.title}</h3>
+            <TitleTag className="text-sm font-semibold sm:text-base">{hire.title}</TitleTag>
             <StatusPill status={hire.status} label={t(`hireStatus.${hire.status}`)} />
           </div>
 

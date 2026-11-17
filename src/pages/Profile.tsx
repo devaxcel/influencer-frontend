@@ -33,6 +33,7 @@ import PhotoLightbox from '../components/profile/PhotoLightbox'
 import { PLATFORM_ICONS, PLATFORM_LABELS, STATUS_LABELS } from '../constants/people'
 import type { SocialPlatform, TaxonomyItem } from '../types/person'
 import { countryName, formatCount, initials, languageName } from '../utils/format'
+import { profileJsonLd, useJsonLd } from '../utils/jsonLd'
 
 // Har platform ka apna rang (icon ki tile ke liye)
 const PLATFORM_TONES: Partial<Record<SocialPlatform, string>> = {
@@ -104,6 +105,7 @@ function Profile() {
   const [photoFailed, setPhotoFailed] = useState(false)
 
   const { data: person, isLoading, error } = useQuery({ ...personQuery(slug), retry: false })
+  useJsonLd('ld-page', person ? profileJsonLd(person, i18n.language) : null)
 
   if (isLoading) return <ProfileSkeleton />
 

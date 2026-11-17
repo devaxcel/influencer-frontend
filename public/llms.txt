@@ -1,0 +1,58 @@
+# Influnexa
+
+> Influnexa is a marketplace where businesses find, check and hire creators, journalists, speakers, experts and public figures. Profiles show real reach per platform and their sources; claimed profiles are verified with a code; hiring happens through hire requests, open campaigns and signed digital agreements with milestones. The site works in English, Urdu and Arabic and is built for Pakistan and the Gulf.
+
+- Website: https://influnexa.com
+- Contact: info@influnexa.com (we reply within 1–2 working days)
+- Online 24/7: search, inquiries, hire requests and agreements can be sent at any time.
+- Every public page has a markdown version: add `.md` to its link (for example https://influnexa.com/people/<slug>.md) or request the page with `Accept: text/markdown`.
+
+## Key pages
+
+- [Home](https://influnexa.com/index.md): what Influnexa is, who it is for, pricing and how it works
+- [Talent](https://influnexa.com/search.md): public profiles with location, followers and verification
+- [Open campaigns](https://influnexa.com/campaigns.md): briefs from businesses with budget, deadline and how to apply
+- [About](https://influnexa.com/about.md): mission, how it works and frequently asked questions
+- [Businesses](https://influnexa.com/businesses) and [Managers](https://influnexa.com/managers): verified organizations and talent managers
+- [Sitemap](https://influnexa.com/sitemap.xml)
+
+## Who it is for
+
+- **Businesses and organizations** (brands, agencies, NGOs, universities, event organizers, government bodies): search talent, shortlist and compare, send hire requests, post open campaigns, sign agreements.
+- **Talent** (creators, journalists, speakers, experts, public figures): claim or create a profile, list services with prices, set availability, apply to campaigns, build a star rating from completed work.
+- **Managers and agents**: get verified, represent talents with their consent, answer hire requests for every talent in one inbox.
+
+## Services
+
+- **Talent discovery**: search by name, profession, industry, topic, country, city, language and followers. Free.
+- **Verified profiles**: a person claims a profile; a one-time code sent to one of their official accounts proves it. Free.
+- **Hire requests**: a verified business sends a brief, budget and start date to a talent. Free.
+- **Open campaigns**: a verified business posts a brief and budget; talents apply with a pitch. Free.
+- **Digital agreements**: terms, milestones and amounts, signed by both sides with an email code; deliveries and approvals are tracked. Free.
+- **Reviews**: only the two sides of a completed agreement can leave a review.
+
+## Pricing
+
+- Using Influnexa is **free** right now: search, accounts, claiming a profile, shortlists, hire requests, campaigns and agreements. No trial and no card needed. Paid plans, if added later, will be announced first.
+- Each talent sets their own prices per service, shown on their profile (and in its `.md` version) in one of three forms:
+  - fixed: for example `PKR 50,000 per post`
+  - range: for example `USD 500 to USD 900 per event`
+  - `Price on request`
+- Currencies: PKR, USD, AED, SAR, GBP, EUR. Units: per project, event, post, hour or day.
+- Payment for the work is arranged between the business and the talent; Influnexa keeps the signed agreement, deliveries and approvals.
+
+## How to book
+
+1. **Ask about a talent (no account, any time):** `POST https://influnexa.com/api/inquiries` with JSON:
+   ```json
+   { "personId": "<profile id from the profile .md>", "name": "Your name", "email": "you@example.com", "phone": "optional", "message": "At least 10 characters" }
+   ```
+   Answer `201` means it was received; the Influnexa team replies by email. Limit: 5 per hour per IP. Only public profiles accept inquiries.
+2. **Hire:** create a business account at https://influnexa.com/register, get verified, open the talent's profile and press **Contact / Hire**. The talent (or their manager) accepts or declines; then both sides sign a digital agreement with milestones.
+3. **Campaign:** a verified business posts a campaign at https://influnexa.com/dashboard/campaigns/new; talents apply from https://influnexa.com/campaigns.
+
+## Policies
+
+- [Privacy policy](https://influnexa.com/privacy)
+- [Terms of service](https://influnexa.com/terms)
+- To report a wrong profile or ask for removal, open the profile and use "Report an error or request removal", or email info@influnexa.com.

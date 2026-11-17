@@ -37,6 +37,7 @@ import {
   prefersReducedMotion,
 } from "../components/home/HomeSections";
 import ScrollProgressButton from "../components/home/ScrollProgressButton";
+import { faqJsonLd, useJsonLd } from "../utils/jsonLd";
 import { useAuth } from "../hooks/useAuth";
 import { useTaxonomy } from "../hooks/useTaxonomy";
 // import type { PersonSummary } from "../types/person";
@@ -121,7 +122,7 @@ function Heading({ title, sub }: { title: string; sub?: string }) {
 
 // About: platform kya hai, kaise chalta hai, kis ke liye hai aur is mein kya kya hai
 function About() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const d = (key: string, defaultValue: string) => t(key, { defaultValue });
   const { user } = useAuth();
   const [bandIndex, setBandIndex] = useState(0);
@@ -207,6 +208,7 @@ function About() {
     q: t(`about.faq${i + 1}Q`),
     a: t(`about.faq${i + 1}A`),
   }));
+  useJsonLd("ld-faq-about", faqJsonLd(faqs, i18n.language));
 
   return (
     // Root: Layout About ko pehle se poori chaurai deta hai, is liye w-full (w-screen / 100vw
