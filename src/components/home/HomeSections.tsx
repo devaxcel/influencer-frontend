@@ -587,6 +587,11 @@ export function OpenCampaigns() {
   const reduced = prefersReducedMotion()
   if (items.length === 0) return null
 
+  // ✅ Cards ko repeat karo taake strip poori screen ko dhak le aur loop seamless ho
+  // Kam se kam 4 set (24 cards) use kar rahe hain taake screen kabhi khali na ho
+  const REPEAT_COUNT = 4
+  const loopItems = Array.from({ length: REPEAT_COUNT }).flatMap(() => items)
+
   return (
     <section className="w-full">
       {/* ✅ Centered title */}
@@ -616,16 +621,23 @@ export function OpenCampaigns() {
             willChange: 'transform',
           }}
         >
-          {/* Original cards */}
-          {items.map((c, i) => (
-            <CampaignCard key={c._id} campaign={c} index={i} t={t} d={d} i18n={i18n} />
+          {/* ✅ Loop Items (Original + Duplicates merged into one long strip) */}
+          {loopItems.map((c, i) => (
+            <CampaignCard 
+              key={`${c._id}-${i}`} 
+              campaign={c} 
+              index={i} 
+              t={t} 
+              d={d} 
+              i18n={i18n} 
+            />
           ))}
-
-          {/* ✅ Duplicate cards — aria-hidden, seamless loop ke liye */}
+          
+          {/* ✅ Ek aur set add kiya taake -50% translate hone par gap na aaye */}
           <div aria-hidden="true" className="contents">
-            {items.map((c, i) => (
+            {loopItems.map((c, i) => (
               <CampaignCard
-                key={`dup-${c._id}`}
+                key={`dup-${c._id}-${i}`}
                 campaign={c}
                 index={i}
                 t={t}
