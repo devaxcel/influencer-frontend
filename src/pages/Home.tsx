@@ -97,7 +97,7 @@ function RotatingWord({ words }: { words: string[] }) {
   )
 }
 
-function HeroShowcase({ topLabel }: { topLabel: string }) {
+function HeroShowcase() {
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
 
@@ -125,14 +125,6 @@ function HeroShowcase({ topLabel }: { topLabel: string }) {
           }`}
         />
       ))}
-
-      <div
-        className="absolute bottom-[14%] end-0 z-20 flex animate-float-slow items-center gap-1.5 rounded-xl bg-white px-2.5 py-1.5 text-[10px] font-semibold text-gray-900 shadow-xl ring-1 ring-gray-200 sm:gap-2 sm:rounded-2xl sm:px-3.5 sm:py-2 sm:text-xs"
-        style={{ animationDelay: '-2s' }}
-      >
-        <FontAwesomeIcon icon={faStar} className="text-[#FF7A00]" />
-        {topLabel}
-      </div>
 
       <div className="absolute inset-x-0 -bottom-5 z-20 flex justify-center gap-2">
         {HERO_SLIDES.map((s, i) => (
@@ -399,7 +391,7 @@ function Home() {
   return (
     <div className="home-page overflow-x-hidden pb-16">
       <ScrollProgressButton />
-      
+
       {/* Hero */}
       <section
         aria-label={t('home.heroLabel')}
@@ -431,8 +423,6 @@ function Home() {
 
           <div className="absolute inset-0 bg-gradient-to-t from-brand-plum/95 via-brand-plum/50 to-transparent" />
         </div>
-
-       
 
         <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-8 px-4 pb-28 pt-20 sm:gap-10 sm:pb-40 sm:pt-24 md:pt-28 lg:grid-cols-2">
           <div className="text-center lg:text-start">
@@ -496,13 +486,10 @@ function Home() {
             </div>
           </div>
 
-          <HeroShowcase
-            topLabel={d('home.heroTop', 'Top rated talent')}
-          />
+          <HeroShowcase />
         </div>
 
-        {/* ✅ Fix: Removed mask, added SVG curve with purple top border and no gap */}
-               {/* ✅ Wavy Curve — Light mode white, Dark mode dark */}
+        {/* Wavy curve: light mode white, dark mode dark */}
         <div className="pointer-events-none absolute inset-x-0 -bottom-1 z-10 w-full translate-y-[1px]">
           <svg
             viewBox="0 0 1440 200"
@@ -510,7 +497,6 @@ function Home() {
             className="h-24 w-full sm:h-36 md:h-48 lg:h-56"
             aria-hidden="true"
           >
-            {/* Purple top border */}
             <path
               d="M0,100 C240,180 480,20 720,100 C960,180 1200,40 1440,100"
               fill="none"
@@ -518,8 +504,6 @@ function Home() {
               strokeWidth="6"
               strokeLinecap="round"
             />
-            
-            {/* ✅ Light mode: White curve */}
             <path
               d="M0,100 C240,180 480,20 720,100 C960,180 1200,40 1440,100 L1440,200 L0,200 Z"
               className="fill-[#ffffff] dark:fill-[#171513]"
