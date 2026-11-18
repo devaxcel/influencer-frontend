@@ -98,6 +98,7 @@ function RotatingWord({ words }: { words: string[] }) {
 }
 
 function HeroShowcase() {
+  const { t } = useTranslation()
   const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
 
@@ -126,6 +127,14 @@ function HeroShowcase() {
         />
       ))}
 
+      <div
+        className="absolute bottom-[14%] end-0 z-20 flex animate-float-slow items-center gap-1.5 rounded-xl bg-white px-2.5 py-1.5 text-[10px] font-semibold text-gray-900 shadow-xl ring-1 ring-gray-200 sm:gap-2 sm:rounded-2xl sm:px-3.5 sm:py-2 sm:text-xs"
+        style={{ animationDelay: '-2s' }}
+      >
+        <FontAwesomeIcon icon={faStar} className="text-[#FF7A00]" />
+        {t('home.topRated', { defaultValue: 'Top rated' })}
+      </div>
+
       <div className="absolute inset-x-0 -bottom-5 z-20 flex justify-center gap-2">
         {HERO_SLIDES.map((s, i) => (
           <button
@@ -142,7 +151,6 @@ function HeroShowcase() {
     </div>
   )
 }
-
 function RoleShapes() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
