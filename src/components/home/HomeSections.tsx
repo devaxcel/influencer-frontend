@@ -587,21 +587,19 @@ export function OpenCampaigns() {
   const reduced = prefersReducedMotion()
   if (items.length === 0) return null
 
-  // ✅ Cards ko repeat karo taake strip poori screen ko dhak le aur loop seamless ho
-  // Kam se kam 4 set (24 cards) use kar rahe hain taake screen kabhi khali na ho
-  const REPEAT_COUNT = 4
-  const loopItems = Array.from({ length: REPEAT_COUNT }).flatMap(() => items)
+  // One "half" must be wider than the screen: ~6 cards min (6 x 288px = ~1700px)
+  const MIN_CARDS = 6
+  const repeat = Math.max(1, Math.ceil(MIN_CARDS / items.length))
+  const half = Array.from({ length: repeat }).flatMap(() => items)
 
   return (
     <section className="w-full">
-      {/* ✅ Centered title */}
       <div className="mx-auto max-w-6xl px-4 text-center">
         <h2 className="font-display text-xl font-bold sm:text-2xl md:text-3xl">
           <HighlightedText i18nKey="home.openCampaignsRich" />
         </h2>
       </div>
 
-      {/* See all link */}
       <div className="mx-auto max-w-6xl px-4">
         <Link
           to="/campaigns"
@@ -612,8 +610,7 @@ export function OpenCampaigns() {
         </Link>
       </div>
 
-      {/* ✅ FULL WIDTH — edge to edge, seamless infinite marquee */}
-      <div className="relative mt-6 w-full overflow-hidden">
+      <div dir="ltr" className="relative mt-6 w-full overflow-hidden">
         <div
           className="flex w-max gap-3 sm:gap-4"
           style={{
@@ -621,29 +618,12 @@ export function OpenCampaigns() {
             willChange: 'transform',
           }}
         >
-          {/* ✅ Loop Items (Original + Duplicates merged into one long strip) */}
-          {loopItems.map((c, i) => (
-            <CampaignCard 
-              key={`${c._id}-${i}`} 
-              campaign={c} 
-              index={i} 
-              t={t} 
-              d={d} 
-              i18n={i18n} 
-            />
+          {half.map((c, i) => (
+            <CampaignCard key={`a-${c._id}-${i}`} campaign={c} d={d} i18n={i18n} />
           ))}
-          
-          {/* ✅ Ek aur set add kiya taake -50% translate hone par gap na aaye */}
           <div aria-hidden="true" className="contents">
-            {loopItems.map((c, i) => (
-              <CampaignCard
-                key={`dup-${c._id}-${i}`}
-                campaign={c}
-                index={i}
-                t={t}
-                d={d}
-                i18n={i18n}
-              />
+            {half.map((c, i) => (
+              <CampaignCard key={`b-${c._id}-${i}`} campaign={c} d={d} i18n={i18n} />
             ))}
           </div>
         </div>
@@ -652,22 +632,20 @@ export function OpenCampaigns() {
   )
 }
 
-// ✅ Card ko alag component banaya — reuse ke liye
 function CampaignCard({
   campaign: c,
-
   d,
   i18n,
 }: {
   campaign: any
-  index: number
-  t: any
   d: (key: string, defaultValue: string) => string
   i18n: any
 }) {
   return (
     <Link
       to={`/campaigns/${c._id}`}
+      dir={i18n.dir()}
+      tabIndex={-1}
       className="group flex h-full w-64 shrink-0 flex-col rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-100 transition duration-300 hover:-translate-y-1.5 hover:shadow-xl sm:w-72 sm:rounded-3xl sm:p-5"
     >
       <p className="flex items-center gap-1.5 text-xs text-gray-500">
@@ -696,6 +674,9 @@ function CampaignCard({
     </Link>
   )
 }
+
+// ✅ Card ko alag component banaya — reuse ke liye
+
 
 /* ---------- 5. Benefits ---------- */
 
