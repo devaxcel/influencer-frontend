@@ -1,8 +1,5 @@
 import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import {
-  faBuilding,
-  faBullhorn,
-  faUserTie,
   faBell,
   faCircleInfo,
   faCompass,
@@ -38,27 +35,7 @@ export const MAIN_NAV: NavItem[] = [
     },
     icon: faCompass,
   },
-  {
-    to: '/campaigns',
-    get label() {
-      return tr('site.nav.campaigns')
-    },
-    icon: faBullhorn,
-  },
-  {
-    to: '/businesses',
-    get label() {
-      return tr('site.nav.businesses')
-    },
-    icon: faBuilding,
-  },
-  {
-    to: '/managers',
-    get label() {
-      return tr('site.nav.managers')
-    },
-    icon: faUserTie,
-  },
+  
   {
     to: '/about',
     get label() {
