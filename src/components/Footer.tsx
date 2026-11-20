@@ -10,6 +10,7 @@ import {
   faTiktok,
   faXTwitter,
   faYoutube,
+  faWhatsapp, // ✅ WhatsApp Icon Import
 } from '@fortawesome/free-brands-svg-icons'
 import { faArrowUp, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { CONTACT_EMAIL, PLATFORM_NAME, SOCIAL_LINKS } from '../constants/config'
@@ -17,13 +18,17 @@ import { useAuth } from '../hooks/useAuth'
 
 const currentYear = new Date().getFullYear()
 
+
+const WHATSAPP_URL = 'https://wa.me/+923195040535' // Apna number yahan dalein
+
 const SOCIALS: {
-  key: keyof typeof SOCIAL_LINKS
+  key: keyof typeof SOCIAL_LINKS | 'whatsapp'
   label: string
   icon: IconDefinition
   bg: string
 }[] = [
   { key: 'instagram', label: 'Instagram', icon: faInstagram, bg: 'bg-pink-600' },
+  { key: 'whatsapp', label: 'WhatsApp', icon: faWhatsapp, bg: 'bg-[#25D366]' }, // ✅ WhatsApp Added
   { key: 'x', label: 'X', icon: faXTwitter, bg: 'bg-black' },
   { key: 'linkedin', label: 'LinkedIn', icon: faLinkedinIn, bg: 'bg-blue-700' },
   { key: 'youtube', label: 'YouTube', icon: faYoutube, bg: 'bg-red-600' },
@@ -117,23 +122,30 @@ function Footer() {
             </p>
 
             <ul className="mt-6 flex flex-wrap gap-2" aria-label={t('footer.followUs')}>
-              {SOCIALS.map((social) => (
-                <li key={social.key}>
-                  <a
-                    href={SOCIAL_LINKS[social.key]}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={social.label}
-                    title={social.label}
-                    className={`group flex h-10 w-10 items-center justify-center rounded-full text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${social.bg}`}
-                  >
-                    <FontAwesomeIcon
-                      icon={social.icon}
-                      className="transition-transform duration-300 group-hover:scale-125"
-                    />
-                  </a>
-                </li>
-              ))}
+              {SOCIALS.map((social) => {
+                // WhatsApp ke liye direct URL use karein, baqi ke liye SOCIAL_LINKS se
+                const href = social.key === 'whatsapp' 
+                  ? WHATSAPP_URL 
+                  : SOCIAL_LINKS[social.key as keyof typeof SOCIAL_LINKS]
+
+                return (
+                  <li key={social.key}>
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      title={social.label}
+                      className={`group flex h-10 w-10 items-center justify-center rounded-full text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md ${social.bg}`}
+                    >
+                      <FontAwesomeIcon
+                        icon={social.icon}
+                        className="transition-transform duration-300 group-hover:scale-125"
+                      />
+                    </a>
+                  </li>
+                )
+              })}
             </ul>
           </div>
 
