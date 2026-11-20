@@ -19,7 +19,7 @@ import { useAuth } from '../hooks/useAuth'
 const currentYear = new Date().getFullYear()
 
 
-const WHATSAPP_URL = 'https://wa.me/+923195040535' // Apna number yahan dalein
+const WHATSAPP_URL = 'https://wa.me/+923195040535' 
 
 const SOCIALS: {
   key: keyof typeof SOCIAL_LINKS | 'whatsapp'
