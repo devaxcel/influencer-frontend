@@ -12,22 +12,9 @@ import LanguageRoot from './components/LanguageRoot'
 import AppToaster from './components/AppToaster'
 import { removeStaticPageJsonLd } from './utils/jsonLd'
 
-// index.html ka home FAQ sirf bina-JS agents ke liye hai; har page apna khud lagata hai
 removeStaticPageJsonLd()
 
-// --- NEW: Initial Loader ko smoothly remove karne ka function ---
-const hideInitialLoader = () => {
-  const loader = document.getElementById('initial-loader')
-  if (loader) {
-    loader.classList.add('hidden') // CSS transition trigger karega
-    // 400ms baad (transition time ke baad) DOM se hata dein
-    setTimeout(() => {
-      loader.remove()
-    }, 400)
-  }
-}
-
-
+// 1. React ko mount karein (yeh background mein hoga loader ke peeche)
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
@@ -45,8 +32,19 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
+// 2. Loader ko hatane ka logic (1.5 seconds ke baad)
+const hideInitialLoader = () => {
+  const loader = document.getElementById('initial-loader')
+  if (loader) {
+    // Fade out class lagayein
+    loader.classList.add('hidden')
+    
+    // CSS transition (0.4s) ke baad DOM se hata dein
+    setTimeout(() => {
+      loader.remove()
+    }, 450) 
+  }
+}
 
-requestAnimationFrame(() => {
-
-  setTimeout(hideInitialLoader, 7500) 
-})
+// 3. Timer start karein
+setTimeout(hideInitialLoader, 1500) 
