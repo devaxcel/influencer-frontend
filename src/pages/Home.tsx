@@ -175,29 +175,40 @@ function IndustryTile({
   name: string
   index: number
 }) {
+  const { t } = useTranslation()
   const [broken, setBroken] = useState(false)
   return (
     <Link
       to={to}
-      className={`group keep-dark relative isolate flex aspect-[4/3] items-end overflow-hidden rounded-2xl bg-gradient-to-br ${
-        TILE_GRADIENTS[index % TILE_GRADIENTS.length]
-      } p-4 text-white shadow-md transition duration-500 hover:-translate-y-1.5 hover:shadow-xl`}
+      className="group flex items-center gap-3 rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-200 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:ring-brand-violet/40 sm:gap-4 sm:p-4"
     >
-      {!broken && (
-        <img
-          src={INDUSTRY_IMAGES[index % INDUSTRY_IMAGES.length]}
-          alt=""
-          loading="lazy"
-          onError={() => setBroken(true)}
-          className="absolute inset-0 -z-10 h-full w-full object-cover opacity-80 transition duration-700 group-hover:scale-110"
-        />
-      )}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-      <span className="flex w-full items-center justify-between gap-2 font-display text-lg font-bold leading-tight">
-        {name}
+      <span
+        className={`keep-dark relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-gradient-to-br sm:h-16 sm:w-16 ${
+          TILE_GRADIENTS[index % TILE_GRADIENTS.length]
+        }`}
+      >
+        {!broken && (
+          <img
+            src={INDUSTRY_IMAGES[index % INDUSTRY_IMAGES.length]}
+            alt=""
+            loading="lazy"
+            onError={() => setBroken(true)}
+            className="h-full w-full object-cover transition duration-500 group-hover:scale-125"
+          />
+        )}
+      </span>
+
+      <span className="min-w-0 flex-1 leading-tight">
+        <span className="block truncate font-display text-sm font-bold sm:text-base">{name}</span>
+        <span className="mt-0.5 block text-[11px] text-gray-500 sm:text-xs">
+          {t('home.explore', { defaultValue: 'Explore' })}
+        </span>
+      </span>
+
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-700 transition duration-300 group-hover:bg-brand group-hover:text-on-brand">
         <FontAwesomeIcon
           icon={faArrowRight}
-          className="text-sm opacity-0 transition duration-300 group-hover:translate-x-1 group-hover:opacity-100 rtl:rotate-180"
+          className="text-xs transition duration-300 group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
         />
       </span>
     </Link>
@@ -504,7 +515,7 @@ function Home() {
           <Reveal>
             <SectionHeader title={t('home.browseByIndustry')} />
           </Reveal>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+         <div className="mt-4 grid gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {industries
               ? industries.slice(0, INDUSTRY_LIMIT).map((industry, i) => (
                   <Reveal key={industry._id} delay={(i % 4) * 80}>
@@ -516,7 +527,7 @@ function Home() {
                   </Reveal>
                 ))
               : Array.from({ length: INDUSTRY_LIMIT }, (_, i) => (
-                  <div key={i} className="aspect-[4/3] animate-pulse rounded-2xl bg-gray-200/70" />
+                 <div key={i} className="h-[4.75rem] animate-pulse rounded-2xl bg-gray-200/70 sm:h-24" />
                 ))}
           </div>
         </section>
