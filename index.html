@@ -20,9 +20,12 @@
     <title>Influnexa</title>
     <link rel="alternate" type="text/markdown" href="/index.md" title="Influnexa (markdown)" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    
     <!-- Search engines aur AI agents ke liye: kaun hain, kya dete hain, kaise book karein -->
     <script type="application/ld+json" id="ld-site">{"@context":"https://schema.org","@graph":[{"@type":["Organization","OnlineBusiness"],"@id":"https://influnexa.com/#organization","name":"Influnexa","url":"https://influnexa.com/","logo":"https://influnexa.com/brand/influnexa-mark.png","image":"https://influnexa.com/brand/influnexa-logo.png","description":"Influnexa is a marketplace where businesses find, check and hire creators, journalists, speakers, experts and public figures, with verified profiles, real reach per platform, open campaigns and signed digital agreements.","email":"info@influnexa.com","knowsLanguage":["en","ur","ar"],"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"],"contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"info@influnexa.com","availableLanguage":["English","Urdu","Arabic"],"hoursAvailable":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}},{"@type":"ContactPoint","contactType":"reservations","url":"https://influnexa.com/search","availableLanguage":["English","Urdu","Arabic"],"hoursAvailable":{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}}],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Influnexa services (free)","itemListElement":[{"@type":"Offer","price":"0","priceCurrency":"PKR","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Talent discovery","description":"Search creators, journalists, speakers and experts by profession, industry, topic, country, city, language and followers.","provider":{"@id":"https://influnexa.com/#organization"},"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"]}},{"@type":"Offer","price":"0","priceCurrency":"PKR","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Verified profiles","description":"Talent claim their profile and prove it with a one-time code sent to an official account.","provider":{"@id":"https://influnexa.com/#organization"},"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"]}},{"@type":"Offer","price":"0","priceCurrency":"PKR","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Hire requests and digital agreements","description":"Verified businesses send hire requests; both sides sign an agreement with milestones.","provider":{"@id":"https://influnexa.com/#organization"},"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"]}},{"@type":"Offer","price":"0","priceCurrency":"PKR","availability":"https://schema.org/InStock","itemOffered":{"@type":"Service","name":"Open campaigns","description":"Verified businesses post a brief and budget; talent apply with a pitch.","provider":{"@id":"https://influnexa.com/#organization"},"areaServed":["Pakistan","United Arab Emirates","Saudi Arabia","Qatar","Kuwait","Bahrain","Oman"]}}]},"potentialAction":[{"@type":"CommunicateAction","name":"Ask about a talent","target":{"@type":"EntryPoint","urlTemplate":"https://influnexa.com/api/inquiries","httpMethod":"POST","contentType":"application/json"}},{"@type":"ReserveAction","name":"Hire talent","target":{"@type":"EntryPoint","urlTemplate":"https://influnexa.com/search","actionPlatform":["https://schema.org/DesktopWebPlatform","https://schema.org/MobileWebPlatform"]}}]},{"@type":"WebSite","@id":"https://influnexa.com/#website","url":"https://influnexa.com/","name":"Influnexa","inLanguage":["en","ur","ar"],"publisher":{"@id":"https://influnexa.com/#organization"},"potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://influnexa.com/search?q={search_term_string}"},"query-input":"required name=search_term_string"}}]}</script>
+    
     <script type="application/ld+json" id="ld-faq-home">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How is a profile verified?","acceptedAnswer":{"@type":"Answer","text":"The person claims the profile, we send a 6-digit code to one of their official accounts, and an admin approves it once they enter the code."}},{"@type":"Question","name":"Is it free to join?","acceptedAnswer":{"@type":"Answer","text":"Creating an account and a profile is free."}},{"@type":"Question","name":"How does hiring work?","acceptedAnswer":{"@type":"Answer","text":"A verified business sends a hire request. When the talent accepts, both sides see each other's contact details and can draft an agreement."}},{"@type":"Question","name":"Can a manager work for a creator?","acceptedAnswer":{"@type":"Answer","text":"Yes. A verified manager can request to represent a creator, and the creator chooses what the manager may do."}},{"@type":"Question","name":"My profile is already listed. What now?","acceptedAnswer":{"@type":"Answer","text":"Find it, press Claim and follow the steps. Once approved it shows the verified badge and you control the details."}}]}</script>
+    
     <script>
       // Page dikhne se pehle dark mode lagao, taake safed flash na aaye
       try {
@@ -31,10 +34,77 @@
           document.documentElement.classList.add('dark')
       } catch (e) {}
     </script>
+
+    <!-- NEW: Initial Loader Inline CSS (For instant 0ms load) -->
+    <style>
+      .initial-loader {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        z-index: 9999;
+        transition: opacity 0.4s ease-out;
+      }
+      .dark .initial-loader {
+        background-color: #070818;
+      }
+      .initial-loader.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .initial-loader-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 112px;
+        height: 112px;
+      }
+      .initial-loader-ring {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: conic-gradient(from 0deg, transparent 0%, transparent 70%, #8b5cf6 90%, #f59e0b 100%);
+        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+        mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+        animation: loader-spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      }
+      .initial-loader-logo {
+        width: 70%;
+        height: 70%;
+        object-fit: contain;
+        position: relative;
+        z-index: 10;
+        animation: loader-pulse 2s ease-in-out infinite;
+        filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
+      }
+      [dir="rtl"] .initial-loader-ring {
+        animation-direction: reverse;
+      }
+      @keyframes loader-spin {
+        to { transform: rotate(360deg); }
+      }
+      @keyframes loader-pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.7; transform: scale(0.92); }
+      }
+    </style>
   </head>
   <body>
     <div id="root">
-      <!-- Bina JavaScript wale agents ke liye page ka khaka. React load hote hi isay hata deta hai. -->
+      <!-- 1. NEW: INITIAL LOADER -->
+      <div id="initial-loader" class="initial-loader">
+        <div class="initial-loader-wrapper">
+          <div class="initial-loader-ring"></div>
+          <img src="/brand/influnexa-mark.png" alt="Loading" class="initial-loader-logo" />
+        </div>
+      </div>
+
+      <!-- 2. EXISTING HIDDEN SEO BLOCK (Keep as is for no-JS agents) -->
       <div style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0">
         <header>
           <a href="/">Influnexa</a>
@@ -65,16 +135,16 @@
           </section>
           <section>
             <h2>Questions, answered</h2>
-          <h3>How is a profile verified?</h3>
-          <p>The person claims the profile, we send a 6-digit code to one of their official accounts, and an admin approves it once they enter the code.</p>
-          <h3>Is it free to join?</h3>
-          <p>Creating an account and a profile is free.</p>
-          <h3>How does hiring work?</h3>
-          <p>A verified business sends a hire request. When the talent accepts, both sides see each other&#x27;s contact details and can draft an agreement.</p>
-          <h3>Can a manager work for a creator?</h3>
-          <p>Yes. A verified manager can request to represent a creator, and the creator chooses what the manager may do.</p>
-          <h3>My profile is already listed. What now?</h3>
-          <p>Find it, press Claim and follow the steps. Once approved it shows the verified badge and you control the details.</p>
+            <h3>How is a profile verified?</h3>
+            <p>The person claims the profile, we send a 6-digit code to one of their official accounts, and an admin approves it once they enter the code.</p>
+            <h3>Is it free to join?</h3>
+            <p>Creating an account and a profile is free.</p>
+            <h3>How does hiring work?</h3>
+            <p>A verified business sends a hire request. When the talent accepts, both sides see each other&#x27;s contact details and can draft an agreement.</p>
+            <h3>Can a manager work for a creator?</h3>
+            <p>Yes. A verified manager can request to represent a creator, and the creator chooses what the manager may do.</p>
+            <h3>My profile is already listed. What now?</h3>
+            <p>Find it, press Claim and follow the steps. Once approved it shows the verified badge and you control the details.</p>
           </section>
         </main>
         <footer>

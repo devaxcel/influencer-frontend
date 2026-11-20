@@ -355,3 +355,58 @@ html:not(.dark) .starlight-bg {
 ::selection {
   background: rgb(139 61 245 / 0.3);
 }
+
+/* --- INITIAL LOADER STYLES --- */
+.initial-loader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  z-index: 9999;
+}
+
+.dark .initial-loader {
+  background-color: #070818;
+}
+
+.initial-loader-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 112px;
+  height: 112px;
+}
+
+.initial-loader-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0%, transparent 70%, #8b5cf6 90%, #f59e0b 100%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5px));
+  animation: loader-spin 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.initial-loader-logo {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  position: relative;
+  z-index: 10;
+  animation: loader-pulse 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.3));
+}
+
+@keyframes loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loader-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(0.92); }
+}
