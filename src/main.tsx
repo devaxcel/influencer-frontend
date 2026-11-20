@@ -48,5 +48,5 @@ createRoot(document.getElementById('root')!).render(
 
 requestAnimationFrame(() => {
 
-  setTimeout(hideInitialLoader, 1500) 
+  setTimeout(hideInitialLoader, 7500) 
 })
