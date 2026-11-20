@@ -151,81 +151,21 @@ function HeroShowcase() {
     </div>
   )
 }
+// Roles section background: sirf dotted grid (footer jaisa)
 function RoleShapes() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-      <svg
-        viewBox="0 0 200 200"
-        fill="none"
-        className="absolute -start-20 -top-20 h-56 w-56 text-brand-violet/40 sm:-start-24 sm:-top-24 sm:h-80 sm:w-80"
-      >
-        <circle cx="100" cy="100" r="92" stroke="currentColor" strokeWidth="2" />
-        <circle cx="100" cy="100" r="64" stroke="currentColor" strokeWidth="2" />
-        <circle cx="100" cy="100" r="34" fill="currentColor" />
-      </svg>
-
-      <svg
-        viewBox="0 0 120 120"
-        className="absolute end-4 top-6 hidden h-24 w-24 text-white/25 sm:block md:h-32 md:w-32"
-      >
+      <svg className="absolute inset-0 h-full w-full text-white/15 dark:text-[#000000]/20">
         <defs>
-          <pattern id="role-dots" width="15" height="15" patternUnits="userSpaceOnUse">
-            <circle cx="3" cy="3" r="2" fill="currentColor" />
+          <pattern id="role-dots" width="32" height="32" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.5" fill="currentColor" />
           </pattern>
         </defs>
-        <rect width="120" height="120" fill="url(#role-dots)" />
-      </svg>
-
-      <svg
-        viewBox="0 0 100 100"
-        fill="none"
-        className="absolute start-[6%] bottom-10 h-12 w-12 rotate-12 text-white/25 sm:h-16 sm:w-16"
-      >
-        <path d="M50 8 L94 88 L6 88 Z" stroke="currentColor" strokeWidth="3" strokeLinejoin="round" />
-      </svg>
-
-      <svg
-        viewBox="0 0 40 40"
-        fill="none"
-        className="absolute end-[10%] top-[45%] h-6 w-6 text-brand-violet/60 sm:h-8 sm:w-8"
-      >
-        <path d="M20 4 V36 M4 20 H36" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-      </svg>
-      <svg
-        viewBox="0 0 40 40"
-        fill="none"
-        className="absolute start-[42%] top-4 hidden h-5 w-5 text-white/30 md:block"
-      >
-        <path d="M20 4 V36 M4 20 H36" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-      </svg>
-
-      <svg
-        viewBox="0 0 200 200"
-        className="absolute -bottom-16 -end-16 h-56 w-56 text-brand-violet/25 sm:-bottom-24 sm:-end-24 sm:h-80 sm:w-80"
-      >
-        <path
-          fill="currentColor"
-          d="M44.7,-58.4C57.4,-48.6,66.3,-33.6,70.6,-17.3C74.9,-1,74.6,16.7,67.1,30.6C59.6,44.5,44.9,54.6,29.1,61.1C13.3,67.6,-3.6,70.5,-19.6,66.5C-35.6,62.5,-50.7,51.6,-60.5,37.2C-70.3,22.8,-74.8,4.9,-71.3,-10.9C-67.8,-26.7,-56.3,-40.4,-42.9,-50C-29.5,-59.6,-14.7,-65.1,0.8,-66.1C16.3,-67.1,32,-68.2,44.7,-58.4Z"
-          transform="translate(100 100)"
-        />
-      </svg>
-
-      <svg
-        viewBox="0 0 1200 80"
-        preserveAspectRatio="none"
-        fill="none"
-        className="absolute inset-x-0 bottom-6 h-10 w-full text-white/15 sm:h-14"
-      >
-        <path
-          d="M0 40 C100 0 200 80 300 40 C400 0 500 80 600 40 C700 0 800 80 900 40 C1000 0 1100 80 1200 40"
-          stroke="currentColor"
-          strokeWidth="2"
-        />
+        <rect width="100%" height="100%" fill="url(#role-dots)" />
       </svg>
     </div>
   )
 }
-
 function IndustryTile({
   to,
   name,
@@ -640,7 +580,7 @@ function Home() {
         <HowItWorks />
       </div>
 
-      <section className="relative isolate mt-16 w-full overflow-hidden bg-gray-800 py-8 shadow-sm ring-1 ring-gray-100 sm:mt-24 sm:py-10 md:py-16">
+     <section className="relative isolate mt-16 w-full overflow-hidden bg-gray-950 py-8 dark:bg-gray-800 sm:mt-24 sm:py-10 md:py-16">
         <RoleShapes />
         <div className="relative z-10 mx-auto max-w-6xl px-4">
           <Reveal>
@@ -649,7 +589,7 @@ function Home() {
             </h2>
             <div
               role="tablist"
-              className="mx-auto mt-4 flex w-fit max-w-full flex-wrap justify-center gap-1.5 rounded-full bg-gray-700 p-1 sm:mt-6 sm:gap-2 sm:p-1.5"
+              className="mx-auto mt-4 flex w-fit max-w-full flex-wrap justify-center gap-1.5 rounded-full bg-white/10 p-1 sm:mt-6 sm:gap-2 sm:p-1.5"
             >
               {(Object.keys(tabs) as (keyof typeof tabs)[]).map((id) => (
                 <button
