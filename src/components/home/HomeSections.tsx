@@ -169,7 +169,7 @@ const PLATFORMS = [
   { icon: faXTwitter, name: 'X', color: 'text-black dark:text-[#ffffff]' },
   { icon: faFacebook, name: 'Facebook', color: 'text-[#1877F2]' },
   { icon: faLinkedin, name: 'LinkedIn', color: 'text-[#0A66C2]' },
-  { icon: faWhatsapp, name: 'WhatsApp', color: 'text-[#25D366]' }, // ✅ WhatsApp Added
+  { icon: faWhatsapp, name: 'WhatsApp', color: 'text-[#25D366]' }, 
 ]
 
 export function PlatformStrip() {
