@@ -1,4 +1,5 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
+import { showPlanLimitToast } from '../utils/planLimit'
 
 // '/api' isi website ka address hai. Local pe Vite proxy aur Vercel pe
 // vercel.json ka rewrite is request ko backend tak pohanchata hai
@@ -18,6 +19,9 @@ api.interceptors.response.use(
   async (error) => {
     const failedRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean }
     const status = error.response?.status
+
+    // Free plan ki hadd poori: Upgrade ka raasta dikhao (asal error bhi aage jata hai)
+    if (status === 402 && error.response?.data?.error?.code === 'PLAN_LIMIT') showPlanLimitToast()
 
     if (status !== 401 || !failedRequest) return Promise.reject(error)
     if (SKIP_REFRESH.includes(failedRequest.url ?? '')) return Promise.reject(error)

@@ -7,7 +7,13 @@ import type { ApiError } from '../types/api'
 export function getApiError(error: unknown) {
   if (axios.isAxiosError<ApiError>(error) && error.response?.data?.error) {
     const { code, message, fields, details } = error.response.data.error
-    const translated = i18n.exists(`apiErrors.${code}`) ? i18n.t(`apiErrors.${code}`) : message
+    const limitKey = `billing.limitMsg.${String(details?.feature ?? '')}`
+    const translated =
+      code === 'PLAN_LIMIT' && i18n.exists(limitKey)
+        ? i18n.t(limitKey, { count: Number(details?.limit) || 0 })
+        : i18n.exists(`apiErrors.${code}`)
+          ? i18n.t(`apiErrors.${code}`)
+          : message
     return {
       message: code === 'VALIDATION_ERROR' ? i18n.t('site.fixFields') : translated,
       fields: fields ?? {},

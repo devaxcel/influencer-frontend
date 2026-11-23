@@ -34,7 +34,7 @@ We put the whole journey in one place: discover people with transparent reach, h
 
 ## Pricing
 
-Using Influnexa is free right now. Talent set their own prices per service on their profiles. Payment for the work is arranged between the business and the talent; Influnexa keeps the signed record, deliveries and approvals.
+Using Influnexa is free, with optional monthly Pro plans for more hire requests, campaigns, managed talents or applications (https://influnexa.com/pricing). Talent set their own prices per service on their profiles. Payment for the work is arranged between the business and the talent; Influnexa keeps the signed record, deliveries and approvals.
 
 ## Questions people ask
 

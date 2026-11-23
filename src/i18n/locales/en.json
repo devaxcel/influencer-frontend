@@ -464,7 +464,8 @@
       "agreements": "Agreements",
       "businesses": "Businesses",
       "managers": "Managers",
-      "campaigns": "Campaigns"
+      "campaigns": "Campaigns",
+      "pricing": "Pricing"
     },
     "search": {
       "placeholder": "Search by name or what they do...",
@@ -1388,7 +1389,8 @@
     "newsletterButton": "Subscribe",
     "newsletterSending": "Subscribing...",
     "newsletterDone": "Thanks! You're on the list.",
-    "description": "Built for brands, talent and managers: verified profiles, open campaigns and signed agreements in one place."
+    "description": "Built for brands, talent and managers: verified profiles, open campaigns and signed agreements in one place.",
+    "pricing": "Pricing"
   },
   "newProfile": {
     "cta": "Can't find it? Create your profile",
@@ -2190,7 +2192,8 @@
     "myTalents": "My talents",
     "myManager": "My manager",
     "campaigns": "Campaigns",
-    "applications": "My applications"
+    "applications": "My applications",
+    "billing": "Billing"
   },
   "pageError": {
     "title": "This page couldn't load",
@@ -2995,5 +2998,83 @@
     "in_progress": "In progress",
     "answered": "Answered",
     "closed": "Closed"
+  },
+  "billing": {
+    "pricingTitle": "Simple plans for every account",
+    "pricingSubtitle": "Influnexa is free to use. Upgrade to Pro when you need more.",
+    "alwaysFree": "Always free: search, profiles, answering hire requests, agreements and reviews.",
+    "securePayments": "Payments are handled securely by Polar. Tax and invoices included, cancel anytime.",
+    "roles": {
+      "business": "For businesses",
+      "representative": "For managers",
+      "talent": "For talent"
+    },
+    "roleName": {
+      "business": "business",
+      "representative": "manager",
+      "talent": "talent"
+    },
+    "free": "Free",
+    "pro": "Pro",
+    "perMonth": "/ month",
+    "perYear": "/ year",
+    "limit": {
+      "hiresPerMonth_one": "{{count}} hire request a month",
+      "hiresPerMonth_other": "{{count}} hire requests a month",
+      "openCampaigns_one": "{{count}} open campaign at a time",
+      "openCampaigns_other": "{{count}} open campaigns at a time",
+      "talents_one": "Manage {{count}} talent",
+      "talents_other": "Manage {{count}} talents",
+      "applicationsPerMonth_one": "{{count}} campaign application a month",
+      "applicationsPerMonth_other": "{{count}} campaign applications a month"
+    },
+    "unlimited": {
+      "hiresPerMonth": "Unlimited hire requests",
+      "openCampaigns": "Unlimited open campaigns",
+      "talents": "Unlimited talents",
+      "applicationsPerMonth": "Unlimited campaign applications"
+    },
+    "usageLabel": {
+      "hiresPerMonth": "Hire requests sent this month",
+      "openCampaigns": "Open campaigns",
+      "talents": "Talents you manage",
+      "applicationsPerMonth": "Campaign applications this month"
+    },
+    "proExtra": "Cancel anytime",
+    "upgrade": "Upgrade to Pro",
+    "currentPlan": "Your current plan",
+    "forRole": "Available for {{role}} accounts",
+    "signUpToUpgrade": "Sign up to get started",
+    "comingSoon": "Free for now",
+    "comingSoonNote": "No paid plan yet: everything is unlimited.",
+    "redirecting": "Opening secure checkout…",
+    "title": "Billing",
+    "subtitle": "Your plan and what you used this month",
+    "planFree": "Free plan",
+    "planPro": "Pro plan",
+    "renews": "Renews on {{date}}",
+    "endsOn": "Pro ends on {{date}} (cancelled)",
+    "usageTitle": "Usage",
+    "usedOf": "{{used}} of {{limit}}",
+    "usedUnlimited": "{{used}} · unlimited",
+    "manage": "Manage subscription",
+    "seePlans": "See plans",
+    "limitToast": "You've reached the limit of the free plan.",
+    "activating": "Payment received. Activating your Pro plan…",
+    "activated": "Welcome to Pro!",
+    "activateSlow": "Your payment went through. Pro can take a minute to show, refresh this page shortly.",
+    "paymentsOff": "Paid plans are not switched on yet. Everything is free and unlimited.",
+    "sandbox": "Test mode: use Polar's test card. No real money is charged.",
+    "pastDue": "Your last payment failed. Update your card in Manage subscription to keep Pro.",
+    "limitMsg": {
+      "hiresPerMonth_one": "Your free plan includes {{count}} hire request a month. Upgrade to Pro for unlimited hire requests.",
+      "hiresPerMonth_other": "Your free plan includes {{count}} hire requests a month. Upgrade to Pro for unlimited hire requests.",
+      "openCampaigns_one": "Your free plan allows {{count}} open campaign at a time. Close one or upgrade to Pro.",
+      "openCampaigns_other": "Your free plan allows {{count}} open campaigns at a time. Close one or upgrade to Pro.",
+      "talents_one": "Your free plan lets you manage {{count}} talent. Upgrade to Pro to add more.",
+      "talents_other": "Your free plan lets you manage {{count}} talents. Upgrade to Pro to add more.",
+      "applicationsPerMonth_one": "Your free plan includes {{count}} campaign application a month. Upgrade to Pro for unlimited applications.",
+      "applicationsPerMonth_other": "Your free plan includes {{count}} campaign applications a month. Upgrade to Pro for unlimited applications."
+    }
   }
 }
