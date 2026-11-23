@@ -11,7 +11,6 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-// import Browse from './pages/Browse'
 import About from "./pages/About";
 import Notifications from "./pages/Notifications";
 import CreateMyProfile from "./pages/dashboards/CreateMyProfile";
@@ -60,7 +59,7 @@ import AgreementDetailPage from "./pages/agreements/AgreementDetailPage";
 import AdminAgreementsPage from "./pages/admin-panel/AdminAgreementsPage";
 import AdminManagersPage from "./pages/admin-panel/AdminManagersPage";
 import AdminNewsletterPage from "./pages/admin-panel/AdminNewsletterPage";
-import AdminSuggestionsPage from "./pages/admin-panel/AdminSuggestionsPage";
+import AdminSuggestionsPage from "./pages/admin-panel/AdminSuggestionsPage"; // ✅ Fixed default import
 import LegalPage from "./pages/LegalPage";
 import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
 import PricingPage from "./pages/PricingPage";
@@ -77,7 +76,6 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
-        {/* <Route path="/browse" element={<Browse />} /> */}
         <Route path="/about" element={<About />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route
@@ -95,7 +93,7 @@ function App() {
         <Route path="/managers/:id" element={<ManagerDetailPage />} />
         <Route path="/campaigns" element={<CampaignsPage />} />
         <Route path="/campaigns/:id" element={<CampaignDetailPage />} />
-        {/* Talent / business dashboard ke pages: admin panel jaisa sidebar */}
+        
         <Route element={<DashboardLayout />}>
           <Route
             path="/dashboard"
@@ -326,7 +324,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* Admin panel: sidebar ke saath, sirf admin */}
         <Route
           path="/admin"
           element={
