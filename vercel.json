@@ -1,18 +1,18 @@
 {
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "https://influencer-backend-seven.vercel.app/api/sitemap.xml" },
-    { "source": "/search.md", "destination": "https://influencer-backend-seven.vercel.app/api/md/talent" },
-    { "source": "/browse.md", "destination": "https://influencer-backend-seven.vercel.app/api/md/talent" },
-    { "source": "/campaigns.md", "destination": "https://influencer-backend-seven.vercel.app/api/md/campaigns" },
+    { "source": "/sitemap.xml", "destination": "https://influencer-backend.vercel.app/api/sitemap.xml" },
+    { "source": "/search.md", "destination": "https://influencer-backend.vercel.app/api/md/talent" },
+    { "source": "/browse.md", "destination": "https://influencer-backend.vercel.app/api/md/talent" },
+    { "source": "/campaigns.md", "destination": "https://influencer-backend.vercel.app/api/md/campaigns" },
     {
       "source": "/people/:slug([^/.]+).md",
-      "destination": "https://influencer-backend-seven.vercel.app/api/md/people/:slug"
+      "destination": "https://influencer-backend.vercel.app/api/md/people/:slug"
     },
     {
       "source": "/campaigns/:id([^/.]+).md",
-      "destination": "https://influencer-backend-seven.vercel.app/api/md/campaigns/:id"
+      "destination": "https://influencer-backend.vercel.app/api/md/campaigns/:id"
     },
-    { "source": "/api/:path*", "destination": "https://influencer-backend-seven.vercel.app/api/:path*" },
+    { "source": "/api/:path*", "destination": "https://influencer-backend.vercel.app/api/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
