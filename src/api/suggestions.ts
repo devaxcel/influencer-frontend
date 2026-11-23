@@ -1,9 +1,15 @@
 import api from './axios'
 import type { ApiSuccess } from '../types/api'
 import type { InfluencerSuggestion } from '../types/suggestion'
+import type { InfluencerSuggestionGroup } from '../types/suggestion'
 
 export async function listSuggestions() {
-  const res = await api.get<ApiSuccess<{ suggestions: InfluencerSuggestion[]; enabled: boolean; intervalSeconds: number }>>(
+  const res = await api.get<ApiSuccess<{
+    suggestions: InfluencerSuggestion[]
+    groups: InfluencerSuggestionGroup[]
+    enabled: boolean
+    intervalSeconds: number
+  }>>(
     '/admin/suggestions',
   )
   return res.data.data
@@ -16,11 +22,12 @@ export async function refreshSuggestions() {
   return res.data.data
 }
 
-export async function approveSuggestion(id: string) {
-  const res = await api.post<ApiSuccess<{ suggestion: InfluencerSuggestion }>>(
-    `/admin/suggestions/${id}/approve`,
-  )
-  return res.data.data.suggestion
+export async function approveSuggestionGroup(groupId: string, ids?: string[]) {
+  const res = await api.post<ApiSuccess<{
+    approved: { suggestion: InfluencerSuggestion }[]
+    failed: { id: string; code: string; message: string }[]
+  }>>(`/admin/suggestions/groups/${encodeURIComponent(groupId)}/approve`, ids ? { ids } : {})
+  return res.data.data
 }
 
 export async function dismissSuggestion(id: string) {

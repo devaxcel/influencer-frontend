@@ -90,7 +90,12 @@
     "enabledToast": "Daily suggestions enabled",
     "disabledToast": "Daily suggestions disabled",
     "emptyTitle": "No suggestions available",
-    "emptyText": "Turn on daily generation or refresh to discover new influencers."
+    "emptyText": "Turn on daily generation or refresh to discover new influencers.",
+    "groupCount": "{{count}} influencers in this group",
+    "select": "Select {{name}}",
+    "addSelected": "Add selected ({{count}})",
+    "addAll": "Add all influencers",
+    "addFailed": "influencers failed to add"
   },
   "claimStatus": {
     "pending": "Send code",
