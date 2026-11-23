@@ -7,7 +7,7 @@ import {
   faCircleExclamation,
   faClock,
   faPlus,
-  faSpinner
+  faSpinner,
 } from '@fortawesome/free-solid-svg-icons'
 import toast from 'react-hot-toast'
 import {
@@ -20,17 +20,18 @@ import {
 } from '../../api/suggestions'
 import DataState from '../../components/admin-panel/DataState'
 import PageHeader from '../../components/admin-panel/PageHeader'
-import Switch from '../../components/Switch' // Agar Switch nahi hai to isko hata kar <input type="checkbox" /> use karein
+import Switch from '../../components/Switch'
 import type { SuggestionGroup, SuggestionsData } from '../../types/suggestion'
 import { getApiError } from '../../utils/apiError'
 
 const QUERY_KEY = ['admin', 'suggestions']
 
-// Helper function to format date
-const formatDate = (dateStr: string) => new Date(dateStr).toLocaleString()
+function formatDate(dateStr?: string) {
+  if (!dateStr) return 'N/A'
+  try { return new Date(dateStr).toLocaleString() } catch { return 'N/A' }
+}
 
-// 3 -> "3 seconds", 86400 -> "1 day" (chuni hui zaban mein)
-function useIntervalLabel(seconds: number) {
+function useIntervalLabel(seconds: number = 86400) {
   const { t } = useTranslation()
   if (seconds % 86400 === 0) return t('suggestions.every.day', { count: seconds / 86400 })
   if (seconds % 3600 === 0) return t('suggestions.every.hour', { count: seconds / 3600 })
@@ -38,7 +39,6 @@ function useIntervalLabel(seconds: number) {
   return t('suggestions.every.second', { count: seconds })
 }
 
-// "in 5 minutes" / "now"
 function useRelative(target: string | null, now: number) {
   const { i18n, t } = useTranslation()
   if (!target) return null
@@ -52,14 +52,14 @@ function useRelative(target: string | null, now: number) {
   return rtf.format(Math.round(s / 86400), 'day')
 }
 
-// ✅ Placeholder SuggestionCard (Agar aapke paas already hai, to import kar lein aur yeh hata dein)
+// Placeholder SuggestionCard (Agar aapke paas already hai, to import kar lein)
 function SuggestionCard({ suggestion, selected, onToggle, isBusy, onAdd, onDismiss }: any) {
   return (
     <div className={`p-4 border rounded-xl ${selected ? 'border-brand ring-1 ring-brand' : 'border-gray-200'} bg-white`}>
       <div className="flex justify-between items-start">
         <div>
-          <h3 className="font-semibold">{suggestion.name || 'Unknown'}</h3>
-          <p className="text-sm text-gray-500">{suggestion.headline || 'No headline'}</p>
+          <h3 className="font-semibold">{suggestion?.name || 'Unknown'}</h3>
+          <p className="text-sm text-gray-500">{suggestion?.headline || 'No headline'}</p>
         </div>
         <input type="checkbox" checked={selected} onChange={onToggle} className="mt-1" />
       </div>
@@ -72,11 +72,7 @@ function SuggestionCard({ suggestion, selected, onToggle, isBusy, onAdd, onDismi
 }
 
 function GroupSection({
-  group,
-  index,
-  busyIds,
-  onAdd,
-  onDismiss,
+  group, index, busyIds, onAdd, onDismiss,
 }: {
   group: SuggestionGroup
   index: number
@@ -86,10 +82,13 @@ function GroupSection({
 }) {
   const { t } = useTranslation()
   const [selected, setSelected] = useState<string[]>([])
-  const pending = group.suggestions.filter((s) => s.status === 'pending')
+  
+  const suggestions = group?.suggestions ?? []
+  const pending = suggestions.filter((s) => s.status === 'pending')
   const chosen = selected.filter((id) => pending.some((s) => s._id === id))
   const allChosen = pending.length > 0 && chosen.length === pending.length
   const busy = chosen.some((id) => busyIds.includes(id))
+  
   const toggle = (id: string) =>
     setSelected((list) => (list.includes(id) ? list.filter((item) => item !== id) : [...list, id]))
 
@@ -99,14 +98,14 @@ function GroupSection({
         <div>
           <h2 className="text-base font-semibold">
             {index === 0 ? t('suggestions.latestGroup') : t('suggestions.group')}
-            <span className="ms-2 text-sm font-normal text-gray-500">{formatDate(group.generatedAt)}</span>
+            <span className="ms-2 text-sm font-normal text-gray-500">{formatDate(group?.generatedAt)}</span>
           </h2>
           <p className="text-xs text-gray-500">
             {t('suggestions.groupMeta', {
-              total: group.suggestions.length,
-              national: group.suggestions.filter((s) => s.scope === 'national').length,
-              international: group.suggestions.filter((s) => s.scope === 'international').length,
-              added: group.suggestions.filter((s) => s.status === 'approved').length,
+              total: suggestions.length,
+              national: suggestions.filter((s) => s.scope === 'national').length,
+              international: suggestions.filter((s) => s.scope === 'international').length,
+              added: suggestions.filter((s) => s.status === 'approved').length,
             })}
           </p>
         </div>
@@ -135,7 +134,7 @@ function GroupSection({
         )}
       </div>
       <div className="grid gap-5 lg:grid-cols-2 2xl:grid-cols-3">
-        {group.suggestions.map((suggestion) => (
+        {suggestions.map((suggestion) => (
           <SuggestionCard
             key={suggestion._id}
             suggestion={suggestion}
@@ -151,7 +150,7 @@ function GroupSection({
   )
 }
 
-export function AdminSuggestionsPage() {
+function AdminSuggestionsPage() {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const [now, setNow] = useState(() => Date.now())
@@ -159,14 +158,18 @@ export function AdminSuggestionsPage() {
   const query = useQuery({
     queryKey: QUERY_KEY,
     queryFn: listSuggestions,
-    refetchInterval: (q) => {
-      const data = q.state.data
-      if (!data) return false
-      return Math.min(30_000, Math.max(3_000, data.intervalSeconds * 1000))
-    },
+    // ✅ Refetch interval hata diya hai, tick khud data fetch karega
   })
   
   const data = query.data
+
+  const missingKeys = data?.missingKeys ?? []
+  const groups = data?.groups ?? []
+  const intervalSeconds = data?.intervalSeconds ?? 86400
+  const enabled = data?.enabled ?? false
+  const lastError = data?.lastError ?? null
+  const generating = Boolean(data?.generating)
+  const nextGenerationAt = data?.nextGenerationAt ?? null
 
   const tick = useMutation({
     mutationFn: tickSuggestions,
@@ -181,12 +184,15 @@ export function AdminSuggestionsPage() {
     return () => window.clearInterval(timer)
   }, [])
   
-  const dueAt = data?.nextGenerationAt ? new Date(data.nextGenerationAt).getTime() : null
-  const due = Boolean(data?.enabled && !data.generating && dueAt !== null && dueAt <= now && data.missingKeys.length === 0)
+  const dueAt = nextGenerationAt ? new Date(nextGenerationAt).getTime() : null
+  const due = Boolean(enabled && !generating && dueAt !== null && dueAt <= now && missingKeys.length === 0)
   
   useEffect(() => {
-    if (due && !tick.isPending) tick.mutate()
-  }, [due, tick.isPending, tick.mutate])
+    // ✅ Faltu calls rokne ke liye check
+    if (due && !tick.isPending && !query.isFetching) {
+      tick.mutate()
+    }
+  }, [due, tick.isPending, query.isFetching, tick])
 
   const setting = useMutation({
     mutationFn: updateSuggestionSetting,
@@ -215,7 +221,7 @@ export function AdminSuggestionsPage() {
     onSuccess: ({ results, added }) => {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY })
       if (added > 0) toast.success(t('suggestions.addedToast', { count: added }))
-      for (const failed of results.filter((r) => !r.ok)) {
+      for (const failed of results?.filter((r) => !r.ok) ?? []) {
         toast.error(failed.code === 'DUPLICATE' ? t('suggestions.duplicate') : (failed.error ?? t('suggestions.addFailed')))
       }
     },
@@ -228,10 +234,9 @@ export function AdminSuggestionsPage() {
     onError: (error) => toast.error(getApiError(error).message),
   })
 
-  const groups = data?.groups ?? []
-  const intervalLabel = useIntervalLabel(data?.intervalSeconds ?? 86400)
-  const nextLabel = useRelative(data?.nextGenerationAt ?? null, now)
-  const generating = Boolean(data?.generating || tick.isPending || refresh.isPending)
+  const intervalLabel = useIntervalLabel(intervalSeconds)
+  const nextLabel = useRelative(nextGenerationAt, now)
+  const isGenerating = Boolean(generating || tick.isPending || refresh.isPending)
   const busyIds = add.isPending ? (add.variables ?? []) : []
 
   return (
@@ -240,9 +245,9 @@ export function AdminSuggestionsPage() {
         <div className="flex items-center gap-3 rounded-xl bg-white px-3 py-2 shadow-sm">
           <span className="text-sm font-medium">{t('suggestions.autoGenerate')}</span>
           <Switch
-            checked={data?.enabled ?? false}
+            checked={enabled}
             disabled={setting.isPending || query.isLoading}
-            onChange={(enabled) => setting.mutate(enabled)}
+            onChange={(val) => setting.mutate(val)}
             label={t('suggestions.toggle')}
             size="sm"
           />
@@ -257,38 +262,39 @@ export function AdminSuggestionsPage() {
                 <FontAwesomeIcon icon={faClock} className="me-1.5 text-gray-400" />
                 {t('suggestions.schedule', { interval: intervalLabel })}
               </span>
-              {generating ? (
+              {isGenerating ? (
                 <span className="font-medium text-brand">
                   <FontAwesomeIcon icon={faSpinner} spin className="me-1.5" />
                   {t('suggestions.generating')}
                 </span>
-              ) : data.enabled && nextLabel ? (
+              ) : enabled && nextLabel ? (
                 <span>{t('suggestions.nextGroup', { when: nextLabel })}</span>
               ) : (
-                !data.enabled && <span>{t('suggestions.paused')}</span>
+                !enabled && <span>{t('suggestions.paused')}</span>
               )}
             </p>
             <button
               type="button"
               onClick={() => refresh.mutate()}
-              disabled={generating || data.missingKeys.length > 0}
+              disabled={isGenerating || missingKeys.length > 0}
               className="inline-flex items-center gap-2 rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium hover:bg-gray-50 disabled:opacity-50"
             >
               <FontAwesomeIcon icon={faArrowsRotate} spin={refresh.isPending} />
               {t('suggestions.refresh')}
             </button>
           </div>
-          {data.missingKeys.length > 0 && (
+          
+          {missingKeys.length > 0 && (
             <p className="flex items-start gap-2 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800">
               <FontAwesomeIcon icon={faCircleExclamation} className="mt-0.5" />
-              {t('suggestions.missingKeys', { keys: data.missingKeys.join(', ') })}
+              {t('suggestions.missingKeys', { keys: missingKeys.join(', ') })}
             </p>
           )}
-          {data.lastError && data.missingKeys.length === 0 && !generating && (
+          {lastError && missingKeys.length === 0 && !isGenerating && (
             <p className="flex items-start gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
               <FontAwesomeIcon icon={faCircleExclamation} className="mt-0.5" />
               <span>
-                {t('suggestions.lastError')} {data.lastError}
+                {t('suggestions.lastError')} {lastError}
               </span>
             </p>
           )}
@@ -300,14 +306,14 @@ export function AdminSuggestionsPage() {
         isError={query.isError && !data}
         error={query.error}
         isEmpty={!query.isLoading && groups.length === 0}
-        emptyTitle={generating ? t('suggestions.generating') : t('suggestions.emptyTitle')}
+        emptyTitle={isGenerating ? t('suggestions.generating') : t('suggestions.emptyTitle')}
         emptyText={t('suggestions.emptyText')}
         onRetry={() => query.refetch()}
       >
         <div className="space-y-6">
           {groups.map((group, index) => (
             <GroupSection
-              key={group.batchId}
+              key={group?.batchId ?? index}
               group={group}
               index={index}
               busyIds={busyIds}
