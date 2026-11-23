@@ -62,6 +62,8 @@ import AdminManagersPage from "./pages/admin-panel/AdminManagersPage";
 import AdminNewsletterPage from "./pages/admin-panel/AdminNewsletterPage";
 import LegalPage from "./pages/LegalPage";
 import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
+import PricingPage from "./pages/PricingPage";
+import BillingPage from "./pages/dashboards/BillingPage";
 import AdminManagerDetailPage from "./pages/admin-panel/AdminManagerDetailPage";
 import AdminAgreementDetailPage from "./pages/admin-panel/AdminAgreementDetailPage";
 
@@ -76,6 +78,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         {/* <Route path="/browse" element={<Browse />} /> */}
         <Route path="/about" element={<About />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route
           path="/privacy"
           element={<LegalPage key="privacy" page="privacy" />}
@@ -202,6 +205,14 @@ function App() {
             element={
               <ProtectedRoute roles={["talent"]}>
                 <MyManagerPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dashboard/billing"
+            element={
+              <ProtectedRoute roles={["talent", "business", "representative"]}>
+                <BillingPage />
               </ProtectedRoute>
             }
           />

@@ -21,7 +21,8 @@ Find journalists, creators, speakers, experts and public figures. See their real
 
 ## Pricing
 
-- Influnexa is free right now: searching profiles, creating an account, claiming your profile, shortlists, hire requests, campaigns and agreements. No trial and no card needed.
+- Influnexa is free to use: searching profiles, creating an account, claiming your profile, shortlists, answering hire requests, agreements and reviews. No card needed.
+- Optional monthly Pro plans for businesses, managers and talent remove the free limits (hire requests, open campaigns, managed talents, campaign applications). Prices: https://influnexa.com/pricing
 - Talent set their own prices per service (fixed, a range, or price on request), shown on each profile.
 
 ## How it works

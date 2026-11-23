@@ -440,7 +440,8 @@
       "agreements": "الاتفاقيات",
       "businesses": "الشركات",
       "managers": "المديرون",
-      "campaigns": "الحملات"
+      "campaigns": "الحملات",
+      "pricing": "الأسعار"
     },
     "search": {
       "placeholder": "ابحث بالاسم أو المجال...",
@@ -1364,7 +1365,8 @@
     "newsletterButton": "اشترك",
     "newsletterSending": "جارٍ الاشتراك...",
     "newsletterDone": "شكرًا! أنت الآن في القائمة.",
-    "description": "مصمم للعلامات التجارية والمواهب والمديرين: ملفات موثقة وحملات مفتوحة واتفاقيات موقعة في مكان واحد."
+    "description": "مصمم للعلامات التجارية والمواهب والمديرين: ملفات موثقة وحملات مفتوحة واتفاقيات موقعة في مكان واحد.",
+    "pricing": "الأسعار"
   },
   "newProfile": {
     "cta": "لم تجده؟ أنشئ ملفك",
@@ -2166,7 +2168,8 @@
     "myTalents": "مواهبي",
     "myManager": "مديري",
     "campaigns": "الحملات",
-    "applications": "طلباتي"
+    "applications": "طلباتي",
+    "billing": "الفوترة"
   },
   "pageError": {
     "title": "تعذّر تحميل هذه الصفحة",
@@ -2971,5 +2974,75 @@
     "in_progress": "قيد المعالجة",
     "answered": "تم الرد",
     "closed": "مغلق"
+  },
+  "billing": {
+    "pricingTitle": "خطط بسيطة لكل حساب",
+    "pricingSubtitle": "استخدام Influnexa مجاني. رقِّ إلى Pro عندما تحتاج المزيد.",
+    "alwaysFree": "مجاني دائمًا: البحث، الملفات الشخصية، الرد على طلبات التوظيف، الاتفاقيات والتقييمات.",
+    "securePayments": "تتم المدفوعات بأمان عبر Polar. تشمل الضرائب والفواتير، ويمكنك الإلغاء في أي وقت.",
+    "roles": {
+      "business": "للشركات",
+      "representative": "للمديرين",
+      "talent": "للمواهب"
+    },
+    "roleName": {
+      "business": "الشركات",
+      "representative": "المديرين",
+      "talent": "المواهب"
+    },
+    "free": "مجاني",
+    "pro": "Pro",
+    "perMonth": "/ شهريًا",
+    "perYear": "/ سنويًا",
+    "limit": {
+      "hiresPerMonth": "{{count}} طلبات توظيف شهريًا",
+      "openCampaigns": "{{count}} حملة مفتوحة في الوقت نفسه",
+      "talents": "إدارة {{count}} مواهب",
+      "applicationsPerMonth": "{{count}} طلبات تقديم للحملات شهريًا"
+    },
+    "unlimited": {
+      "hiresPerMonth": "طلبات توظيف غير محدودة",
+      "openCampaigns": "حملات مفتوحة غير محدودة",
+      "talents": "مواهب غير محدودة",
+      "applicationsPerMonth": "طلبات تقديم غير محدودة"
+    },
+    "usageLabel": {
+      "hiresPerMonth": "طلبات التوظيف المرسلة هذا الشهر",
+      "openCampaigns": "الحملات المفتوحة",
+      "talents": "المواهب التي تديرها",
+      "applicationsPerMonth": "طلبات التقديم هذا الشهر"
+    },
+    "proExtra": "إلغاء في أي وقت",
+    "upgrade": "الترقية إلى Pro",
+    "currentPlan": "خطتك الحالية",
+    "forRole": "متاحة لحسابات {{role}}",
+    "signUpToUpgrade": "سجّل للبدء",
+    "comingSoon": "مجاني حاليًا",
+    "comingSoonNote": "لا توجد خطة مدفوعة بعد: كل شيء غير محدود.",
+    "redirecting": "جارٍ فتح صفحة الدفع الآمنة…",
+    "title": "الفوترة",
+    "subtitle": "خطتك واستخدامك هذا الشهر",
+    "planFree": "الخطة المجانية",
+    "planPro": "خطة Pro",
+    "renews": "تتجدد في {{date}}",
+    "endsOn": "تنتهي Pro في {{date}} (ملغاة)",
+    "usageTitle": "الاستخدام",
+    "usedOf": "{{used}} من {{limit}}",
+    "usedUnlimited": "{{used}} · غير محدود",
+    "manage": "إدارة الاشتراك",
+    "seePlans": "عرض الخطط",
+    "limitToast": "لقد وصلت إلى حد الخطة المجانية.",
+    "activating": "تم استلام الدفع. جارٍ تفعيل خطة Pro…",
+    "activated": "مرحبًا بك في Pro!",
+    "activateSlow": "تمت عملية الدفع. قد يستغرق ظهور Pro دقيقة، حدّث الصفحة بعد قليل.",
+    "paymentsOff": "الخطط المدفوعة غير مفعّلة بعد. كل شيء مجاني وغير محدود.",
+    "sandbox": "وضع الاختبار: استخدم بطاقة الاختبار من Polar. لن تُخصم أموال حقيقية.",
+    "pastDue": "فشلت دفعتك الأخيرة. حدّث بطاقتك من \"إدارة الاشتراك\" للحفاظ على Pro.",
+    "limitMsg": {
+      "hiresPerMonth": "تتضمن خطتك المجانية {{count}} طلبات توظيف شهريًا. رقِّ إلى Pro لطلبات غير محدودة.",
+      "openCampaigns": "تسمح خطتك المجانية بـ {{count}} حملة مفتوحة في الوقت نفسه. أغلق واحدة أو رقِّ إلى Pro.",
+      "talents": "تتيح لك خطتك المجانية إدارة {{count}} مواهب. رقِّ إلى Pro لإضافة المزيد.",
+      "applicationsPerMonth": "تتضمن خطتك المجانية {{count}} طلبات تقديم شهريًا. رقِّ إلى Pro لطلبات غير محدودة."
+    }
   }
 }

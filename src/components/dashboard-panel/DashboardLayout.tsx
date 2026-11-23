@@ -9,6 +9,7 @@ import {
   faBuilding,
   faBullhorn,
   faChartPie,
+  faCreditCard,
   faFileContract,
   faHandshake,
   faIdCard,
@@ -72,6 +73,7 @@ function TalentPanel() {
         { to: '/dashboard/applications', key: 'dashNav.applications', icon: faBullhorn },
         { to: '/dashboard/hire-requests', key: 'dashNav.hireRequests', icon: faHandshake, badge: pending },
         { to: '/agreements', key: 'dashNav.agreements', icon: faFileContract },
+        { to: '/dashboard/billing', key: 'dashNav.billing', icon: faCreditCard },
         { to: '/dashboard/my-manager', key: 'dashNav.myManager', icon: faUserTie, badge: managerRequests },
       ]}
       extra={
@@ -113,6 +115,7 @@ function BusinessPanel() {
         { to: '/shortlists', key: 'dashNav.shortlists', icon: faStar },
         { to: '/dashboard/hire-requests', key: 'dashNav.hireRequests', icon: faHandshake, badge: toDraft },
         { to: '/agreements', key: 'dashNav.agreements', icon: faFileContract },
+        { to: '/dashboard/billing', key: 'dashNav.billing', icon: faCreditCard },
       ]}
     />
   )
@@ -134,6 +137,7 @@ function ManagerPanel() {
         { to: '/talents', key: 'dashNav.myTalents', icon: faUsers, badge: invites },
         { to: '/dashboard/hire-requests', key: 'dashNav.hireRequests', icon: faHandshake, badge: pending },
         { to: '/agreements', key: 'dashNav.agreements', icon: faFileContract },
+        { to: '/dashboard/billing', key: 'dashNav.billing', icon: faCreditCard },
       ]}
     />
   )

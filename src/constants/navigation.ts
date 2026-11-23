@@ -3,6 +3,7 @@ import {
   faBell,
   faCircleInfo,
   faCompass,
+  faCrown,
   faGear,
   faHouse,
   faShieldHalved,
@@ -42,6 +43,13 @@ export const MAIN_NAV: NavItem[] = [
       return tr('site.nav.about')
     },
     icon: faCircleInfo,
+  },
+  {
+    to: '/pricing',
+    get label() {
+      return tr('site.nav.pricing')
+    },
+    icon: faCrown,
   },
 ]
 

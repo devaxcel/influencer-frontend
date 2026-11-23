@@ -33,7 +33,12 @@
 
 ## Pricing
 
-- Using Influnexa is **free** right now: search, accounts, claiming a profile, shortlists, hire requests, campaigns and agreements. No trial and no card needed. Paid plans, if added later, will be announced first.
+- Using Influnexa is **free**: search, accounts, claiming a profile, shortlists, answering hire requests, agreements and reviews. No card needed.
+- Optional monthly **Pro** plans (paid through Polar), with current prices at https://influnexa.com/pricing:
+  - Business: free = 3 hire requests a month and 1 open campaign at a time; Pro = unlimited
+  - Manager: free = 2 talents; Pro = unlimited talents
+  - Talent: free = 5 campaign applications a month; Pro = unlimited
+  A free limit applies only while that account type's Pro plan is on sale.
 - Each talent sets their own prices per service, shown on their profile (and in its `.md` version) in one of three forms:
   - fixed: for example `PKR 50,000 per post`
   - range: for example `USD 500 to USD 900 per event`
