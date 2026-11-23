@@ -12,7 +12,8 @@
     "agreements": "Agreements",
     "managers": "Managers",
     "newsletter": "Newsletter",
-    "inquiries": "Queries"
+    "inquiries": "Queries",
+    "suggestions": "AI suggestions"
   },
   "common": {
     "loading": "Loading...",
@@ -67,6 +68,29 @@
     "activeAgreements": "{{count}} active agreements",
     "managersNeedAction": "Managers to review",
     "managersApproved": "{{count}} verified"
+  },
+  "suggestions": {
+    "title": "AI influencer suggestions",
+    "subtitle": "Review five AI-discovered influencers each day and publish the right ones.",
+    "autoGenerate": "Daily generation",
+    "toggle": "Toggle automatic suggestions",
+    "national": "National",
+    "international": "International",
+    "followers": "Followers",
+    "category": "Category",
+    "platform": "Platform",
+    "website": "Website",
+    "unknown": "Not verified",
+    "add": "Add influencer",
+    "added": "Added",
+    "count": "{{count}} suggestions",
+    "refresh": "Refresh suggestions",
+    "refreshed": "Suggestions refreshed",
+    "addedToast": "Influencer added to the directory",
+    "enabledToast": "Daily suggestions enabled",
+    "disabledToast": "Daily suggestions disabled",
+    "emptyTitle": "No suggestions available",
+    "emptyText": "Turn on daily generation or refresh to discover new influencers."
   },
   "claimStatus": {
     "pending": "Send code",

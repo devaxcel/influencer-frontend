@@ -13,11 +13,13 @@ import {
   faUserCheck,
   faUserTie,
   faUsers,
+  faWandMagicSparkles,
   type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 
 const LINKS: { to: string; key: string; icon: IconDefinition; end?: boolean }[] = [
   { to: '/admin', key: 'nav.dashboard', icon: faChartPie, end: true },
+  { to: '/admin/suggestions', key: 'nav.suggestions', icon: faWandMagicSparkles },
   { to: '/admin/claims', key: 'nav.claims', icon: faUserCheck },
   { to: '/admin/businesses', key: 'nav.businesses', icon: faBuilding },
   { to: '/admin/managers', key: 'nav.managers', icon: faUserTie },

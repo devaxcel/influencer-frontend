@@ -60,6 +60,7 @@ import AgreementDetailPage from "./pages/agreements/AgreementDetailPage";
 import AdminAgreementsPage from "./pages/admin-panel/AdminAgreementsPage";
 import AdminManagersPage from "./pages/admin-panel/AdminManagersPage";
 import AdminNewsletterPage from "./pages/admin-panel/AdminNewsletterPage";
+import AdminSuggestionsPage from "./pages/admin-panel/AdminSuggestionsPage";
 import LegalPage from "./pages/LegalPage";
 import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
 import AdminManagerDetailPage from "./pages/admin-panel/AdminManagerDetailPage";
@@ -324,6 +325,7 @@ function App() {
           }
         >
           <Route index element={<AdminOverviewPage />} />
+          <Route path="suggestions" element={<AdminSuggestionsPage />} />
           <Route path="claims" element={<AdminClaimsPage />} />
           <Route path="claims/:id" element={<AdminClaimDetailPage />} />
           <Route path="users" element={<AdminUsersPage />} />
