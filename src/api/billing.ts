@@ -42,8 +42,8 @@ export async function getMyBilling(sync = false) {
 }
 
 // Polar ke checkout page ka link
-export async function startCheckout() {
-  const res = await api.post<ApiSuccess<{ url: string }>>('/billing/checkout')
+export async function startCheckout(role: string) {
+  const res = await api.post<ApiSuccess<{ url: string }>>('/billing/checkout', { role })
   return res.data.data.url
 }
 
