@@ -52,7 +52,7 @@ function useRelative(target: string | null, now: number) {
   return rtf.format(Math.round(s / 86400), 'day')
 }
 
-// Placeholder SuggestionCard (Agar aapke paas already hai, to import kar lein)
+// SuggestionCard 
 function SuggestionCard({ suggestion, selected, onToggle, isBusy, onAdd, onDismiss }: any) {
   return (
     <div className={`p-4 border rounded-xl ${selected ? 'border-brand ring-1 ring-brand' : 'border-gray-200'} bg-white`}>
@@ -158,7 +158,8 @@ function AdminSuggestionsPage() {
   const query = useQuery({
     queryKey: QUERY_KEY,
     queryFn: listSuggestions,
-    // ✅ Refetch interval hata diya hai, tick khud data fetch karega
+    // ✅ Refetch interval 30 minutes set kiya hai
+    refetchInterval: 30 * 60 * 1000, 
   })
   
   const data = query.data
