@@ -7,10 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faBuilding,
   faCheck,
+  faChevronDown,
   faCrown,
   faLock,
+  faRightFromBracket,
   faStar,
   faUserTie,
+  faGift,
   type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 import { myBillingQuery, plansQuery, startCheckout, type PaidRole, type Plan, type PlanFeature } from '../api/billing'
@@ -24,6 +27,8 @@ const ROLE_ICONS: Record<PaidRole, IconDefinition> = {
   representative: faUserTie,
   talent: faStar,
 }
+
+const FAQ_KEYS = ['q1', 'q2', 'q3', 'q4'] as const
 
 function planPrice(plan: Plan, t: (key: string) => string) {
   if (!plan.price || plan.price.amount === null) return null
@@ -53,7 +58,6 @@ function PlanCard({ plan }: { plan: Plan }) {
   async function upgrade() {
     setBusy(true)
     try {
-      // ✅ FIX: startCheckout mein plan.role pass kiya gaya
       const url = await startCheckout(plan.role)
       window.location.assign(url)
     } catch (error) {
@@ -141,6 +145,91 @@ function PlanCard({ plan }: { plan: Plan }) {
   )
 }
 
+// Har enabled plan ke har feature ka Free limit vs Pro, ek table mein
+function ComparisonTable({ plans }: { plans: Plan[] }) {
+  const { t } = useTranslation()
+  const rows = plans
+    .filter((plan) => plan.enabled)
+    .flatMap((plan) =>
+      (Object.keys(plan.freeLimits) as PlanFeature[]).map((feature) => ({
+        role: plan.role,
+        feature,
+        limit: plan.freeLimits[feature],
+      })),
+    )
+  if (rows.length === 0) return null
+
+  return (
+    <section className="mx-auto w-full max-w-4xl">
+      <h2 className="text-center text-xl font-bold md:text-2xl">{t('billing.compare.title')}</h2>
+      <div className="mt-5 overflow-x-auto rounded-3xl bg-white shadow-sm ring-1 ring-gray-200/70">
+        <table className="w-full min-w-[560px] text-start text-sm">
+          <thead className="bg-gray-50 text-gray-600">
+            <tr>
+              <th className="px-4 py-3 text-start font-semibold">{t('billing.compare.role')}</th>
+              <th className="px-4 py-3 text-start font-semibold">{t('billing.compare.feature')}</th>
+              <th className="px-4 py-3 text-start font-semibold">{t('billing.free')}</th>
+              <th className="px-4 py-3 text-start font-semibold">
+                <FontAwesomeIcon icon={faCrown} className="me-1.5 text-brand" />
+                {t('billing.pro')}
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {rows.map((row) => (
+              <tr key={`${row.role}-${row.feature}`}>
+                <td className="px-4 py-3 font-medium text-gray-900">{t(`billing.roles.${row.role}`)}</td>
+                <td className="px-4 py-3 text-gray-600">{t(`billing.compare.features.${row.feature}`)}</td>
+                <td className="px-4 py-3 text-gray-600">{t(`billing.limit.${row.feature}`, { count: row.limit })}</td>
+                <td className="px-4 py-3 font-medium text-gray-900">{t(`billing.unlimited.${row.feature}`)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  )
+}
+
+function TrustStrip() {
+  const { t } = useTranslation()
+  const items = [
+    { icon: faGift, text: t('billing.alwaysFree') },
+    { icon: faLock, text: t('billing.securePayments') },
+    { icon: faRightFromBracket, text: t('billing.trust.checkout') },
+  ]
+  return (
+    <ul className="mx-auto grid max-w-4xl gap-3 sm:grid-cols-3">
+      {items.map((item) => (
+        <li key={item.text} className="flex items-start gap-3 rounded-2xl bg-white p-4 text-sm text-gray-600 ring-1 ring-gray-200/70">
+          <FontAwesomeIcon icon={item.icon} className="mt-0.5 text-brand" />
+          <span>{item.text}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function Faq() {
+  const { t } = useTranslation()
+  return (
+    <section className="mx-auto w-full max-w-2xl">
+      <h2 className="text-center text-xl font-bold md:text-2xl">{t('billing.faq.title')}</h2>
+      <div className="mt-5 space-y-3">
+        {FAQ_KEYS.map((key) => (
+          <details key={key} className="group rounded-2xl bg-white p-4 ring-1 ring-gray-200/70">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-gray-900">
+              {t(`billing.faq.${key}`)}
+              <FontAwesomeIcon icon={faChevronDown} className="text-xs text-gray-400 transition group-open:rotate-180" />
+            </summary>
+            <p className="mt-3 text-sm leading-relaxed text-gray-600">{t(`billing.faq.a${key.slice(1)}`)}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 // /pricing: har account type ka Free aur Pro plan (daam Polar se)
 function PricingPage() {
   const { t, i18n } = useTranslation()
@@ -179,7 +268,7 @@ function PricingPage() {
   )
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-12">
       <header className="mx-auto max-w-2xl text-center">
         <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl">{t('billing.pricingTitle')}</h1>
         <p className="mt-3 text-gray-600">{t('billing.pricingSubtitle')}</p>
@@ -194,19 +283,18 @@ function PricingPage() {
       ) : isError || !plans ? (
         <p className="text-center text-gray-500">{t('site.somethingWrong')}</p>
       ) : (
-        <div className="grid gap-6 md:grid-cols-3">
-          {plans.map((plan) => (
-            <PlanCard key={plan.role} plan={plan} />
-          ))}
-        </div>
+        <>
+          <div className="grid gap-6 md:grid-cols-3">
+            {plans.map((plan) => (
+              <PlanCard key={plan.role} plan={plan} />
+            ))}
+          </div>
+          <ComparisonTable plans={plans} />
+        </>
       )}
 
-      <div className="mx-auto max-w-2xl space-y-2 text-center text-sm text-gray-500">
-        <p>{t('billing.alwaysFree')}</p>
-        <p className="flex items-center justify-center gap-2">
-          <FontAwesomeIcon icon={faLock} /> {t('billing.securePayments')}
-        </p>
-      </div>
+      <TrustStrip />
+      <Faq />
     </div>
   )
 }

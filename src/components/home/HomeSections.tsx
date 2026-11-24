@@ -692,7 +692,7 @@ export function Benefits() {
     { icon: faUsers, t: d('home.b6', 'Moderated community'), b: d('home.b6b', 'Reports, reviews and an audit log keep the platform honest.') },
   ]
   return (
-    <section>
+    <section className="pt-12 sm:pt-16 md:pt-20">
       <Title>{d('home.whyTitle', 'Why teams choose us')}</Title>
       <div className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
         {items.map((it, i) => (

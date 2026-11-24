@@ -3073,6 +3073,31 @@
       "applicationsPerMonth": "Campaign applications this month"
     },
     "proExtra": "Cancel anytime",
+        "compare": {
+      "title": "Free vs Pro, side by side",
+      "role": "Account type",
+      "feature": "What's limited",
+      "features": {
+        "hiresPerMonth": "Hire requests per month",
+        "openCampaigns": "Open campaigns",
+        "talents": "Talents you manage",
+        "applicationsPerMonth": "Campaign applications per month"
+      }
+    },
+    "trust": {
+      "checkout": "Upgrading takes you to a secure checkout page and brings you back when you are done."
+    },
+    "faq": {
+      "title": "Plans, answered",
+      "q1": "Is there a free plan?",
+      "a1": "Yes. Every account type has a Free plan with fixed limits, and it stays free.",
+      "q2": "What do I get with Pro?",
+      "a2": "Pro removes the Free limits listed for your account type, plus the extras shown on the plan.",
+      "q3": "Can I buy a plan for another account type?",
+      "a3": "No. Each plan is for one account type, and you can only upgrade the plan that matches your own account.",
+      "q4": "How does payment work?",
+      "a4": "When you press Upgrade you are sent to a secure checkout page to pay, then returned to Influnexa."
+    },
     "upgrade": "Upgrade to Pro",
     "currentPlan": "Your current plan",
     "forRole": "Available for {{role}} accounts",
