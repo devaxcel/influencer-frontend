@@ -8,6 +8,7 @@ import {
   faClock,
   faPlus,
   faSpinner,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons'
 import toast from 'react-hot-toast'
 import {
@@ -17,18 +18,25 @@ import {
   refreshSuggestions,
   tickSuggestions,
   updateSuggestionSetting,
+  getSuggestionDetail,
 } from '../../api/suggestions'
 import DataState from '../../components/admin-panel/DataState'
 import PageHeader from '../../components/admin-panel/PageHeader'
 import Switch from '../../components/Switch'
-import type { SuggestionGroup, SuggestionsData } from '../../types/suggestion'
+import type { SuggestionsData, InfluencerSuggestion } from '../../types/suggestion'
 import { getApiError } from '../../utils/apiError'
+import { useAuth } from '../../hooks/useAuth'
+import { Photo } from '../../components/home/HomeSections'
 
 const QUERY_KEY = ['admin', 'suggestions']
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return 'N/A'
-  try { return new Date(dateStr).toLocaleString() } catch { return 'N/A' }
+  try {
+    return new Date(dateStr).toLocaleString()
+  } catch {
+    return 'N/A'
+  }
 }
 
 function useIntervalLabel(seconds: number = 86400) {
@@ -52,45 +60,155 @@ function useRelative(target: string | null, now: number) {
   return rtf.format(Math.round(s / 86400), 'day')
 }
 
-// SuggestionCard 
-function SuggestionCard({ suggestion, selected, onToggle, isBusy, onAdd, onDismiss }: any) {
+// ✅ Suggestion Detail Modal (Profile View)
+function SuggestionDetailModal({ id, onClose }: { id: string; onClose: () => void }) {
+  const { data: suggestion, isLoading } = useQuery({
+    queryKey: ['suggestion-detail', id],
+    queryFn: () => getSuggestionDetail(id),
+  })
+
   return (
-    <div className={`p-4 border rounded-xl ${selected ? 'border-brand ring-1 ring-brand' : 'border-gray-200'} bg-white`}>
-      <div className="flex justify-between items-start">
-        <div>
-          <h3 className="font-semibold">{suggestion?.name || 'Unknown'}</h3>
-          <p className="text-sm text-gray-500">{suggestion?.headline || 'No headline'}</p>
-        </div>
-        <input type="checkbox" checked={selected} onChange={onToggle} className="mt-1" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="relative flex max-h-[90vh] w-full max-w-lg flex-col overflow-hidden rounded-3xl bg-white shadow-2xl">
+        <button
+          onClick={onClose}
+          className="absolute end-4 top-4 z-10 rounded-full bg-white/80 p-2 text-gray-500 hover:bg-gray-100"
+        >
+          <FontAwesomeIcon icon={faTimes} />
+        </button>
+
+        {isLoading ? (
+          <div className="p-10 text-center text-gray-500">Loading...</div>
+        ) : suggestion ? (
+          <div className="overflow-y-auto">
+            <div className="h-32 w-full bg-gradient-to-r from-brand to-brand-violet" />
+            <div className="px-6 pb-6">
+              <div className="relative -mt-16 mb-4 mx-auto h-32 w-32 overflow-hidden rounded-full border-4 border-white bg-white shadow-md">
+                <Photo
+                  person={{ name: suggestion.name, photoUrl: suggestion.photoUrl }}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="text-center">
+                <h2 className="text-2xl font-bold">{suggestion.name}</h2>
+                <p className="text-gray-500">{suggestion.headline}</p>
+                <p className="mt-2 text-sm text-gray-600">{suggestion.reason}</p>
+              </div>
+
+              <div className="mt-6 flex justify-center gap-6 rounded-2xl bg-gray-50 p-4">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-brand">
+                    {suggestion.followerCount?.toLocaleString() || 0}
+                  </div>
+                  <div className="text-xs text-gray-500">Total Followers</div>
+                </div>
+              </div>
+
+              <div className="mt-6">
+                <h3 className="mb-3 text-sm font-semibold text-gray-900">Social Accounts</h3>
+                <div className="space-y-2">
+                  {suggestion.socials.map((social) => (
+                    <a
+                      key={social.url}
+                      href={social.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center justify-between rounded-xl border border-gray-100 p-3 hover:bg-gray-50"
+                    >
+                      <span className="font-medium capitalize">{social.platform}</span>
+                      <span className="text-sm text-gray-500">@{social.handle}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="p-10 text-center text-red-500">Suggestion not found.</div>
+        )}
       </div>
-      <div className="mt-4 flex gap-2">
-        <button onClick={onAdd} disabled={isBusy} className="px-3 py-1 bg-brand text-white rounded-lg text-sm">Add</button>
-        <button onClick={onDismiss} disabled={isBusy} className="px-3 py-1 border border-gray-300 rounded-lg text-sm">Dismiss</button>
+    </div>
+  )
+}
+
+function SuggestionCard({
+  suggestion,
+  selected,
+  onToggle,
+  isBusy,
+  onAdd,
+  onDismiss,
+  onClick,
+}: {
+  suggestion: InfluencerSuggestion
+  selected: boolean
+  onToggle: () => void
+  isBusy: boolean
+  onAdd: () => void
+  onDismiss: () => void
+  onClick: () => void
+}) {
+  return (
+    <div
+      className={`relative cursor-pointer rounded-xl border p-4 transition hover:shadow-md ${
+        selected ? 'border-brand bg-brand/5 ring-1 ring-brand' : 'border-gray-200 bg-white'
+      }`}
+      onClick={onClick}
+    >
+      <div className="flex items-start justify-between">
+        <div>
+          <h3 className="font-semibold text-brand">{suggestion?.name || 'Unknown'}</h3>
+          <p className="line-clamp-2 text-sm text-gray-500">{suggestion?.headline || 'No headline'}</p>
+        </div>
+        <div onClick={(e) => e.stopPropagation()}>
+          <input type="checkbox" checked={selected} onChange={onToggle} className="mt-1 cursor-pointer" />
+        </div>
+      </div>
+      <div className="mt-4 flex gap-2" onClick={(e) => e.stopPropagation()}>
+        <button
+          onClick={onAdd}
+          disabled={isBusy}
+          className="rounded-lg bg-brand px-3 py-1 text-sm font-medium text-white hover:bg-brand-hover disabled:opacity-50"
+        >
+          Add
+        </button>
+        <button
+          onClick={onDismiss}
+          disabled={isBusy}
+          className="rounded-lg border border-gray-300 px-3 py-1 text-sm font-medium hover:bg-gray-50 disabled:opacity-50"
+        >
+          Dismiss
+        </button>
       </div>
     </div>
   )
 }
 
 function GroupSection({
-  group, index, busyIds, onAdd, onDismiss,
+  group,
+  index,
+  busyIds,
+  onAdd,
+  onDismiss,
+  onView,
 }: {
-  group: SuggestionGroup
+  group: any
   index: number
   busyIds: string[]
   onAdd: (ids: string[]) => void
   onDismiss: (id: string) => void
+  onView: (id: string) => void
 }) {
   const { t } = useTranslation()
   const [selected, setSelected] = useState<string[]>([])
-  
   const suggestions = group?.suggestions ?? []
-  const pending = suggestions.filter((s) => s.status === 'pending')
-  const chosen = selected.filter((id) => pending.some((s) => s._id === id))
+  const pending = suggestions.filter((s: any) => s.status === 'pending')
+  const chosen = selected.filter((id) => pending.some((s: any) => s._id === id))
   const allChosen = pending.length > 0 && chosen.length === pending.length
   const busy = chosen.some((id) => busyIds.includes(id))
-  
+
   const toggle = (id: string) =>
-    setSelected((list) => (list.includes(id) ? list.filter((item) => item !== id) : [...list, id]))
+    setSelected((list) => (list.includes(id) ? list.filter((i) => i !== id) : [...list, id]))
 
   return (
     <section className="space-y-4 rounded-3xl border border-gray-200 bg-gray-50/60 p-4 md:p-5">
@@ -98,14 +216,16 @@ function GroupSection({
         <div>
           <h2 className="text-base font-semibold">
             {index === 0 ? t('suggestions.latestGroup') : t('suggestions.group')}
-            <span className="ms-2 text-sm font-normal text-gray-500">{formatDate(group?.generatedAt)}</span>
+            <span className="ms-2 text-sm font-normal text-gray-500">
+              {formatDate(group?.generatedAt)}
+            </span>
           </h2>
           <p className="text-xs text-gray-500">
             {t('suggestions.groupMeta', {
               total: suggestions.length,
-              national: suggestions.filter((s) => s.scope === 'national').length,
-              international: suggestions.filter((s) => s.scope === 'international').length,
-              added: suggestions.filter((s) => s.status === 'approved').length,
+              national: suggestions.filter((s: any) => s.scope === 'national').length,
+              international: suggestions.filter((s: any) => s.scope === 'international').length,
+              added: suggestions.filter((s: any) => s.status === 'approved').length,
             })}
           </p>
         </div>
@@ -113,7 +233,7 @@ function GroupSection({
           <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              onClick={() => setSelected(allChosen ? [] : pending.map((s) => s._id))}
+              onClick={() => setSelected(allChosen ? [] : pending.map((s: any) => s._id))}
               className="rounded-xl border border-gray-300 bg-white px-3 py-2 text-sm font-medium hover:bg-gray-50"
             >
               {allChosen ? t('suggestions.clearSelection') : t('suggestions.selectAll')}
@@ -134,7 +254,7 @@ function GroupSection({
         )}
       </div>
       <div className="grid gap-5 lg:grid-cols-2 2xl:grid-cols-3">
-        {suggestions.map((suggestion) => (
+        {suggestions.map((suggestion: any) => (
           <SuggestionCard
             key={suggestion._id}
             suggestion={suggestion}
@@ -143,6 +263,7 @@ function GroupSection({
             isBusy={busyIds.includes(suggestion._id)}
             onAdd={() => onAdd([suggestion._id])}
             onDismiss={() => onDismiss(suggestion._id)}
+            onClick={() => onView(suggestion._id)}
           />
         ))}
       </div>
@@ -152,16 +273,19 @@ function GroupSection({
 
 function AdminSuggestionsPage() {
   const { t } = useTranslation()
+  const { user } = useAuth()
+  const userCountry = (user as any)?.country || 'PK'
+  
   const queryClient = useQueryClient()
   const [now, setNow] = useState(() => Date.now())
-  
+  const [viewSuggestionId, setViewSuggestionId] = useState<string | null>(null)
+
   const query = useQuery({
     queryKey: QUERY_KEY,
     queryFn: listSuggestions,
-    // ✅ Refetch interval 30 minutes set kiya hai
-    refetchInterval: 30 * 60 * 1000, 
+    refetchInterval: 30 * 60 * 1000,
   })
-  
+
   const data = query.data
 
   const missingKeys = data?.missingKeys ?? []
@@ -173,7 +297,7 @@ function AdminSuggestionsPage() {
   const nextGenerationAt = data?.nextGenerationAt ?? null
 
   const tick = useMutation({
-    mutationFn: tickSuggestions,
+    mutationFn: () => tickSuggestions(userCountry),
     onSuccess: (fresh) => {
       queryClient.setQueryData(QUERY_KEY, fresh)
       if (fresh.result?.status === 'generated') toast.success(t('suggestions.newGroup'))
@@ -184,12 +308,13 @@ function AdminSuggestionsPage() {
     const timer = window.setInterval(() => setNow(Date.now()), 1000)
     return () => window.clearInterval(timer)
   }, [])
-  
+
   const dueAt = nextGenerationAt ? new Date(nextGenerationAt).getTime() : null
-  const due = Boolean(enabled && !generating && dueAt !== null && dueAt <= now && missingKeys.length === 0)
-  
+  const due = Boolean(
+    enabled && !generating && dueAt !== null && dueAt <= now && missingKeys.length === 0,
+  )
+
   useEffect(() => {
-    // ✅ Faltu calls rokne ke liye check
     if (due && !tick.isPending && !query.isFetching) {
       tick.mutate()
     }
@@ -198,7 +323,9 @@ function AdminSuggestionsPage() {
   const setting = useMutation({
     mutationFn: updateSuggestionSetting,
     onSuccess: (enabled) => {
-      queryClient.setQueryData(QUERY_KEY, (old: SuggestionsData | undefined) => (old ? { ...old, enabled } : old))
+      queryClient.setQueryData(QUERY_KEY, (old: SuggestionsData | undefined) =>
+        old ? { ...old, enabled } : old,
+      )
       queryClient.invalidateQueries({ queryKey: QUERY_KEY })
       toast.success(enabled ? t('suggestions.enabledToast') : t('suggestions.disabledToast'))
     },
@@ -206,7 +333,7 @@ function AdminSuggestionsPage() {
   })
 
   const refresh = useMutation({
-    mutationFn: refreshSuggestions,
+    mutationFn: () => refreshSuggestions(userCountry),
     onSuccess: (fresh) => {
       queryClient.setQueryData(QUERY_KEY, fresh)
       toast.success(t('suggestions.refreshed'))
@@ -223,7 +350,11 @@ function AdminSuggestionsPage() {
       queryClient.invalidateQueries({ queryKey: QUERY_KEY })
       if (added > 0) toast.success(t('suggestions.addedToast', { count: added }))
       for (const failed of results?.filter((r) => !r.ok) ?? []) {
-        toast.error(failed.code === 'DUPLICATE' ? t('suggestions.duplicate') : (failed.error ?? t('suggestions.addFailed')))
+        toast.error(
+          failed.code === 'DUPLICATE'
+            ? t('suggestions.duplicate')
+            : (failed.error ?? t('suggestions.addFailed')),
+        )
       }
     },
     onError: (error) => toast.error(getApiError(error).message),
@@ -284,7 +415,7 @@ function AdminSuggestionsPage() {
               {t('suggestions.refresh')}
             </button>
           </div>
-          
+
           {missingKeys.length > 0 && (
             <p className="flex items-start gap-2 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800">
               <FontAwesomeIcon icon={faCircleExclamation} className="mt-0.5" />
@@ -312,7 +443,7 @@ function AdminSuggestionsPage() {
         onRetry={() => query.refetch()}
       >
         <div className="space-y-6">
-          {groups.map((group, index) => (
+          {groups.map((group: any, index: number) => (
             <GroupSection
               key={group?.batchId ?? index}
               group={group}
@@ -320,10 +451,18 @@ function AdminSuggestionsPage() {
               busyIds={busyIds}
               onAdd={(ids) => add.mutate(ids)}
               onDismiss={(id) => dismiss.mutate(id)}
+              onView={(id) => setViewSuggestionId(id)}
             />
           ))}
         </div>
       </DataState>
+
+      {viewSuggestionId && (
+        <SuggestionDetailModal
+          id={viewSuggestionId}
+          onClose={() => setViewSuggestionId(null)}
+        />
+      )}
     </>
   )
 }

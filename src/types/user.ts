@@ -1,7 +1,6 @@
 import type { CompanySize, OrganizationType } from './business'
 
 export type Role = 'talent' | 'representative' | 'business' | 'admin'
-
 export type SignupRole = Exclude<Role, 'admin'>
 
 export interface User {
@@ -11,9 +10,8 @@ export interface User {
   role: Role
   isEmailVerified: boolean
   status: 'active' | 'suspended'
-  // Apni photo / business ka logo (upload ki hui)
+  country?: string // ✅ Added for suggestions feature
   avatarUrl?: string
-  // Business / organization signup pe di gayi details (tasdeeq ka form inhi se shuru hota hai)
   company?: {
     organizationType?: OrganizationType
     companyName: string
@@ -23,7 +21,6 @@ export interface User {
     country?: string
     websiteUrl?: string
   }
-  // Manager signup pe di gayi details (tasdeeq ka form inhi se shuru hota hai)
   manager?: {
     agencyName?: string
     country?: string

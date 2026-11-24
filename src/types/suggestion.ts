@@ -1,38 +1,20 @@
-import type { SocialPlatform } from './person'
-
-export interface SuggestionSocial {
-  platform: SocialPlatform
-  handle?: string
-  url: string
-  // Asal profile se verify hue followers (generation ke waqt) aur kis page se
-  followers?: number
-  followersSourceUrl?: string
-  followersUpdatedAt?: string
-}
-
 export interface InfluencerSuggestion {
   _id: string
-  date: string
+  name: string
+  headline?: string
+  photoUrl?: string
+  followerCount?: number
+  socials: {
+    platform: string
+    handle?: string
+    url: string
+    followers?: number
+  }[]
+  reason?: string
+  scope: 'national' | 'international'
+  status: 'pending' | 'approved' | 'dismissed'
   batchId?: string
   generatedAt?: string
-  groupId?: string
-  groupTitle?: string
-  name: string
-  scope: 'national' | 'international'
-  country: string
-  headline: string
-  bio?: string
-  photoUrl?: string
-  websiteUrl?: string
-  username?: string
-  followerCount?: number
-  reason: string
-  profession?: string
-  industry?: string
-  topics: string[]
-  socials: SuggestionSocial[]
-  status: 'pending' | 'approved' | 'dismissed'
-  personId?: string
 }
 
 export interface SuggestionGroup {
@@ -42,16 +24,17 @@ export interface SuggestionGroup {
 }
 
 export interface SuggestionsData {
-  groups: SuggestionGroup[]
-  suggestions: InfluencerSuggestion[]
   enabled: boolean
   generating: boolean
-  intervalSeconds: number
   lastGeneratedAt: string | null
   nextGenerationAt: string | null
   lastError: string | null
+  intervalSeconds: number
   missingKeys: string[]
-  result?: { status: string; error?: string; count?: number }
+  groups: SuggestionGroup[]
+  suggestions: InfluencerSuggestion[]
+
+ result?: { status: string; batchId?: string; count?: number; error?: string }
 }
 
 export interface ApproveResult {
@@ -61,10 +44,4 @@ export interface ApproveResult {
   slug?: string
   error?: string
   code?: string
-}
-
-export interface InfluencerSuggestionGroup {
-  groupId: string
-  title: string
-  suggestions: InfluencerSuggestion[]
 }
