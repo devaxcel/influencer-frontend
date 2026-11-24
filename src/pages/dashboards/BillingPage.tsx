@@ -16,6 +16,7 @@ import { getMyBilling, myBillingQuery, openBillingPortal, startCheckout } from '
 import { getApiError } from '../../utils/apiError'
 import { formatDate } from '../../utils/adminFormat'
 import { money } from '../../utils/price'
+import { useAuth } from '../../hooks/useAuth' // ✅ Import kiya
 
 const box = 'rounded-2xl bg-white p-5 shadow-sm md:p-6'
 
@@ -23,6 +24,7 @@ const box = 'rounded-2xl bg-white p-5 shadow-sm md:p-6'
 // Polar checkout ke baad yahin wapas aate hain (?checkout_id=...)
 function BillingPage() {
   const { t } = useTranslation()
+  const { user } = useAuth() // ✅ User nikala
   const queryClient = useQueryClient()
   const [params, setParams] = useSearchParams()
   const fromCheckout = params.has('checkout_id')
@@ -124,7 +126,13 @@ function BillingPage() {
           </div>
           <div className="flex flex-wrap gap-2">
             {data.enabled && !isPro && (
-              <button type="button" disabled={busy} onClick={() => go(startCheckout)} className={`${button} bg-brand text-on-brand hover:bg-brand-hover`}>
+              // ✅ FIX: startCheckout mein user.role pass kiya
+              <button 
+                type="button" 
+                disabled={busy} 
+                onClick={() => go(() => startCheckout(user?.role || 'talent'))} 
+                className={`${button} bg-brand text-on-brand hover:bg-brand-hover`}
+              >
                 <FontAwesomeIcon icon={faCrown} /> {busy ? t('billing.redirecting') : t('billing.upgrade')}
               </button>
             )}
