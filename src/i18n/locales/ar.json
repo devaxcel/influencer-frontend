@@ -796,7 +796,8 @@
     "googleNoAccount": "لا يوجد حساب بهذا البريد من Google بعد. اختر نوع الحساب للتسجيل.",
     "googleButton": "المتابعة باستخدام Google",
     "eyebrow": "مرحباً بعودتك",
-    "secure": "تسجيل دخول آمن"
+    "secure": "تسجيل دخول آمن",
+    "completeCaptcha": "يرجى إكمال التحقق من reCAPTCHA"
   },
   "notFound": {
     "title": "404 - الصفحة غير موجودة",
@@ -1005,7 +1006,8 @@
     },
     "googleHint": "تستخدم Google؟ املأ التفاصيل أعلاه أولاً. لا حاجة لكلمة مرور.",
     "googleFillFirst": "املأ التفاصيل المطلوبة أعلاه، ثم تابع باستخدام Google.",
-    "googleButton": "التسجيل باستخدام Google"
+    "googleButton": "التسجيل باستخدام Google",
+    "completeCaptcha": "يرجى إكمال التحقق من reCAPTCHA"
   },
   "claimForm": {
     "sent": "تم إرسال المطالبة! سنراجعها قريباً.",

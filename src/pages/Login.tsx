@@ -11,6 +11,7 @@ import { AUTH_BUTTON, AUTH_INPUT } from '../components/auth/authStyles'
 import { googleLoginRequest } from '../api/auth'
 import { useAuth } from '../hooks/useAuth'
 import { getApiError } from '../utils/apiError'
+import RecaptchaCheckbox from '../components/RecaptchaCheckbox'
 
 function Login() {
   const { t } = useTranslation()
@@ -25,13 +26,20 @@ function Login() {
   const [password, setPassword] = useState('')
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaEnabled, setCaptchaEnabled] = useState(false)
+  const [captchaResetKey, setCaptchaResetKey] = useState(0)
 
   if (user) return <Navigate to={from ?? homeFor(user.role)} replace />
 
   async function handleGoogle(credential: string) {
+    if (captchaEnabled && !captchaToken) {
+      toast.error(t('login.completeCaptcha'))
+      return
+    }
     setIsSubmitting(true)
     try {
-      const loggedIn = await googleLoginRequest(credential)
+      const loggedIn = await googleLoginRequest(credential, captchaToken ?? undefined)
       updateUser(loggedIn)
       toast.success(t('login.welcomeBack', { name: loggedIn.name }))
       navigate(from ?? homeFor(loggedIn.role), { replace: true })
@@ -45,16 +53,21 @@ function Login() {
       }
     } finally {
       setIsSubmitting(false)
+      setCaptchaResetKey((key) => key + 1)
     }
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    if (captchaEnabled && !captchaToken) {
+      toast.error(t('login.completeCaptcha'))
+      return
+    }
     setErrors({})
     setIsSubmitting(true)
 
     try {
-      const loggedIn = await login({ email, password })
+      const loggedIn = await login({ email, password, captchaToken: captchaToken ?? undefined })
       toast.success(t('login.welcomeBack', { name: loggedIn.name }))
       navigate(from ?? homeFor(loggedIn.role), { replace: true })
     } catch (error) {
@@ -63,6 +76,7 @@ function Login() {
       toast.error(message)
     } finally {
       setIsSubmitting(false)
+      setCaptchaResetKey((key) => key + 1)
     }
   }
 
@@ -132,6 +146,11 @@ function Login() {
               {t('forgot.link')}
             </Link>
           </div>
+          <RecaptchaCheckbox
+            onToken={setCaptchaToken}
+            onEnabled={setCaptchaEnabled}
+            resetKey={captchaResetKey}
+          />
           {/*
             ✅ INVERSE button — Tailwind v4 auto-invert se:
             - Light mode: bg-gray-900 (dark) + text-white (white)

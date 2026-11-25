@@ -851,7 +851,8 @@
     "googleNoAccount": "No account uses this Google email yet. Choose an account type to sign up.",
     "googleButton": "Continue with Google",
     "eyebrow": "WELCOME BACK",
-    "secure": "SECURE SIGN IN"
+    "secure": "SECURE SIGN IN",
+    "completeCaptcha": "Please complete the reCAPTCHA verification"
   },
   "notFound": {
     "title": "404 - Page not found",
@@ -1060,7 +1061,8 @@
     },
     "googleHint": "Using Google? Fill in the details above first. No password needed.",
     "googleFillFirst": "Fill in the required details above, then continue with Google.",
-    "googleButton": "Sign up with Google"
+    "googleButton": "Sign up with Google",
+    "completeCaptcha": "Please complete the reCAPTCHA verification"
   },
   "claimForm": {
     "sent": "Claim sent! We will review it soon.",

@@ -28,6 +28,7 @@ import { useAuth } from '../hooks/useAuth'
 import type { SignupRole } from '../types/user'
 import { getApiError } from '../utils/apiError'
 import { countryName } from '../utils/format'
+import RecaptchaCheckbox from '../components/RecaptchaCheckbox'
 
 const ROLE_ICONS: Record<SignupRole, IconDefinition> = {
   talent: faStar,
@@ -117,6 +118,9 @@ function Register() {
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null)
+  const [captchaEnabled, setCaptchaEnabled] = useState(false)
+  const [captchaResetKey, setCaptchaResetKey] = useState(0)
 
   if (user) return <Navigate to="/dashboard" replace />
 
@@ -179,10 +183,15 @@ function Register() {
     ...details(current),
     email: email.trim(),
     password,
+    captchaToken: captchaToken ?? undefined,
   })
 
   async function handleGoogle(credential: string) {
     if (!role) return
+    if (captchaEnabled && !captchaToken) {
+      toast.error(t('register.completeCaptcha'))
+      return
+    }
     const found = validate(role)
     delete found.email
     delete found.password
@@ -196,7 +205,11 @@ function Register() {
 
     setIsSubmitting(true)
     try {
-      const { user: created, existing } = await googleRegisterRequest(credential, details(role))
+      const { user: created, existing } = await googleRegisterRequest(
+        credential,
+        details(role),
+        captchaToken ?? undefined,
+      )
       updateUser(created)
       toast.success(
         existing
@@ -210,12 +223,17 @@ function Register() {
       toast.error(message)
     } finally {
       setIsSubmitting(false)
+      setCaptchaResetKey((key) => key + 1)
     }
   }
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (!role) return
+    if (captchaEnabled && !captchaToken) {
+      toast.error(t('register.completeCaptcha'))
+      return
+    }
     const found = validate(role)
     setErrors(found)
     if (Object.keys(found).length) {
@@ -234,6 +252,7 @@ function Register() {
       toast.error(message)
     } finally {
       setIsSubmitting(false)
+      setCaptchaResetKey((key) => key + 1)
     }
   }
 
@@ -547,6 +566,12 @@ function Register() {
           />
           <p className="text-xs text-gray-500">{t('register.passwordHint')}</p>
           <p className="text-xs text-gray-500">{t('register.requiredHint')}</p>
+
+          <RecaptchaCheckbox
+            onToken={setCaptchaToken}
+            onEnabled={setCaptchaEnabled}
+            resetKey={captchaResetKey}
+          />
 
           <button type="submit" disabled={isSubmitting} className={AUTH_BUTTON}>
             {isSubmitting ? t('register.submitting') : t('register.submit')}

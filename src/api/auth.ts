@@ -20,11 +20,23 @@ export interface RegisterInput {
   industry?: string
   companySize?: CompanySize | ''
   description?: string
+  captchaToken?: string
 }
 
 export interface LoginInput {
   email: string
   password: string
+  captchaToken?: string
+}
+
+export interface CaptchaConfig {
+  enabled: boolean
+  siteKey: string | null
+}
+
+export async function getCaptchaConfig() {
+  const res = await api.get<ApiSuccess<CaptchaConfig>>('/auth/captcha/config')
+  return res.data.data
 }
 
 export async function registerUser(input: RegisterInput) {
@@ -45,8 +57,11 @@ export async function getGoogleConfig() {
   return res.data.data
 }
 
-export async function googleLoginRequest(credential: string) {
-  const res = await api.post<ApiSuccess<{ user: User }>>('/auth/google/login', { credential })
+export async function googleLoginRequest(credential: string, captchaToken?: string) {
+  const res = await api.post<ApiSuccess<{ user: User }>>('/auth/google/login', {
+    credential,
+    captchaToken,
+  })
   return res.data.data.user
 }
 
@@ -54,10 +69,11 @@ export async function googleLoginRequest(credential: string) {
 export async function googleRegisterRequest(
   credential: string,
   details: Omit<RegisterInput, 'email' | 'password'>,
+  captchaToken?: string,
 ) {
   const res = await api.post<ApiSuccess<{ user: User; existing: boolean }>>(
     '/auth/google/register',
-    { ...details, credential },
+    { ...details, credential, captchaToken },
   )
   return res.data.data
 }
