@@ -12,6 +12,10 @@
       "source": "/campaigns/:id([^/.]+).md",
       "destination": "https://influencer-backend.vercel.app/api/md/campaigns/:id"
     },
+    {
+      "source": "/people/:slug([^/.]+)",
+      "destination": "https://influencer-backend.vercel.app/api/seo/people/:slug"
+    },
     { "source": "/api/:path*", "destination": "https://influencer-backend.vercel.app/api/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
