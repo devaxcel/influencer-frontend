@@ -17,6 +17,12 @@ Disallow: /talents
 Disallow: /my-profile
 Allow: /api/people/photos/
 Allow: /api/uploads/
+Allow: /api/seo/og/
+Disallow: /*?sort=
+Disallow: /*&sort=
+Disallow: /*?minFollowers=
+Disallow: /*&minFollowers=
+Disallow: /*?page=
 Disallow: /api/
 
 # AI crawlers and AI assistants: allowed on the same public pages

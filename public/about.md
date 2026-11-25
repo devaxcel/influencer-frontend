@@ -30,7 +30,7 @@ We put the whole journey in one place: discover people with transparent reach, h
 - **Transparent metrics:** followers and engagement are shown per platform, with the source of the information. No mystery score.
 - **Verified people:** talents, managers and businesses are verified by our team before they can hire, represent or edit a profile.
 - **Honest reviews, public data only:** reviews come only from completed work. Profiles start from public sources, and anyone can report a mistake or ask for removal.
-- **Built for our region:** the whole site works in English, Urdu and Arabic, including right-to-left layouts, starting with Pakistan and the Gulf.
+- **Built for the world:** talent and businesses from any country can join, and the whole site works in English, Urdu and Arabic, including right-to-left layouts.
 
 ## Pricing
 
