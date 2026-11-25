@@ -16,6 +16,13 @@
       "source": "/people/:slug([^/.]+)",
       "destination": "https://influencer-backend.vercel.app/api/seo/people/:slug"
     },
+    { "source": "/about", "destination": "https://influencer-backend.vercel.app/api/seo/page/about" },
+    { "source": "/search", "destination": "https://influencer-backend.vercel.app/api/seo/page/search" },
+    { "source": "/browse", "destination": "https://influencer-backend.vercel.app/api/seo/page/browse" },
+    { "source": "/managers", "destination": "https://influencer-backend.vercel.app/api/seo/page/managers" },
+    { "source": "/businesses", "destination": "https://influencer-backend.vercel.app/api/seo/page/businesses" },
+    { "source": "/campaigns", "destination": "https://influencer-backend.vercel.app/api/seo/page/campaigns" },
+    { "source": "/campaigns/:id([^/.]+)", "destination": "https://influencer-backend.vercel.app/api/seo/campaigns/:id" },
     { "source": "/api/:path*", "destination": "https://influencer-backend.vercel.app/api/:path*" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],

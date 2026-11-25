@@ -1,6 +1,6 @@
 # Influnexa
 
-> Influnexa is a marketplace where businesses find, check and hire creators, journalists, speakers, experts and public figures. Profiles show real reach per platform and their sources; claimed profiles are verified with a code; hiring happens through hire requests, open campaigns and signed digital agreements with milestones. The site works in English, Urdu and Arabic and is built for Pakistan and the Gulf.
+> Influnexa is a marketplace where businesses find, check and hire creators, journalists, speakers, experts and public figures. Profiles show real reach per platform and their sources; claimed profiles are verified with a code; hiring happens through hire requests, open campaigns and signed digital agreements with milestones. The platform is international, for talent and businesses worldwide, and the site works in English, Urdu and Arabic.
 
 - Website: https://influnexa.com
 - Contact: info@influnexa.com (we reply within 1–2 working days)
