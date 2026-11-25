@@ -60,7 +60,7 @@ function useRelative(target: string | null, now: number) {
   return rtf.format(Math.round(s / 86400), 'day')
 }
 
-// ✅ Suggestion Detail Modal (Profile View)
+// ✅ Profile Detail Modal (Suggestion par click karne se khulta hai)
 function SuggestionDetailModal({ id, onClose }: { id: string; onClose: () => void }) {
   const { data: suggestion, isLoading } = useQuery({
     queryKey: ['suggestion-detail', id],
@@ -131,6 +131,7 @@ function SuggestionDetailModal({ id, onClose }: { id: string; onClose: () => voi
   )
 }
 
+// Suggestion Card (Clickable)
 function SuggestionCard({
   suggestion,
   selected,
@@ -283,7 +284,7 @@ function AdminSuggestionsPage() {
   const query = useQuery({
     queryKey: QUERY_KEY,
     queryFn: listSuggestions,
-    refetchInterval: 30 * 60 * 1000,
+    refetchInterval: 30 * 60 * 1000, // 30 minutes
   })
 
   const data = query.data
@@ -376,6 +377,7 @@ function AdminSuggestionsPage() {
       <PageHeader title={t('suggestions.title')} subtitle={t('suggestions.subtitle')}>
         <div className="flex items-center gap-3 rounded-xl bg-white px-3 py-2 shadow-sm">
           <span className="text-sm font-medium">{t('suggestions.autoGenerate')}</span>
+          {/* ✅ ON/OFF Switch */}
           <Switch
             checked={enabled}
             disabled={setting.isPending || query.isLoading}
@@ -449,9 +451,9 @@ function AdminSuggestionsPage() {
               group={group}
               index={index}
               busyIds={busyIds}
-              onAdd={(ids) => add.mutate(ids)}
-              onDismiss={(id) => dismiss.mutate(id)}
-              onView={(id) => setViewSuggestionId(id)}
+              onAdd={(ids: string[]) => add.mutate(ids)}
+              onDismiss={(id: string) => dismiss.mutate(id)}
+              onView={(id: string) => setViewSuggestionId(id)}
             />
           ))}
         </div>
