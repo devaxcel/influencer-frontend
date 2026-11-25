@@ -71,6 +71,7 @@ function Footer() {
       title: t('footer.product'),
       links: [
         { label: t('footer.explorePeople'), to: '/search' },
+        { label: t('footer.talentByCountry', { defaultValue: 'Talent by country' }), to: '/talent' },
         { label: t('footer.mostFollowed'), to: '/search?sort=followers' },
         { label: t('footer.campaigns'), to: '/campaigns' },
         { label: t('footer.businesses'), to: '/businesses' },
