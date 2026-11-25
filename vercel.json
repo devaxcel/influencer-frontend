@@ -1,9 +1,33 @@
 {
+  "redirects": [
+    {
+      "source": "/en",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/:path*",
+      "destination": "/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/sitemap.xml", "destination": "https://influencer-backend.vercel.app/api/sitemap.xml" },
-    { "source": "/search.md", "destination": "https://influencer-backend.vercel.app/api/md/talent" },
-    { "source": "/browse.md", "destination": "https://influencer-backend.vercel.app/api/md/talent" },
-    { "source": "/campaigns.md", "destination": "https://influencer-backend.vercel.app/api/md/campaigns" },
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://influencer-backend-seven.vercel.app/api/sitemap.xml"
+    },
+    {
+      "source": "/search.md",
+      "destination": "https://influencer-backend.vercel.app/api/md/talent"
+    },
+    {
+      "source": "/browse.md",
+      "destination": "https://influencer-backend.vercel.app/api/md/talent"
+    },
+    {
+      "source": "/campaigns.md",
+      "destination": "https://influencer-backend.vercel.app/api/md/campaigns"
+    },
     {
       "source": "/people/:slug([^/.]+).md",
       "destination": "https://influencer-backend.vercel.app/api/md/people/:slug"
@@ -16,51 +40,183 @@
       "source": "/people/:slug([^/.]+)",
       "destination": "https://influencer-backend-seven.vercel.app/api/seo/people/:slug"
     },
-    { "source": "/about", "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/about" },
-    { "source": "/search", "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/search" },
-    { "source": "/browse", "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/browse" },
-    { "source": "/managers", "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/managers" },
-    { "source": "/businesses", "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/businesses" },
-    { "source": "/campaigns", "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/campaigns" },
-    { "source": "/campaigns/:id([^/.]+)", "destination": "https://influencer-backend-seven.vercel.app/api/seo/campaigns/:id" },
-    { "source": "/api/seo/og/:path*", "destination": "https://influencer-backend-seven.vercel.app/api/seo/og/:path*" },
-    { "source": "/api/:path*", "destination": "https://influencer-backend.vercel.app/api/:path*" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/:lang(ur|ar)/people/:slug([^/.]+)",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/people/:slug?lang=:lang"
+    },
+    {
+      "source": "/about",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/about"
+    },
+    {
+      "source": "/:lang(ur|ar)/about",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/about?lang=:lang"
+    },
+    {
+      "source": "/search",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/search"
+    },
+    {
+      "source": "/:lang(ur|ar)/search",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/search?lang=:lang"
+    },
+    {
+      "source": "/browse",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/browse"
+    },
+    {
+      "source": "/:lang(ur|ar)/browse",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/browse?lang=:lang"
+    },
+    {
+      "source": "/managers",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/managers"
+    },
+    {
+      "source": "/:lang(ur|ar)/managers",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/managers?lang=:lang"
+    },
+    {
+      "source": "/businesses",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/businesses"
+    },
+    {
+      "source": "/:lang(ur|ar)/businesses",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/businesses?lang=:lang"
+    },
+    {
+      "source": "/campaigns",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/campaigns"
+    },
+    {
+      "source": "/:lang(ur|ar)/campaigns",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/campaigns?lang=:lang"
+    },
+    {
+      "source": "/talent",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/talent"
+    },
+    {
+      "source": "/:lang(ur|ar)/talent",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/talent?lang=:lang"
+    },
+    {
+      "source": "/:lang(ur|ar)",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/page/home?lang=:lang"
+    },
+    {
+      "source": "/campaigns/:id([^/.]+)",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/campaigns/:id"
+    },
+    {
+      "source": "/:lang(ur|ar)/campaigns/:id([^/.]+)",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/campaigns/:id?lang=:lang"
+    },
+    {
+      "source": "/talent/:segment",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/hub/:segment"
+    },
+    {
+      "source": "/talent/:segment/:country",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/hub/:segment/:country"
+    },
+    {
+      "source": "/:lang(ur|ar)/talent/:segment",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/hub/:segment?lang=:lang"
+    },
+    {
+      "source": "/:lang(ur|ar)/talent/:segment/:country",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/hub/:segment/:country?lang=:lang"
+    },
+    {
+      "source": "/api/seo/og/:path*",
+      "destination": "https://influencer-backend-seven.vercel.app/api/seo/og/:path*"
+    },
+    {
+      "source": "/api/hubs/:path*",
+      "destination": "https://influencer-backend-seven.vercel.app/api/hubs/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://influencer-backend.vercel.app/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=()" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=()"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
+        }
       ]
     },
     {
       "source": "/(index|about).md",
       "headers": [
-        { "key": "Content-Type", "value": "text/markdown; charset=utf-8" },
-        { "key": "Vary", "value": "Accept" }
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
       ]
     },
     {
       "source": "/llms.txt",
-      "headers": [{ "key": "Content-Type", "value": "text/plain; charset=utf-8" }]
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
+      ]
     },
     {
       "source": "/",
       "headers": [
-        { "key": "Vary", "value": "Accept" },
-        { "key": "Link", "value": "</index.md>; rel=\"alternate\"; type=\"text/markdown\", </llms.txt>; rel=\"describedby\"" }
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "</index.md>; rel=\"alternate\"; type=\"text/markdown\", </llms.txt>; rel=\"describedby\""
+        }
       ]
     },
     {
       "source": "/about",
       "headers": [
-        { "key": "Vary", "value": "Accept" },
-        { "key": "Link", "value": "</about.md>; rel=\"alternate\"; type=\"text/markdown\"" }
+        {
+          "key": "Vary",
+          "value": "Accept"
+        },
+        {
+          "key": "Link",
+          "value": "</about.md>; rel=\"alternate\"; type=\"text/markdown\""
+        }
       ]
     }
   ]

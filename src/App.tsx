@@ -61,6 +61,8 @@ import AdminManagersPage from "./pages/admin-panel/AdminManagersPage";
 import AdminNewsletterPage from "./pages/admin-panel/AdminNewsletterPage";
 import AdminSuggestionsPage from "./pages/admin-panel/AdminSuggestionsPage"; // ✅ Fixed default import
 import LegalPage from "./pages/LegalPage";
+import TalentHub from "./pages/TalentHub";
+import TalentIndex from "./pages/TalentIndex";
 import NewsletterUnsubscribe from "./pages/NewsletterUnsubscribe";
 import PricingPage from "./pages/PricingPage";
 import BillingPage from "./pages/dashboards/BillingPage";
@@ -77,6 +79,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/about" element={<About />} />
+        <Route path="/talent" element={<TalentIndex />} />
+        <Route path="/talent/:segment" element={<TalentHub />} />
+        <Route path="/talent/:segment/:country" element={<TalentHub />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route
           path="/privacy"

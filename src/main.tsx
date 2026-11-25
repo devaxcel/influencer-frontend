@@ -6,7 +6,7 @@ import { AuthProvider } from './context/AuthProvider.tsx'
 import { ThemeProvider } from './context/ThemeContext.tsx'
 import { queryClient } from './context/reactQueryContext'
 import './index.css'
-import './i18n'
+import { ROUTER_BASENAME } from './i18n'
 import App from './App.tsx'
 import LanguageRoot from './components/LanguageRoot'
 import AppToaster from './components/AppToaster'
@@ -31,7 +31,7 @@ const hideInitialLoader = () => {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+      <BrowserRouter basename={ROUTER_BASENAME}>
         <ThemeProvider>
           <AuthProvider>
             <LanguageRoot>
