@@ -12,6 +12,7 @@ export interface InfluencerSuggestion {
   }[]
   reason?: string
   scope: 'national' | 'international'
+  category?: 'leader' | 'tech' | 'influencer' | 'professional' | 'trending'
   status: 'pending' | 'approved' | 'dismissed'
   batchId?: string
   generatedAt?: string
