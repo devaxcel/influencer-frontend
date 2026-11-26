@@ -60,6 +60,7 @@ import AdminAgreementsPage from "./pages/admin-panel/AdminAgreementsPage";
 import AdminManagersPage from "./pages/admin-panel/AdminManagersPage";
 import AdminNewsletterPage from "./pages/admin-panel/AdminNewsletterPage";
 import AdminSuggestionsPage from "./pages/admin-panel/AdminSuggestionsPage"; // ✅ Fixed default import
+import AdminApiSettingsPage from "./pages/admin-panel/AdminApiSettingsPage";
 import LegalPage from "./pages/LegalPage";
 import TalentHub from "./pages/TalentHub";
 import TalentIndex from "./pages/TalentIndex";
@@ -339,6 +340,7 @@ function App() {
         >
           <Route index element={<AdminOverviewPage />} />
           <Route path="suggestions" element={<AdminSuggestionsPage />} />
+          <Route path="settings" element={<AdminApiSettingsPage />} />
           <Route path="claims" element={<AdminClaimsPage />} />
           <Route path="claims/:id" element={<AdminClaimDetailPage />} />
           <Route path="users" element={<AdminUsersPage />} />

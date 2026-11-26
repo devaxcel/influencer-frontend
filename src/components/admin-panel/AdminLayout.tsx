@@ -10,6 +10,7 @@ import {
   faFileContract,
   faFlag,
   faIdCard,
+  faKey,
   faUserCheck,
   faUserTie,
   faUsers,
@@ -17,7 +18,7 @@ import {
   type IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
 
-const LINKS: { to: string; key: string; icon: IconDefinition; end?: boolean }[] = [
+const LINKS: { to: string; key: string; label?: string; icon: IconDefinition; end?: boolean }[] = [
   { to: '/admin', key: 'nav.dashboard', icon: faChartPie, end: true },
   { to: '/admin/suggestions', key: 'nav.suggestions', icon: faWandMagicSparkles },
   { to: '/admin/claims', key: 'nav.claims', icon: faUserCheck },
@@ -29,6 +30,7 @@ const LINKS: { to: string; key: string; icon: IconDefinition; end?: boolean }[] 
   { to: '/admin/inquiries', key: 'nav.inquiries', icon: faCircleQuestion },
   { to: '/admin/audit-logs', key: 'nav.auditLog', icon: faClipboardList },
   { to: '/admin/newsletter', key: 'nav.newsletter', icon: faEnvelopeOpenText },
+  { to: '/admin/settings', key: 'nav.apiSettings', label: 'API settings', icon: faKey },
 ]
 
 // /admin ka dhaancha: sidebar + page. dir se Urdu/Arabic mein layout ulta ho jata hai
@@ -56,7 +58,7 @@ function AdminLayout() {
             {LINKS.map((link) => (
               <NavLink key={link.to} to={link.to} end={link.end} className={linkClass}>
                 <FontAwesomeIcon icon={link.icon} className="w-4" />
-                {t(link.key)}
+                {t(link.key, { defaultValue: link.label ?? link.key })}
               </NavLink>
             ))}
           </nav>
