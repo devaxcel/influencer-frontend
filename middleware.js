@@ -1,6 +1,6 @@
 // Vercel Routing Middleware: agar koi AI agent "Accept: text/markdown" bheje to
 // usay page ka markdown version do (HTML/JS ki jagah). Baaki sab ke liye kuch nahi badalta.
-const BACKEND = 'https://influencer-backend.vercel.app/api/md'
+const BACKEND = 'https://influencer-backend-seven.vercel.app/api/md'
 
 export const config = {
   matcher: ['/', '/about', '/search', '/browse', '/campaigns', '/campaigns/:id', '/people/:slug'],
