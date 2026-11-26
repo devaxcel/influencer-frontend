@@ -30,6 +30,25 @@ import { Photo } from '../../components/home/HomeSections'
 
 const QUERY_KEY = ['admin', 'suggestions']
 
+
+// Suggestion kis category ka hai (backend roz 3 categories rotate karta hai)
+const CATEGORY_LABEL: Record<string, string> = {
+  leader: 'Politician / leader',
+  tech: 'Technology leader',
+  influencer: 'Social media influencer',
+  professional: 'Professional',
+  trending: 'Trending',
+}
+
+function CategoryBadge({ category }: { category?: string }) {
+  if (!category || !CATEGORY_LABEL[category]) return null
+  return (
+    <span className="inline-block rounded-full bg-brand/10 px-2 py-0.5 text-[11px] font-semibold text-brand">
+      {CATEGORY_LABEL[category]}
+    </span>
+  )
+}
+
 function formatDate(dateStr?: string) {
   if (!dateStr) return 'N/A'
   try {
@@ -91,6 +110,9 @@ function SuggestionDetailModal({ id, onClose }: { id: string; onClose: () => voi
               </div>
               <div className="text-center">
                 <h2 className="text-2xl font-bold">{suggestion.name}</h2>
+                <div className="mt-1">
+                  <CategoryBadge category={suggestion.category} />
+                </div>
                 <p className="text-gray-500">{suggestion.headline}</p>
                 <p className="mt-2 text-sm text-gray-600">{suggestion.reason}</p>
               </div>
@@ -160,6 +182,9 @@ function SuggestionCard({
         <div>
           <h3 className="font-semibold text-brand">{suggestion?.name || 'Unknown'}</h3>
           <p className="line-clamp-2 text-sm text-gray-500">{suggestion?.headline || 'No headline'}</p>
+          <div className="mt-1">
+            <CategoryBadge category={suggestion?.category} />
+          </div>
         </div>
         <div onClick={(e) => e.stopPropagation()}>
           <input type="checkbox" checked={selected} onChange={onToggle} className="mt-1 cursor-pointer" />
