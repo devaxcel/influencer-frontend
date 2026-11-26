@@ -27,18 +27,11 @@ import type { SuggestionsData, InfluencerSuggestion } from '../../types/suggesti
 import { getApiError } from '../../utils/apiError'
 import { useAuth } from '../../hooks/useAuth'
 import { Photo } from '../../components/home/HomeSections'
+import SuggestionStats from '../../components/admin-panel/SuggestionStats'
+import { CATEGORY_LABEL } from './suggestionCategories'
 
 const QUERY_KEY = ['admin', 'suggestions']
 
-
-// Suggestion kis category ka hai (backend roz 3 categories rotate karta hai)
-const CATEGORY_LABEL: Record<string, string> = {
-  leader: 'Politician / leader',
-  tech: 'Technology leader',
-  influencer: 'Social media influencer',
-  professional: 'Professional',
-  trending: 'Trending',
-}
 
 function CategoryBadge({ category }: { category?: string }) {
   if (!category || !CATEGORY_LABEL[category]) return null
@@ -412,6 +405,8 @@ function AdminSuggestionsPage() {
           />
         </div>
       </PageHeader>
+
+      <SuggestionStats />
 
       {data && (
         <div className="mb-5 space-y-3">
