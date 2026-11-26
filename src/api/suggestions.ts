@@ -46,3 +46,25 @@ export async function updateSuggestionSetting(enabled: boolean) {
   const res = await api.patch<ApiSuccess<{ enabled: boolean }>>('/admin/suggestions/settings', { enabled })
   return res.data.data.enabled
 }
+export interface SuggestionStatDay {
+  date: string
+  generated: number
+  approved: number
+  dismissed: number
+  tracked: boolean
+}
+
+export interface SuggestionStats {
+  days: SuggestionStatDay[]
+  totals: { generated: number; approved: number; dismissed: number; pending: number }
+  categories: { category: string; generated: number; approved: number; dismissed: number }[]
+  trackedSince: string | null
+  dailyTarget: number
+  nextGenerationAt: string | null
+}
+
+// Roz kitni suggestions bani / approve / dismiss hui
+export async function getSuggestionStats(days = 14) {
+  const res = await api.get<ApiSuccess<SuggestionStats>>('/admin/suggestions/stats', { params: { days } })
+  return res.data.data
+}
