@@ -29,6 +29,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { Photo } from '../../components/home/HomeSections'
 import SuggestionStats from '../../components/admin-panel/SuggestionStats'
 import { CATEGORY_LABEL } from './suggestionCategories'
+import { Link } from 'react-router-dom'
 
 const QUERY_KEY = ['admin', 'suggestions']
 
@@ -441,14 +442,24 @@ function AdminSuggestionsPage() {
           {missingKeys.length > 0 && (
             <p className="flex items-start gap-2 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800">
               <FontAwesomeIcon icon={faCircleExclamation} className="mt-0.5" />
-              {t('suggestions.missingKeys', { keys: missingKeys.join(', ') })}
+              <span>
+                No search API key is set ({missingKeys.join(', ')}).{' '}
+                <Link to="/admin/settings" className="font-semibold underline">
+                  Add one in API settings
+                </Link>
+              </span>
             </p>
           )}
           {lastError && missingKeys.length === 0 && !isGenerating && (
             <p className="flex items-start gap-2 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
               <FontAwesomeIcon icon={faCircleExclamation} className="mt-0.5" />
               <span>
-                {t('suggestions.lastError')} {lastError}
+                {t('suggestions.lastError')} {lastError}{' '}
+                {/limit|credit|quota|432|429/i.test(lastError) && (
+                  <Link to="/admin/settings" className="font-semibold underline">
+                    Check API settings
+                  </Link>
+                )}
               </span>
             </p>
           )}
