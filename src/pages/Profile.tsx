@@ -36,6 +36,7 @@ import { countryName, formatCount, initials, languageName } from '../utils/forma
 import { profileJsonLd, useJsonLd } from '../utils/jsonLd'
 import { profileTitle, usePageMeta } from '../utils/pageMeta'
 import { trackProfileView } from '../api/people'
+import CoverImage from '../components/profile/CoverImage'
 
 // Har platform ka apna rang (icon ki tile ke liye)
 const PLATFORM_TONES: Partial<Record<SocialPlatform, string>> = {
@@ -172,22 +173,9 @@ function Profile() {
 
       {/* Identity: cover + gol photo + naam + buttons */}
       <section className="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-gray-200/70 motion-safe:animate-fade-up">
-        {/* Cover: usi photo ka dhundla roop, chalti roshni */}
-        <div className="keep-dark relative isolate h-36 overflow-hidden bg-brand-plum sm:h-52">
-          {photo && (
-            <img
-              src={photo}
-              alt=""
-              aria-hidden="true"
-              className="absolute inset-0 -z-10 h-full w-full scale-125 object-cover opacity-60 blur-2xl motion-safe:animate-hero-zoom"
-            />
-          )}
-          <div className="absolute -start-16 -top-20 -z-10 h-64 w-64 rounded-full bg-brand-violet/35 blur-3xl motion-safe:animate-drift" />
-          <div
-            className="absolute -end-10 -bottom-24 -z-10 h-72 w-72 rounded-full bg-brand-magenta/25 blur-3xl motion-safe:animate-drift"
-            style={{ animationDelay: '-6s' }}
-          />
-          <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+        {/* Cover: aam Influnexa banner (baad mein talent apna lagayega: person.bannerUrl), halki chalti roshni */}
+        <div className="keep-dark relative isolate h-36 overflow-hidden bg-[#e7d8c6] sm:h-52">
+          <CoverImage src={person.bannerUrl} />
           {isOpen && (
             <span className="absolute end-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-gray-900 shadow backdrop-blur">
               <span className="relative flex h-2 w-2">
