@@ -44,6 +44,8 @@ const HERO_IMAGE =
 
 const FEATURED_COUNT = 8
 const MOST_FOLLOWED_PAGE = 8
+// Featured this week: ek qatar (4 profiles)
+const WEEK_COUNT = 4
 const STRIP_COUNT = 12
 const INDUSTRY_LIMIT = 8
 
@@ -284,7 +286,7 @@ function Home() {
   const featuredTotal = mostFollowed.data?.pages[0]?.meta.total ?? 0
 
   // Featured this week: is hafte ke sab se maqbool profiles
-  const week = useQuery(featuredWeekQuery(FEATURED_COUNT))
+  const week = useQuery(featuredWeekQuery(WEEK_COUNT))
 
   useEffect(() => {
     if (!playing) return
@@ -558,7 +560,7 @@ function Home() {
             </Reveal>
             <div className="mt-4 grid gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
               {week.isLoading
-                ? Array.from({ length: FEATURED_COUNT }, (_, i) => (
+                ? Array.from({ length: WEEK_COUNT }, (_, i) => (
                     <div key={i} className="aspect-[4/5] animate-pulse rounded-3xl bg-gray-200/70" />
                   ))
                 : week.data!.map((p, i) => (
