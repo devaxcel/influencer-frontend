@@ -67,6 +67,8 @@ export interface PersonRating {
 // Profile page ka poora version
 export interface Person extends PersonSummary {
   bio?: string
+  // Talent ka apna banner (abhi koi nahi lagata; na ho to Influnexa ka aam banner)
+  bannerUrl?: string
   industries: TaxonomyItem[]
   topics: TaxonomyItem[]
   languages: string[]

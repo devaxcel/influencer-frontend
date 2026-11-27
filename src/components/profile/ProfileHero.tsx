@@ -5,6 +5,7 @@ import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExpand } from '@fortawesome/free-solid-svg-icons'
 import { initials } from '../../utils/format'
+import CoverImage from './CoverImage'
 import PhotoLightbox from './PhotoLightbox'
 import { rise } from './profileStyles'
 
@@ -28,6 +29,7 @@ function ProfileHero({
   chips,
   actions,
   coverTag,
+  cover,
   stats,
   caption,
   verified,
@@ -43,6 +45,8 @@ function ProfileHero({
   chips?: ReactNode
   actions?: ReactNode
   coverTag?: ReactNode
+  // Apna banner (baad mein talent khud lagayega). Na ho to Influnexa ka aam banner
+  cover?: string
   stats?: HeroStat[]
   caption?: string
   verified?: boolean
@@ -56,22 +60,9 @@ function ProfileHero({
 
   return (
     <section className="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-gray-200/70 motion-safe:animate-fade-up">
-      {/* Cover: usi photo ka dhundla roop, chalti roshni */}
-      <div className="keep-dark relative isolate h-36 overflow-hidden bg-brand-plum sm:h-52">
-        {image && (
-          <img
-            src={image}
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 -z-10 h-full w-full scale-125 object-cover opacity-60 blur-2xl motion-safe:animate-hero-zoom"
-          />
-        )}
-        <div className="absolute -start-16 -top-20 -z-10 h-64 w-64 rounded-full bg-brand-violet/35 blur-3xl motion-safe:animate-drift" />
-        <div
-          className="absolute -end-10 -bottom-24 -z-10 h-72 w-72 rounded-full bg-brand-magenta/25 blur-3xl motion-safe:animate-drift"
-          style={{ animationDelay: '-6s' }}
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
+      {/* Cover: aam Influnexa banner (ya talent ka apna), halki chalti roshni */}
+      <div className="keep-dark relative isolate h-36 overflow-hidden bg-[#e7d8c6] sm:h-52">
+        <CoverImage src={cover} />
         {coverTag && <div className="absolute end-4 top-4">{coverTag}</div>}
       </div>
 
