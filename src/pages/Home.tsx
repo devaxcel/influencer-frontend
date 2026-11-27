@@ -5,19 +5,20 @@ import ScrollProgressButton from '../components/home/ScrollProgressButton'
 import { MARK } from '../components/admin-panel/sentenceSlots'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faArrowRight,
   faBriefcase,
   faCheck,
-  faCircleCheck,
   faPlay,
   faStar,
   faUserTie,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons'
-import { peopleQuery } from '../api/queries'
+import { featuredWeekQuery, peopleQuery } from '../api/queries'
+import { listPeople } from '../api/people'
+import { ProfileTile } from '../components/home/ProfileTile'
 import SearchBar from '../components/SearchBar'
 import { useAuth } from '../hooks/useAuth'
 import { useTaxonomy } from '../hooks/useTaxonomy'
@@ -42,6 +43,7 @@ const HERO_IMAGE =
   'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=75'
 
 const FEATURED_COUNT = 8
+const MOST_FOLLOWED_PAGE = 8
 const STRIP_COUNT = 12
 const INDUSTRY_LIMIT = 8
 
@@ -263,12 +265,26 @@ function Home() {
   const [playing, setPlaying] = useState(false)
   const [reduced] = useState(prefersReducedMotion)
 
-  const { data, isLoading, isError } = useQuery(
+  const { data } = useQuery(
     peopleQuery(new URLSearchParams({ limit: String(STRIP_COUNT), sort: 'followers' })),
   )
   const people = data?.people ?? []
-  const featured = people.slice(0, FEATURED_COUNT)
-  const reach = featured.reduce((sum, p) => sum + p.totalFollowers, 0)
+  const reach = people.slice(0, FEATURED_COUNT).reduce((sum, p) => sum + p.totalFollowers, 0)
+
+  // Most followed: 8 profiles, "Load more" se agle 8, jab tak sab na aa jayen
+  const mostFollowed = useInfiniteQuery({
+    queryKey: ['people', 'most-followed', MOST_FOLLOWED_PAGE],
+    queryFn: ({ pageParam }) =>
+      listPeople(new URLSearchParams({ limit: String(MOST_FOLLOWED_PAGE), sort: 'followers', page: String(pageParam) })),
+    initialPageParam: 1,
+    getNextPageParam: (last, all) => (all.length * MOST_FOLLOWED_PAGE < last.meta.total ? all.length + 1 : undefined),
+    staleTime: 30 * 1000,
+  })
+  const featured = mostFollowed.data?.pages.flatMap((page) => page.people) ?? []
+  const featuredTotal = mostFollowed.data?.pages[0]?.meta.total ?? 0
+
+  // Featured this week: is hafte ke sab se maqbool profiles
+  const week = useQuery(featuredWeekQuery(FEATURED_COUNT))
 
   useEffect(() => {
     if (!playing) return
@@ -532,58 +548,70 @@ function Home() {
           </div>
         </section>
 
+        {(week.isLoading || (week.data && week.data.length > 0)) && (
+          <section aria-label={d('home.featuredWeek', 'Featured this week')}>
+            <Reveal>
+              <SectionHeader title={d('home.featuredWeek', 'Featured this week')} to="/search" />
+              <p className="mt-1 text-sm text-gray-500">
+                {d('home.featuredWeekSub', 'The profiles people viewed, saved and contacted the most in the last 7 days.')}
+              </p>
+            </Reveal>
+            <div className="mt-4 grid gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
+              {week.isLoading
+                ? Array.from({ length: FEATURED_COUNT }, (_, i) => (
+                    <div key={i} className="aspect-[4/5] animate-pulse rounded-3xl bg-gray-200/70" />
+                  ))
+                : week.data!.map((p, i) => (
+                    <Reveal key={p._id} delay={(i % 4) * 90}>
+                      <ProfileTile person={p} hot={p.weekly.source === 'popular'} />
+                    </Reveal>
+                  ))}
+            </div>
+          </section>
+        )}
+
         <section>
           <Reveal>
             <SectionHeader title={t('home.mostFollowed')} to="/search?sort=followers" />
           </Reveal>
-          {isError && !data && (
+          {mostFollowed.isError && !mostFollowed.data && (
             <p className="mt-5 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">
               {t('home.loadError')}
             </p>
           )}
-          {data && featured.length === 0 && (
+          {mostFollowed.data && featured.length === 0 && (
             <p className="mt-5 text-gray-500">{t('home.noProfiles')}</p>
           )}
           <div className="mt-4 grid gap-3 sm:mt-6 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
-            {isLoading
+            {mostFollowed.isLoading
               ? Array.from({ length: FEATURED_COUNT }, (_, i) => (
                   <div key={i} className="aspect-[4/5] animate-pulse rounded-3xl bg-gray-200/70" />
                 ))
               : featured.map((p, i) => (
-                  <Reveal key={p._id} delay={(i % 4) * 90}>
-                    <Link
-                      to={`/people/${p.slug}`}
-                      className="group keep-dark relative block aspect-[4/5] overflow-hidden rounded-3xl bg-brand-plum text-white shadow-lg transition duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                    >
-                      <Photo
-                        person={p}
-                        className="h-full w-full transition duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-                      {p.totalFollowers > 0 && (
-                        <span className="absolute end-2 top-2 rounded-full bg-white/90 px-2 py-0.5 text-[10px] font-bold text-gray-900 shadow sm:end-3 sm:top-3 sm:px-3 sm:py-1 sm:text-xs">
-                          {sub(p)}
-                        </span>
-                      )}
-                      <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                        <p className="flex items-center gap-1.5 font-display text-sm font-bold sm:gap-2 sm:text-lg">
-                          <span className="truncate">{p.name}</span>
-                          {p.verified && (
-                            <FontAwesomeIcon icon={faCircleCheck} className="text-xs text-brand-sun sm:text-sm" />
-                          )}
-                        </p>
-                        {p.headline && (
-                          <p className="mt-1 line-clamp-1 text-[11px] text-white/80 sm:text-sm">{p.headline}</p>
-                        )}
-                        <span className="mt-2 inline-flex translate-y-3 items-center gap-2 text-xs font-semibold opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 sm:mt-3 sm:text-sm">
-                          {d('home.viewProfile', 'View profile')}
-                          <FontAwesomeIcon icon={faArrowRight} className="text-[10px] rtl:rotate-180 sm:text-xs" />
-                        </span>
-                      </div>
-                    </Link>
+                  <Reveal key={p._id} delay={(i % MOST_FOLLOWED_PAGE % 4) * 90}>
+                    <ProfileTile person={p} />
                   </Reveal>
                 ))}
           </div>
+          {mostFollowed.data && featuredTotal > 0 && (
+            <div className="mt-6 flex flex-col items-center gap-2 sm:mt-8">
+              <p className="text-xs text-gray-500">
+                {d('home.showingOf', 'Showing {{shown}} of {{total}}')
+                  .replace('{{shown}}', String(featured.length))
+                  .replace('{{total}}', String(featuredTotal))}
+              </p>
+              {mostFollowed.hasNextPage && (
+                <button
+                  type="button"
+                  onClick={() => mostFollowed.fetchNextPage()}
+                  disabled={mostFollowed.isFetchingNextPage}
+                  className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-6 py-2.5 text-sm font-semibold shadow-sm transition hover:border-gray-900 hover:shadow-md disabled:opacity-60"
+                >
+                  {mostFollowed.isFetchingNextPage ? d('home.loadingMore', 'Loading…') : d('home.loadMore', 'Load more')}
+                </button>
+              )}
+            </div>
+          )}
         </section>
 
         <FeatureShowcase people={people} />
