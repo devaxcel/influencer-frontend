@@ -20,6 +20,7 @@ import type { PersonInput } from '../../types/admin'
 import type { Person, ProfileStatus, SocialAccount, SocialPlatform } from '../../types/person'
 import { getApiError } from '../../utils/apiError'
 import { countryName, formatCount, languageName } from '../../utils/format'
+import AccountFinder from './AccountFinder'
 import { FOLLOWER_PLATFORMS, handleFromUrl } from '../../utils/socialHandle'
 
 const SOURCE_TYPES = ['public_web', 'research_sheet', 'self_submitted', 'admin']
@@ -459,6 +460,23 @@ function PersonForm({
             </button>
           </div>
         </div>
+        {/* Sirf admin: naam se asli accounts dhoondo, check karke form mein lagao */}
+        {isAdmin && (
+          <AccountFinder
+            name={form.name}
+            existing={form.socialAccounts.filter((row) => row.url.trim()).map((row) => ({ platform: row.platform, handle: row.handle }))}
+            onAdd={(proposal) => {
+              const row = { platform: proposal.platform, url: proposal.url, handle: proposal.handle, engagementRate: '' } as (typeof form.socialAccounts)[number]
+              // Khali row ho to usi mein, warna nayi row
+              const emptyIndex = form.socialAccounts.findIndex((r) => !r.url.trim())
+              update(
+                'socialAccounts',
+                emptyIndex >= 0 ? form.socialAccounts.map((r, i) => (i === emptyIndex ? row : r)) : [...form.socialAccounts, row],
+              )
+              setLocalErrors((prev) => ({ ...prev, socialAccounts: '' }))
+            }}
+          />
+        )}
         {form.socialAccounts.length === 0 && (
           <p className="text-sm text-gray-500">{t('personForm.noSocial')}</p>
         )}
