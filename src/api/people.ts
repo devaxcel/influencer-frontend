@@ -22,3 +22,18 @@ export async function listTaxonomy(type: TaxonomyType) {
   const res = await api.get<ApiSuccess<{ items: TaxonomyItem[] }>>(`/taxonomy/${type}`)
   return res.data.data.items
 }
+
+export interface FeaturedPerson extends PersonSummary {
+  weekly: { score: number; source: 'popular' | 'rotation' }
+}
+
+// "Featured this week": pichhle 7 din ke sab se maqbool; kam hon to hafte ki chunni hui mix se bhare hue
+export async function getFeaturedWeek(limit = 8) {
+  const res = await api.get<ApiSuccess<{ people: FeaturedPerson[] }>>('/people/featured-week', { params: { limit } })
+  return res.data.data.people
+}
+
+// Profile khulne par ek dafa (server alag visitor / din ginta hai, bots nahi)
+export async function trackProfileView(slug: string) {
+  await api.post(`/people/${encodeURIComponent(slug)}/view`)
+}

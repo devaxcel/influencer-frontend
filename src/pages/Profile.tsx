@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useState, type CSSProperties, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { taxName } from '../utils/taxonomy'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -35,6 +35,7 @@ import type { SocialPlatform, TaxonomyItem } from '../types/person'
 import { countryName, formatCount, initials, languageName } from '../utils/format'
 import { profileJsonLd, useJsonLd } from '../utils/jsonLd'
 import { profileTitle, usePageMeta } from '../utils/pageMeta'
+import { trackProfileView } from '../api/people'
 
 // Har platform ka apna rang (icon ki tile ke liye)
 const PLATFORM_TONES: Partial<Record<SocialPlatform, string>> = {
@@ -108,6 +109,20 @@ function Profile() {
   const { data: person, isLoading, error } = useQuery({ ...personQuery(slug), retry: false })
   useJsonLd('ld-page', person ? profileJsonLd(person, i18n.language) : null)
   usePageMeta(person ? profileTitle(person.name, person.professions[0]?.name) : null, person?.headline)
+
+  // "Featured this week" ke liye: profile dikhne par ek dafa ginti (ek tab mein ek profile ek dafa; server alag visitor / din ginta hai)
+  const personId = person?._id
+  useEffect(() => {
+    if (!personId || !slug) return
+    try {
+      const key = `viewed:${slug}`
+      if (sessionStorage.getItem(key)) return
+      sessionStorage.setItem(key, '1')
+    } catch {
+      // Private window: server khud dobara ginti rokta hai
+    }
+    trackProfileView(slug).catch(() => undefined)
+  }, [personId, slug])
 
   if (isLoading) return <ProfileSkeleton />
 

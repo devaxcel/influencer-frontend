@@ -1,5 +1,5 @@
 import { queryOptions } from '@tanstack/react-query'
-import { getPerson, listPeople, listTaxonomy } from './people'
+import { getFeaturedWeek, getPerson, listPeople, listTaxonomy } from './people'
 import { getMyProfile, listMyClaims } from './claims'
 import { getMyBusiness, listIncomingHires, listMyHires } from './business'
 import { getAgreement, getPersonReviews, listMyAgreements } from './agreements'
@@ -38,6 +38,16 @@ export function peopleQuery(params: URLSearchParams) {
     queryFn: () => listPeople(params),
     // Verified / claimed jaisi tabdeeli jaldi dikhe
     staleTime: 30 * 1000,
+  })
+}
+
+// Home: "Featured this week"
+export function featuredWeekQuery(limit = 8) {
+  return queryOptions({
+    queryKey: ['people', 'featured-week', limit],
+    queryFn: () => getFeaturedWeek(limit),
+    // Server 5 minute cache karta hai; hafte bhar mein kam badalta hai
+    staleTime: 5 * 60 * 1000,
   })
 }
 
