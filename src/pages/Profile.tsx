@@ -100,6 +100,10 @@ function ProfileSkeleton() {
   )
 }
 
+// YouTube Data API ka number wahi hai jo YouTube khud dikhata hai (seedha channel se), is liye "~" nahi
+const fromYoutubeApi = (account: { platform: string; followersSourceUrl?: string }) =>
+  account.platform === 'youtube' && Boolean(account.followersSourceUrl?.startsWith('https://www.youtube.com/channel/'))
+
 function Profile() {
   const { t, i18n } = useTranslation()
   const { slug = '' } = useParams()
@@ -405,7 +409,7 @@ function Profile() {
                             <span className="shrink-0 font-semibold text-gray-900">
                               {account.followers === undefined
                                 ? '—'
-                                : (account.followersUpdatedAt ? '~' : '') +
+                                : (account.followersUpdatedAt && !fromYoutubeApi(account) ? '~' : '') +
                                   formatCount(account.followers)}
                             </span>
                           </span>

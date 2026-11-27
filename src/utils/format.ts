@@ -1,10 +1,11 @@
 import i18n from '../i18n'
 
-// 1250000 -> "1.3M" (chuni hui zaban ke andaaz mein)
+// 1170000 -> "1.17M", 3400000 -> "3.4M" (chuni hui zaban ke andaaz mein). Do ashariya tak: pehle 1.17M "1.2M" ban jata tha
+// aur asal (YouTube pe 1.17M) se alag dikhta tha
 export function formatCount(value: number) {
   return new Intl.NumberFormat(i18n.language, {
     notation: 'compact',
-    maximumFractionDigits: 1,
+    maximumFractionDigits: 2,
   }).format(value)
 }
 
