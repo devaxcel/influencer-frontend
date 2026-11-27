@@ -16,6 +16,7 @@ import { getAdminStats } from '../../api/adminPanel'
 import DataState from '../../components/admin-panel/DataState'
 import PageHeader from '../../components/admin-panel/PageHeader'
 import FillPhotosCard from '../../components/admin-panel/FillPhotosCard'
+import AccountAuditCard from '../../components/admin-panel/AccountAuditCard'
 import type { Role } from '../../types/user'
 import type { AdminStats } from '../../types/adminPanel'
 
@@ -71,6 +72,7 @@ function AdminOverviewPage() {
   return (
     <>
       <PageHeader title={t('overview.title')} subtitle={t('overview.subtitle')} />
+      <AccountAuditCard />
       <FillPhotosCard />
       <DataState
         isLoading={isLoading}
