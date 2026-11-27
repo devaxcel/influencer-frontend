@@ -34,3 +34,35 @@ export async function removeAuditAccount(account: Pick<AuditAccount, 'personId' 
 export async function keepAuditAccount(account: Pick<AuditAccount, 'personId' | 'platform' | 'handle'>) {
   await api.post(`${BASE}/keep`, account)
 }
+
+export interface LinkChange {
+  personId: string
+  name: string
+  slug: string
+  platform: string
+  from: string
+  to: string
+}
+
+export interface LinkProblem {
+  personId: string
+  name: string
+  slug: string
+  platform: string
+  handle: string
+  url: string
+}
+
+export interface LinkCheck {
+  checked: number
+  fixed: LinkChange[]
+  missing: LinkProblem[]
+  unverified: LinkProblem[]
+  youtubeSkipped: boolean
+}
+
+// Social links ki jaanch: YouTube ke galat handle khud theek (fix = true), baqi ki fehrist
+export async function checkSocialLinks(fix = true) {
+  const res = await api.post<ApiSuccess<LinkCheck>>('/admin/people/check-links', { fix }, { timeout: 180_000 })
+  return res.data.data
+}

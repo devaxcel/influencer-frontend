@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
-import { getAccountAudit, keepAuditAccount, removeAuditAccount, type AuditAccount } from '../../api/accountAudit'
+import { checkSocialLinks, getAccountAudit, keepAuditAccount, removeAuditAccount, type AuditAccount, type LinkCheck } from '../../api/accountAudit'
 import { formatCount } from '../../utils/format'
 import { getApiError } from '../../utils/apiError'
 
@@ -19,6 +19,16 @@ function AccountAuditCard() {
   const [open, setOpen] = useState(false)
   const audit = useQuery({ queryKey: KEY, queryFn: getAccountAudit, staleTime: 30_000 })
   const [busy, setBusy] = useState<string | null>(null)
+  const [links, setLinks] = useState<LinkCheck | null>(null)
+  const checkLinks = useMutation({
+    mutationFn: () => checkSocialLinks(true),
+    onSuccess: (result) => {
+      setLinks(result)
+      if (result.fixed.length > 0) toast.success(`${result.fixed.length} link${result.fixed.length === 1 ? '' : 's'} fixed`)
+      queryClient.invalidateQueries({ queryKey: ['people'] })
+    },
+    onError: (error) => toast.error(getApiError(error).message),
+  })
 
   const done = () => {
     queryClient.invalidateQueries({ queryKey: KEY })
@@ -63,12 +73,83 @@ function AccountAuditCard() {
           </p>
           <p className="mt-1 text-xs text-gray-500">Only profiles that are not claimed by their talent are checked. Nothing changes until you press a button.</p>
         </div>
-        {rows.length > 0 && (
-          <button type="button" onClick={() => setOpen((value) => !value)} className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50">
-            {open ? 'Hide list' : `Review ${rows.length}`}
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            disabled={checkLinks.isPending}
+            onClick={() => checkLinks.mutate()}
+            className="rounded-xl bg-brand px-4 py-2 text-sm font-semibold text-on-brand hover:bg-brand-hover disabled:opacity-50"
+          >
+            {checkLinks.isPending ? 'Checking links…' : 'Check and fix links'}
           </button>
-        )}
+          {rows.length > 0 && (
+            <button type="button" onClick={() => setOpen((value) => !value)} className="rounded-xl border border-gray-300 px-4 py-2 text-sm font-medium hover:bg-gray-50">
+              {open ? 'Hide list' : `Review ${rows.length}`}
+            </button>
+          )}
+        </div>
       </div>
+
+      {links && (
+        <div className="mt-4 space-y-3 rounded-xl bg-gray-50 p-4 text-sm">
+          <p className="font-medium">
+            Checked {links.checked} account{links.checked === 1 ? '' : 's'}.
+            {links.youtubeSkipped && ' YouTube links were skipped: add the YouTube key in API settings.'}
+          </p>
+          <div>
+            <p className="font-medium text-emerald-700">Fixed ({links.fixed.length})</p>
+            {links.fixed.length === 0 && <p className="text-xs text-gray-500">No YouTube link needed fixing.</p>}
+            <ul className="mt-1 space-y-1">
+              {links.fixed.map((change) => (
+                <li key={`${change.personId}-${change.platform}`} className="text-xs">
+                  <Link to={`/people/${change.slug}`} target="_blank" className="font-medium underline">
+                    {change.name}
+                  </Link>
+                  : <span className="text-red-600 line-through">{change.from.replace('https://www.', '')}</span> →{' '}
+                  <a href={change.to} target="_blank" rel="noopener noreferrer" className="text-emerald-700 underline">
+                    {change.to.replace('https://www.', '')}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {links.missing.length > 0 && (
+            <div>
+              <p className="font-medium text-red-700">Account not found ({links.missing.length})</p>
+              <p className="text-xs text-gray-500">These links point to nothing. Open Edit profile and fix or remove them.</p>
+              <ul className="mt-1 space-y-1 text-xs">
+                {links.missing.map((problem) => (
+                  <li key={`${problem.personId}-${problem.platform}-${problem.handle}`}>
+                    <Link to={`/people/${problem.slug}`} target="_blank" className="font-medium underline">
+                      {problem.name}
+                    </Link>
+                    : {problem.platform} @{problem.handle}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {links.unverified.length > 0 && (
+            <div>
+              <p className="font-medium text-amber-700">Could not be confirmed ({links.unverified.length})</p>
+              <p className="text-xs text-gray-500">Instagram, Facebook and X cannot be opened from our server, so the follower count could not be confirmed for these. Open each link once to be sure.</p>
+              <ul className="mt-1 space-y-1 text-xs">
+                {links.unverified.map((problem) => (
+                  <li key={`${problem.personId}-${problem.platform}-${problem.handle}`}>
+                    <Link to={`/people/${problem.slug}`} target="_blank" className="font-medium underline">
+                      {problem.name}
+                    </Link>
+                    : {problem.platform}{' '}
+                    <a href={problem.url} target="_blank" rel="noopener noreferrer" className="underline">
+                      @{problem.handle}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
 
       {open && rows.length > 0 && (
         <ul className="mt-4 divide-y divide-gray-100 text-sm">
